@@ -75,3 +75,4 @@ D:\uni\assignments\TP-PWEB\HabitAqui\obj\Debug\net6.0\refint\HabitAqui.dll
 D:\uni\assignments\TP-PWEB\HabitAqui\obj\Debug\net6.0\HabitAqui.pdb
 D:\uni\assignments\TP-PWEB\HabitAqui\obj\Debug\net6.0\HabitAqui.genruntimeconfig.cache
 D:\uni\assignments\TP-PWEB\HabitAqui\obj\Debug\net6.0\ref\HabitAqui.dll
+D:\uni\assignments\TP-PWEB\HabitAqui\bin\Debug\net6.0\BootstrapIcons.AspNetCore.dll

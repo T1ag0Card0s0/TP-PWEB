@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "HabitAqui/1.0.0": {
         "dependencies": {
+          "BootstrapIcons.AspNetCore": "1.9.2",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.20",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.20",
           "Microsoft.AspNetCore.Identity.UI": "6.0.20",
@@ -16,6 +17,17 @@
         },
         "runtime": {
           "HabitAqui.dll": {}
+        }
+      },
+      "BootstrapIcons.AspNetCore/1.9.2": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Razor.Runtime": "2.2.0"
+        },
+        "runtime": {
+          "lib/net5.0/BootstrapIcons.AspNetCore.dll": {
+            "assemblyVersion": "1.9.2.0",
+            "fileVersion": "1.9.2.0"
+          }
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -56,6 +68,11 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
+        "dependencies": {
+          "System.Text.Encodings.Web": "4.5.0"
+        }
+      },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/6.0.20": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "6.0.20",
@@ -78,6 +95,17 @@
             "assemblyVersion": "6.0.20.0",
             "fileVersion": "6.0.2023.32106"
           }
+        }
+      },
+      "Microsoft.AspNetCore.Razor/2.2.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Html.Abstractions": "2.2.0"
+        }
+      },
+      "Microsoft.AspNetCore.Razor.Runtime/2.2.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Html.Abstractions": "2.2.0",
+          "Microsoft.AspNetCore.Razor": "2.2.0"
         }
       },
       "Microsoft.CSharp/4.5.0": {},
@@ -524,6 +552,7 @@
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
       },
+      "System.Text.Encodings.Web/4.5.0": {},
       "System.Windows.Extensions/4.7.0": {
         "dependencies": {
           "System.Drawing.Common": "4.7.0"
@@ -550,6 +579,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BootstrapIcons.AspNetCore/1.9.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dxiQskKw3EoNGH0GXAgNbyZN34gxex18rMMXRWrv0m76U5LLEJGmIg2Y+I7x6rDkla0lSPTIO18x6YLP9DsQvg==",
+      "path": "bootstrapicons.aspnetcore/1.9.2",
+      "hashPath": "bootstrapicons.aspnetcore.1.9.2.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",
@@ -579,6 +615,13 @@
       "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/6.0.20",
       "hashPath": "microsoft.aspnetcore.diagnostics.entityframeworkcore.6.0.20.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y4rs5aMEXY8G7wJo5S3EEt6ltqyOTr/qOeZzfn+hw/fuQj5GppGckMY5psGLETo1U9hcT5MmAhaT5xtusM1b5g==",
+      "path": "microsoft.aspnetcore.html.abstractions/2.2.0",
+      "hashPath": "microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore/6.0.20": {
       "type": "package",
       "serviceable": true,
@@ -592,6 +635,20 @@
       "sha512": "sha512-GX46Lu8NVupl/5Wvy2WDjHOQXNXZQttkQrP8gg0U0euzqb9w2ff8xyoqanlx631BYMI4FlUYMy2OVRm3VV/OqA==",
       "path": "microsoft.aspnetcore.identity.ui/6.0.20",
       "hashPath": "microsoft.aspnetcore.identity.ui.6.0.20.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Razor/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V54PIyDCFl8COnTp9gezNHpUNHk7F9UnerGeZy3UfbnwYvfzbo+ipqQmSgeoESH8e0JvKhRTyQyZquW2EPtCmg==",
+      "path": "microsoft.aspnetcore.razor/2.2.0",
+      "hashPath": "microsoft.aspnetcore.razor.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Razor.Runtime/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7YqK+H61lN6yj9RiQUko7oaOhKtRR9Q/kBcoWNRemhJdTIWOh1OmdvJKzZrMWOlff3BAjejkPQm+0V0qXk+B1w==",
+      "path": "microsoft.aspnetcore.razor.runtime/2.2.0",
+      "hashPath": "microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.5.0": {
       "type": "package",
@@ -907,6 +964,13 @@
       "sha512": "sha512-aeu4FlaUTemuT1qOd1MyU4T516QR4Fy+9yDbwWMPHOHy7U8FD6SgTzdZFO7gHcfAPHtECqInbwklVvUK4RHcNg==",
       "path": "system.text.encoding.codepages/4.7.0",
       "hashPath": "system.text.encoding.codepages.4.7.0.nupkg.sha512"
+    },
+    "System.Text.Encodings.Web/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xg4G4Indi4dqP1iuAiMSwpiWS54ZghzR644OtsRCm/m/lBMG8dUBhLVN7hLm8NNrNTR+iGbshCPTwrvxZPlm4g==",
+      "path": "system.text.encodings.web/4.5.0",
+      "hashPath": "system.text.encodings.web.4.5.0.nupkg.sha512"
     },
     "System.Windows.Extensions/4.7.0": {
       "type": "package",
