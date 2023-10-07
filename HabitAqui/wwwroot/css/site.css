@@ -16,3 +16,72 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Sidebar Styles */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #333;
+    transition: left 0.3s ease;
+}
+/* Sidebar Animation */
+.sidebar.open {
+    left: 0px;
+
+}
+.sidebar .sidebar-header {
+    background-color: #222;
+    padding: 20px;
+    text-align: center;
+
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+
+}
+.sidebar ul li {
+    padding: 10px;
+    text-align: center;
+
+}
+.sidebar ul li div:hover {
+    background: #222;
+
+}
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    position: fixed;
+    top: 20px;
+    left: 0px;
+    transition: left 0.3s ease;
+}
+.openbtn.open {
+    left: 260px;
+ }
+
+/* Content Styles */
+.content {
+    margin-top: 70px
+}
+.login-partial {
+    position: fixed;
+    top: 20px;
+    right: 5px;
+    padding: 10px 15px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+}
