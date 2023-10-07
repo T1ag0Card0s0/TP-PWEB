@@ -25,6 +25,7 @@ body {
     left: -250px;
     background-color: #333;
     transition: left 0.3s ease;
+    z-index:999;
 }
 /* Sidebar Animation */
 .sidebar.open {
@@ -49,7 +50,9 @@ body {
 }
 .sidebar ul li div:hover {
     background: #222;
-
+}
+.log-partialbtn:hover {
+    background: #222;
 }
 .sidebar ul li a {
     color: #fff;
@@ -75,13 +78,4 @@ body {
 /* Content Styles */
 .content {
     margin-top: 70px
-}
-.login-partial {
-    position: fixed;
-    top: 20px;
-    right: 5px;
-    padding: 10px 15px;
-    background-color: #333;
-    color: #fff;
-    border: none;
 }
