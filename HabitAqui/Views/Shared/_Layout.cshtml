@@ -7,33 +7,38 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HabitAqui.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true" />
 </head>
 <body>
-  
-    <div id ="mySidebar" class="sidebar">
-        <nav class="sidebar-header">
-            <h1><a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">HabitAqui</a></h1>
-        </nav>
-        <ul>
-            <li><div><a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a></div></li>
-            <li><div><a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div></li>
-        </ul>
-        <partial name="_LoginPartial" />
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2023 - HabitAqui - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <nav id="mySidebar" class="sidebar position-fixed top-0 left-0 w-15 h-100 z-index-1">
+            <div class="sidebar-header text-center p-3">
+                <h1><a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">HabitAqui</a></h1>
             </div>
-        </footer>
-        <button class="openbtn" onclick="toggleSidebar()">☰ Open Sidebar</button>
-    </div>
-
-
-    <div class="content container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <ul class="p-2 list-unstyled text-center">
+                <li>
+                    <a class="nav-link text-white d-block" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li>
+                   <a class="nav-link text-white d-block" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+            </ul>
+            
+      
+            <footer class="footer text-muted">
+            <partial name="_LoginPartial" />
+            <div class="container border-top">
+                    &copy; 2023 - HabitAqui - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
+        </nav>
+        
+        <div class="content container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
