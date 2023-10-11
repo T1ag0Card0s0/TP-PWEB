@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HabitAqui.Models.Arrendamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_min)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo_max)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data_inicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data_fim)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.ClienteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Habitacao.HabitacaoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodo_min)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodo_max)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_inicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_fim)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ArrendamentoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ArrendamentoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ArrendamentoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

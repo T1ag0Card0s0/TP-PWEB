@@ -2,14 +2,11 @@
 {
 	public class Funcionario
 	{
-		public int Id { get; set; }
+		public int FuncionarioId { get; set; }
 
-		public Utilizador utilizador { get; set; }
-
-		// Locador ao qual esta associado
-		public Locador Locador { get; set; }
+		public Utilizador Utilizador { get; set; }
 
 		// Lista de habitações geridas pelo funcionário
-		public List<Habitacao> Habituacoes { get; set; }
+		public ICollection<Habitacao> Habitacoes { get; set; }
 	}
 }

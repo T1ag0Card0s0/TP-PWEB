@@ -2,13 +2,12 @@
 {
 	public class Locador
 	{
-		public int Id { get; set; }
+		public int LocadorId { get; set; }
 		public string Nome { get; set; }
-
 		public string Contacto { get; set; }
 
 		// Lista das habitacoes do Locador
-		public List<Habitacao> Habitacoes { get; set; }
+		public ICollection<Habitacao> Habitacoes { get; set; }
 
 	}
 }

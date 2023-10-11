@@ -1,21 +1,17 @@
 ﻿namespace HabitAqui.Models
 {
-	public enum TipoHabitacao
-	{
-		Casa, 
-		Quarto, 
-		Apartamento
-	}
 	public class Habitacao
 	{
-		public int Id { get; set; }
-		public Locador Locador { get; set; }
-		public TipoHabitacao Tipo {  get; set; }
+		public int HabitacaoId { get; set; }
+        public string Descricao { get; set; }
+        public int Custo { get; set; }
 
-		public string Descricao { get; set; }
+        // uma habitacao tem um locador
+        public Locador Locador { get; set; }
+		public int LocadorId {  get; set; }
 
-		public int Custo { get; set; }
-
-		public Avaliacao Avaliacao { get; set; }
+		// uma habitacao tem varias avaliacoes
+		public ICollection<Avaliacao> Avaliacoes { get; set; }
 	}
+
 }
