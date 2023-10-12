@@ -16,3 +16,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Sidebar Styles */
+.sidebar {
+    background-color: #333;
+ 
+}
+.sidebar .sidebar-header {
+    background-color: #222;
+}
+.sidebar ul li:hover {
+    background: #222;
+}
+.log-partialbtn:hover {
+    background: #222;
+}
+.sidebar ul li a {
+    color: #fff;
+}
+.content {
+    padding-left:200px
+}

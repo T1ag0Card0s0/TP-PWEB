@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HabitAqui.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Habitacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Classificacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Habitacao.HabitacaoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Classificacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.ClienteId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AvaliacaoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AvaliacaoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AvaliacaoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
