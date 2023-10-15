@@ -6,6 +6,9 @@
 
 		public Utilizador Utilizador { get; set; }
 
+		public Locador Locador { get; set; }
+		public int LocadorId { get; set; }
+
 		// Lista de funcionários associados ao locador gerido pelo gestor
 		public ICollection<Funcionario> Funcionarios { get; set; }
 

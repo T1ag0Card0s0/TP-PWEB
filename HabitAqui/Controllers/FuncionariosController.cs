@@ -22,9 +22,8 @@ namespace HabitAqui.Controllers
         // GET: Funcionarios
         public async Task<IActionResult> Index()
         {
-              return _context.Funcionario != null ? 
-                          View(await _context.Funcionario.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Funcionario'  is null.");
+            var applicationDbContext = _context.Funcionario.Include(f => f.Locador);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Funcionarios/Details/5
@@ -36,6 +35,7 @@ namespace HabitAqui.Controllers
             }
 
             var funcionario = await _context.Funcionario
+                .Include(f => f.Locador)
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
@@ -48,6 +48,7 @@ namespace HabitAqui.Controllers
         // GET: Funcionarios/Create
         public IActionResult Create()
         {
+            ViewData["LocadorId"] = new SelectList(_context.Locador, "LocadorId", "LocadorId");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FuncionarioId")] Funcionario funcionario)
+        public async Task<IActionResult> Create([Bind("FuncionarioId,LocadorId")] Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,7 @@ namespace HabitAqui.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LocadorId"] = new SelectList(_context.Locador, "LocadorId", "LocadorId", funcionario.LocadorId);
             return View(funcionario);
         }
 
@@ -80,6 +82,7 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
+            ViewData["LocadorId"] = new SelectList(_context.Locador, "LocadorId", "LocadorId", funcionario.LocadorId);
             return View(funcionario);
         }
 
@@ -88,7 +91,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,LocadorId")] Funcionario funcionario)
         {
             if (id != funcionario.FuncionarioId)
             {
@@ -115,6 +118,7 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LocadorId"] = new SelectList(_context.Locador, "LocadorId", "LocadorId", funcionario.LocadorId);
             return View(funcionario);
         }
 
@@ -127,6 +131,7 @@ namespace HabitAqui.Controllers
             }
 
             var funcionario = await _context.Funcionario
+                .Include(f => f.Locador)
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
