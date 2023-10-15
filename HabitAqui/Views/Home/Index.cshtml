@@ -2,8 +2,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <i class="fa-solid fa-bug"></i>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pesquisar Habitação</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <br />
+    <br />
+        <h1>Pesquisar Habitação</h1>
+        <form asp-area="" asp-controller="Habitacoes" asp-action="Index" method="get">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <select name="category" class="form-control">
+                        <option value="" disabled selected>Tipo de Imóvel</option>
+                        <option value="Apartamentos">Apartamentos</option>
+                        <option value="Moradias">Moradias</option>
+                        <option value="Quartos">Quartos</option>
+                        <option value="Outra">Outra</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                        <input type="text" name="location" class="form-control" placeholder="Procurar por Localização">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="start_date">Data início</label>
+                    <input class="form-control" type="date" name="start_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="end_date">Data fim</label>
+                    <input class="form-control" type="date" name="end_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="periodo">Período mínimo</label>
+                    <input class="form-control" type="number" placeholder="Período mínimo" name="periodo">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">Procurar</button>
+        </form>
+    
+    </div>
+    </div>
+        
+</body>
+</html>
+

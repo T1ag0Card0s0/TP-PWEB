@@ -176,8 +176,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Filtrar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xGaWx0cmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Habitacoes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIYWJpdGFjb2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Index.cshtml]

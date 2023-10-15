@@ -3,12 +3,64 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Habitações Disponiveis</h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-warning" data-toggle="collapse" data-target="#formDropdown">Filtrar Pesquisa</button>
+            <br />
+            <br />
+            <div class="collapse" id="formDropdown">
+                <form asp-area="" asp-controller="Habitacoes" asp-action="Index" method="get">
+                    <label for="categoria">
+                        Categoria:
+                        <input class="form-check-input" type="checkbox" name="category" value="T1"> T1
+                        <input class="form-check-input" type="checkbox" name="category" value="T2"> T2
+                        <input class="form-check-input" type="checkbox" name="category" value="T3"> T3
+                        <input class="form-check-input" type="checkbox" name="category" value="T4"> T4
+                        <input class="form-check-input" type="checkbox" name="category" value="Moradias"> Moradias
+                        <input class="form-check-input" type="checkbox" name="category" value="Quartos"> Quartos
+                        <input class="form-check-input" type="checkbox" name="category" value="Outra"> Outra
+                    </label>
+                    <br>
+                    <label for="locador">
+                        <input class="form-control" type="text" name="locador" placeholder="Nome do Locador">
+                    </label>
+                    <button class="btn btn-secondary">Pesquisar</button>
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <button class="btn btn-warning" data-toggle="collapse" data-target="#formDropdown2">Ordenar Por</button>
+            <br />
+            <br />
+            <div class="collapse" id="formDropdown2">
+                <form asp-area="" asp-controller="Habitacoes" asp-action="Index" method="get">
+                    <label for="preco">
+                        Preço:
+                        <select name="preco" class="form-control">
+                            <option value="crescente">Crescente</option>
+                            <option value="decrescente">Decrescente</option>
+                        </select>
+                    </label>
+                    <label for="avaliacao">
+                        Avaliação:
+                        <select name="avaliacao" class="form-control">
+                            <option value="crescente"  selected>Crescente</option>
+                            <option value="decrescente">Decrescente</option>
+                        </select>
+                    </label>
+                    <button class="btn btn-secondary">Pesquisar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -19,6 +71,9 @@
                 @Html.DisplayNameFor(model => model.Custo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Locador)
             </th>
             <th></th>
@@ -26,7 +81,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
@@ -34,12 +89,13 @@
                 @Html.DisplayFor(modelItem => item.Custo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Locador.LocadorId)
+                @Html.DisplayFor(model => item.Categoria.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HabitacaoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HabitacaoId">Delete</a>
+                @Html.DisplayFor(model => item.Locador.Nome)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a>
             </td>
         </tr>
 }
