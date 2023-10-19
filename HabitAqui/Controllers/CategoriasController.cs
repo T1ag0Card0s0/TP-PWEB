@@ -47,28 +47,7 @@ namespace HabitAqui.Controllers
 
         // GET: Categorias/Create
         public IActionResult Create()
-        {// Buscar categorias do banco de dados
-            var categorias = _context.Categoria.ToList();
-
-            // Criar uma lista de SelectListItems para usar no DropDownList
-            var categoriasSelectList = categorias
-                .Select(c => new SelectListItem
-                {
-                    Text = c.Nome,
-                    Value = c.CategoriaId.ToString()
-                })
-                .ToList();
-
-            // Adicionar uma opção padrão "Selecione uma categoria"
-            categoriasSelectList.Insert(0, new SelectListItem
-            {
-                Text = "Selecione uma categoria",
-                Value = ""
-            });
-
-            // Passar a lista de categorias para a visão usando ViewBag
-            ViewBag.CategoriaId = categoriasSelectList;
-
+        {
             return View();
         }
 

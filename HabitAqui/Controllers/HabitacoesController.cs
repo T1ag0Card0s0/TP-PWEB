@@ -20,32 +20,29 @@ namespace HabitAqui.Controllers
             _context = context;
         }
 
+        // controller for initial search
         // GET: Habitacoes
-        public async Task<IActionResult> Index(string category, string location, DateTime? start_date, DateTime? end_date, int? periodo, string locador)
+        public async Task<IActionResult> Index(string category, string location, DateTime? start_date, DateTime? end_date, int? periodo)
         {
-            var habitacoes = _context.Habitacao.AsQueryable();
+            //var habitacoes = _context.Habitacao.AsQueryable();
+            var habitacoes = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
             {
-                if(category == "Apartamentos")
+                if (category == "Apartamentos")
                 {
-                    habitacoes = habitacoes.Where(h => h.Categoria.Nome == "T1" || 
+                    habitacoes = habitacoes.Where(h => h.Categoria.Nome == "T1" ||
                     h.Categoria.Nome == "T2" || h.Categoria.Nome == "T3" || h.Categoria.Nome == "T4");
                 }
-                else {
-                    habitacoes = habitacoes.Where(h => h.Categoria.Nome == category);
+                else
+                {
+                    habitacoes = habitacoes.Where(h => h.Categoria.Nome.Contains(category));
                 }
-                    
-            }
-
-            if (!string.IsNullOrEmpty(locador))
-            {
-                habitacoes = habitacoes.Where(h => h.Locador.Nome == locador);
             }
 
             if (!string.IsNullOrEmpty(location))
             {
-                habitacoes = habitacoes.Where(h => h.Localizacao == location);
+                habitacoes = habitacoes.Where(h => h.Localizacao.Contains(location));
             }
 
             if (start_date.HasValue && end_date.HasValue)
@@ -63,6 +60,45 @@ namespace HabitAqui.Controllers
             var resultado = habitacoes.ToList();
 
             return View(resultado);
+        }
+
+        // controller for filters search
+        [HttpPost]
+        public async Task<IActionResult> Search(string[] category, string locador)
+        {
+            var habitacao = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
+
+            if (category != null && category.Length > 0)
+            {
+                foreach (string selectedCategory in category)
+                {
+                    habitacao = habitacao.Where(h => h.Categoria.Nome.Contains(selectedCategory));
+                }
+            }
+
+            if (locador != null)
+            {
+                habitacao = habitacao.Where(h => h.Locador.Nome.Contains(locador));
+            }
+
+            return View(await habitacao.ToListAsync());
+        }
+
+
+        // controller for order search
+        [HttpPost]
+        public async Task<IActionResult> OrderSearch(string preco, string avaliacao)
+        {
+            var habitacao = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).Include(h=>h.Avaliacoes).AsQueryable();
+           
+            if (preco!= null)
+            {
+                if (preco == "crescente")
+                    habitacao = habitacao.OrderBy(h => h.Custo);
+                else
+                    habitacao = habitacao.OrderByDescending(h => h.Custo);
+            }
+            return View(await habitacao.ToListAsync());
         }
 
         // GET: Habitacoes/Details/5
