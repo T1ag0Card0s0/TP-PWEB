@@ -54,7 +54,7 @@
                             <option value="decrescente">Decrescente</option>
                         </select>
                     </label>
-                    <button class="btn btn-secondary">Pesquisar</button>
+                    <button class="btn btn-secondary" type= "submit">Pesquisar</button>
                 </form>
             </div>
         </div>
@@ -89,7 +89,7 @@
                 @Html.DisplayFor(modelItem => item.Custo)
             </td>
             <td>
-                 @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                @Html.DisplayFor(modelItem => item.Categoria.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Locador.Nome)

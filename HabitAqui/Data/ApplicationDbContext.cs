@@ -20,6 +20,6 @@ namespace HabitAqui.Data
         public DbSet<HabitAqui.Models.Funcionario>? Funcionario { get; set; }
         public DbSet<HabitAqui.Models.Administrador>? Administrador { get; set; }
         public DbSet<HabitAqui.Models.Categoria>? Categoria { get; set; }
-        
-    }
+
+	}
 }
