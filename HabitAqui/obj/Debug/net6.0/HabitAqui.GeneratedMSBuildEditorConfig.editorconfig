@@ -9,241 +9,241 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HabitAqui
 build_property.RootNamespace = HabitAqui
-build_property.ProjectDir = D:\uni\assignments\TP-PWEB\HabitAqui\
+build_property.ProjectDir = C:\Users\danie\ISEC\PWEB\TP-PWEB\HabitAqui\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\uni\assignments\TP-PWEB\HabitAqui
+build_property.MSBuildProjectDirectory = C:\Users\danie\ISEC\PWEB\TP-PWEB\HabitAqui
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Administrador/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Administrador/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYWRvclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Administrador/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Administrador/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYWRvclxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Administrador/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Administrador/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYWRvclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Administrador/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Administrador/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYWRvclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Administrador/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Administrador/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYWRvclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Arrendamentos/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Arrendamentos/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJyZW5kYW1lbnRvc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Arrendamentos/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Arrendamentos/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJyZW5kYW1lbnRvc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Arrendamentos/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Arrendamentos/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJyZW5kYW1lbnRvc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Arrendamentos/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Arrendamentos/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJyZW5kYW1lbnRvc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Arrendamentos/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Arrendamentos/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJyZW5kYW1lbnRvc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Avaliacoes/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Avaliacoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhbGlhY29lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Avaliacoes/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Avaliacoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhbGlhY29lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Avaliacoes/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Avaliacoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhbGlhY29lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Avaliacoes/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Avaliacoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhbGlhY29lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Avaliacoes/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Avaliacoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhbGlhY29lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Categorias/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Categorias/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Categorias/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Categorias/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Categorias/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Categorias/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Categorias/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Categorias/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Categorias/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Categorias/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Clientes/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Clientes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Clientes/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Clientes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Clientes/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Clientes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Clientes/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Clientes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Clientes/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Clientes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Funcionarios/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Funcionarios/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Funcionarios/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Funcionarios/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Funcionarios/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Funcionarios/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Funcionarios/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Funcionarios/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Funcionarios/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Funcionarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Gestores/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Gestores/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VzdG9yZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Gestores/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Gestores/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VzdG9yZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Gestores/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Gestores/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VzdG9yZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Gestores/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Gestores/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VzdG9yZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Gestores/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Gestores/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VzdG9yZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/OrderSearch.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/OrderSearch.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xPcmRlclNlYXJjaC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Habitacoes/Search.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Habitacoes/Search.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGFiaXRhY29lc1xTZWFyY2guY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Home/Categorias.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Categorias.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXRlZ29yaWFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Home/Habitacoes.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Habitacoes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIYWJpdGFjb2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Home/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Home/Privacy.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Locadores/Create.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Locadores/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYWRvcmVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Locadores/Delete.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Locadores/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYWRvcmVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Locadores/Details.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Locadores/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYWRvcmVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Locadores/Edit.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Locadores/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYWRvcmVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Locadores/Index.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Locadores/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9jYWRvcmVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Shared/Error.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/_ViewImports.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/_ViewStart.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/uni/assignments/TP-PWEB/HabitAqui/Views/Shared/_Layout.cshtml]
+[C:/Users/danie/ISEC/PWEB/TP-PWEB/HabitAqui/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-l3xs0rysfs
