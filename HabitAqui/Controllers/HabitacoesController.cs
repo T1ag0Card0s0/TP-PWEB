@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
@@ -20,19 +21,32 @@ namespace HabitAqui.Controllers
             _context = context;
         }
 
-        // controller for initial search
         // GET: Habitacoes
-        public async Task<IActionResult> Index(string category, string location, DateTime? start_date, DateTime? end_date, int? periodo)
+        public IActionResult Index(List<Habitacao> habitacoes)
+        {
+            // Se habitacoes for nulo (ou seja, nenhum resultado de pesquisa), carrega todas as habitacoes
+            if (habitacoes == null || !habitacoes.Any())
+            {
+                habitacoes = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).ToList();
+            }
+
+            return View(habitacoes);
+        }
+
+        // metodo chamado na view Home para fazer a pesquisa inicial
+        [HttpPost]
+        public IActionResult InitialSearch(string category, string location, DateTime? start_date, DateTime? end_date, int? periodo)
         {
             //var habitacoes = _context.Habitacao.AsQueryable();
             var habitacoes = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
             {
+                string[] types = { "T0", "T1", "T2", "T3", "T4", "T5"};
+
                 if (category == "Apartamentos")
                 {
-                    habitacoes = habitacoes.Where(h => h.Categoria.Nome == "T1" ||
-                    h.Categoria.Nome == "T2" || h.Categoria.Nome == "T3" || h.Categoria.Nome == "T4");
+                    habitacoes = habitacoes.Where(h => types.Contains(h.Categoria.Nome));
                 }
                 else
                 {
@@ -59,33 +73,37 @@ namespace HabitAqui.Controllers
 
             var resultado = habitacoes.ToList();
 
-            return View(resultado);
+            return View("Index", resultado);
         }
 
-        // controller for filters search
+        // cria lista de categorias existentes para mostrar nos filtros e muda para a view FilterSearch
+        public IActionResult FilterSearch()
+        {
+            ViewBag.Categorias = _context.Categoria.ToList();
+            return View("FilterSearch");
+        }
+
+        // metodo chamado para aplicar os filtros e retornar a nova lista para o Index
         [HttpPost]
-        public async Task<IActionResult> Search(string[] category, string locador)
+        public IActionResult Filter(string[] SelectedCategories, string locador)
         {
             var habitacao = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
+            
+            if (SelectedCategories != null)
+                habitacao = habitacao.Where(h => SelectedCategories.Contains(h.Categoria.Nome));
 
-            if (category != null && category.Length > 0)
-            {
-                foreach (string selectedCategory in category)
-                {
-                    habitacao = habitacao.Where(h => h.Categoria.Nome.Contains(selectedCategory));
-                }
-            }
-
-            if (locador != null)
-            {
+            if (!string.IsNullOrEmpty(locador))
                 habitacao = habitacao.Where(h => h.Locador.Nome.Contains(locador));
-            }
 
-            return View(await habitacao.ToListAsync());
+
+            var resultado = habitacao.ToList();
+
+
+            return View("Index", resultado);
         }
 
 
-        // controller for order search
+        // metodo chamado para ordenar os resultados e retornar a nova lista
         [HttpPost]
         public async Task<IActionResult> OrderSearch(string preco, string avaliacao)
         {
@@ -98,6 +116,9 @@ namespace HabitAqui.Controllers
                 else
                     habitacao = habitacao.OrderByDescending(h => h.Custo);
             }
+
+            // FALTA AQUI ORDERNAR PELA AVALIACAO
+
             return View(await habitacao.ToListAsync());
         }
 

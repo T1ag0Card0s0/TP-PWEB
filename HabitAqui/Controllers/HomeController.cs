@@ -1,5 +1,6 @@
 ﻿using HabitAqui.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HabitAqui.Controllers

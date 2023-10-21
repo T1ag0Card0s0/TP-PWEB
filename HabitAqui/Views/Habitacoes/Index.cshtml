@@ -11,28 +11,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <button class="btn btn-warning" data-toggle="collapse" data-target="#formDropdown">Filtrar Pesquisa</button>
-            <br />
-            <br />
-            <div class="collapse" id="formDropdown">
-                <form asp-area="" asp-controller="Habitacoes" asp-action="Search" method="post">
-                    <label for="categoria">
-                        Categoria:
-                        <input class="form-check-input" type="checkbox" name="category[]" value="T1"> T1
-                        <input class="form-check-input" type="checkbox" name="category[]" value="T2"> T2
-                        <input class="form-check-input" type="checkbox" name="category[]" value="T3"> T3
-                        <input class="form-check-input" type="checkbox" name="category[]" value="T4"> T4
-                        <input class="form-check-input" type="checkbox" name="category[]" value="Moradias"> Moradias
-                        <input class="form-check-input" type="checkbox" name="category[]" value="Quartos"> Quartos
-                        <input class="form-check-input" type="checkbox" name="category[]" value="Outra"> Outra
-                    </label>
-                    <br>
-                    <label for="locador">
-                        <input class="form-control" type="text" name="locador" placeholder="Nome do Locador">
-                    </label>
-                    <button class="btn btn-secondary">Pesquisar</button>
-                </form>
-            </div>
+            <a asp-action="FilterSearch" asp-controller="Habitacoes" class="btn btn-primary">Filtrar Pesquisa</a>
         </div>
         <div class="col">
             <button class="btn btn-warning" data-toggle="collapse" data-target="#formDropdown2">Ordenar Por</button>
@@ -80,24 +59,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @if (Model.Any()) 
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Custo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Locador.Nome)</td>
+                    <td><a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a></td>
+                </tr>
+            }
+        }
+        else
+        {
             <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Custo)
-            </td>
-            <td>
-                 @Html.DisplayFor(modelItem => item.Categoria.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Locador.Nome)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a>
-            </td>
-        </tr>
-}
+                <td colspan="4">Nenhum resultado encontrado.</td>
+            </tr>
+        }
     </tbody>
 </table>
