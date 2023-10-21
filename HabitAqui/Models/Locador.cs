@@ -8,5 +8,5 @@
 
 		// Lista das habitacoes do Locador
 		public ICollection<Habitacao> Habitacoes { get; set; }
-	}
+    }
 }
