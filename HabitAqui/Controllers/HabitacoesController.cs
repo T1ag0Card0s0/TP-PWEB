@@ -88,13 +88,17 @@ namespace HabitAqui.Controllers
         public IActionResult Filter(string[] SelectedCategories, string locador)
         {
             var habitacao = _context.Habitacao.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
-            
-            if (SelectedCategories != null)
-                habitacao = habitacao.Where(h => SelectedCategories.Contains(h.Categoria.Nome));
+           
 
-            if (!string.IsNullOrEmpty(locador))
+            if (locador != null)
+            {
                 habitacao = habitacao.Where(h => h.Locador.Nome.Contains(locador));
+            }
 
+            if (SelectedCategories != null && SelectedCategories.Length > 0)
+            {
+                habitacao = habitacao.Where(h => SelectedCategories.Contains(h.Categoria.Nome));
+            }
 
             var resultado = habitacao.ToList();
 

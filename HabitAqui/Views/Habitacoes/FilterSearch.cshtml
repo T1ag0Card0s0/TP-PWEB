@@ -12,7 +12,7 @@
         <h5 class="card-title" style="font-size: 1.5rem;">Filtros de Pesquisa</h5>
         <form asp-area="" asp-controller="Habitacoes" asp-action="Filter" method="post">
             <div class="form-group mb-3">
-                <label for="categoria" style="font-size: 1.2rem;">Categorias:</label>
+                <label for="categoria" style="font-size: 1.2rem;">Categorias:
                 @foreach (var categoria in ViewBag.Categorias)
                 {
                     <div class="form-check">
@@ -20,13 +20,35 @@
                         <label class="form-check-label" for="categoria-@categoria.Nome" style="font-size: 1.1rem;">@categoria.Nome</label>
                     </div>
                 }
+                </label>
             </div>
             <div class="form-group mb-3">
-                <label for="locador" style="font-size: 1.2rem;">Nome do Locador:</label>
-                <input class="form-control" type="text" name="locador" placeholder="Nome do Locador">
+                <label for="locador">
+                    <input class="form-control" type="text" name="locador" placeholder="Nome do Locador">
+                </label>
             </div>
             <button class="btn btn-secondary" style="font-size: 1.2rem;">Pesquisar</button>
         </form>
     </div>
 </div>
+<!--
+<form asp-area="" asp-controller="Habitacoes" asp-action="Filter" method="post">
+    <label for="categoria">
+        Categoria:
+        <input class="form-check-input" type="checkbox" name="category[]" value="T1"> T1
+        <input class="form-check-input" type="checkbox" name="category[]" value="T2"> T2
+        <input class="form-check-input" type="checkbox" name="category[]" value="T3"> T3
+        <input class="form-check-input" type="checkbox" name="category[]" value="T4"> T4
+        <input class="form-check-input" type="checkbox" name="category[]" value="Moradias"> Moradias
+        <input class="form-check-input" type="checkbox" name="category[]" value="Quartos"> Quartos
+        <input class="form-check-input" type="checkbox" name="category[]" value="Outra"> Outra
+    </label>
+    <br>
+    <label for="locador">
+        <input class="form-control" type="text" name="locador" placeholder="Nome do Locador">
+    </label>
+    <button class="btn btn-secondary">Pesquisar</button>
+</form>
+-->
+
 
