@@ -65,11 +65,34 @@ namespace HabitAqui.Controllers
             {
                 _context.Add(avaliacaoHabitacao);
                 await _context.SaveChangesAsync();
+                // After saving the new Avaliacao, calculate the updated MediaAvaliacao.
+                UpdateLocadorMediaAvaliacao(avaliacaoHabitacao.HabitacaoId);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Id", avaliacaoHabitacao.ClienteId);
             ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id", avaliacaoHabitacao.HabitacaoId);
             return View(avaliacaoHabitacao);
+        }
+
+        private void UpdateLocadorMediaAvaliacao(int? habitacaoId)
+        {
+            if (habitacaoId == null) return;
+            // Fetch the Locador entity by its ID.
+            var habitacao = _context.Habitacoes.Find(habitacaoId);
+
+            if (habitacao != null)
+            {
+                // Calculate the new MediaAvaliacao based on all associated Avaliacoes.
+                double newMediaAvaliacao = _context.AvaliacoesHabitacao
+                    .Where(avaliacao => avaliacao.HabitacaoId == habitacaoId)
+                    .Average(avaliacao => avaliacao.Classificacao);
+
+                // Update the MediaAvaliacao property of the Locador.
+                habitacao.MediaAvaliacao = newMediaAvaliacao;
+
+                // Save the changes to the database.
+                _context.SaveChanges();
+            }
         }
 
         // GET: AvaliacoesHabitacao/Edit/5
