@@ -26,19 +26,23 @@ namespace HabitAqui.Controllers
             {
                 habitacoes = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).ToList();
             }
-            ViewBag.Categorias = _context.Categorias.ToList();
+            // Retrieve the list of Categoria names from the database
+            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
+
+            // Pass the list of Categoria names to the view
+            ViewData["CategoriaNames"] = categoriaNames;
             return View(habitacoes);
         }
-        // cria lista de categorias existentes para mostrar nos filtros e muda para a view FilterSearch
-        public IActionResult FilterSearch()
-        {
-            ViewBag.Categorias = _context.Categorias.ToList();
-            return View();
-        }
+
         // metodo chamado para aplicar os filtros e retornar a nova lista para o Index
         [HttpPost]
-        public IActionResult Filter(string[] SelectedCategories, string locador)
+        public IActionResult Filter(string[] SelectedCategories, string? locador)
         {
+            // Retrieve the list of Categoria names from the database
+            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
+
+            // Pass the list of Categoria names to the view
+            ViewData["CategoriaNames"] = categoriaNames;
             var habitacao = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
 
 
@@ -61,11 +65,16 @@ namespace HabitAqui.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderSearch(string preco, string avaliacao)
         {
+            // Retrieve the list of Categoria names from the database
+            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
+
+            // Pass the list of Categoria names to the view
+            ViewData["CategoriaNames"] = categoriaNames;
             var habitacao = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).Include(h => h.Avaliacoes).AsQueryable();
 
             if (preco != null)
             {
-                if (preco == "crescente")
+                if (preco != "crescente")
                     habitacao = habitacao.OrderBy(h => h.Custo);
                 else
                     habitacao = habitacao.OrderByDescending(h => h.Custo);
@@ -77,7 +86,7 @@ namespace HabitAqui.Controllers
                     habitacao = habitacao.OrderByDescending(h => h.Locador.MediaAvaliacao);
             }
 
-            return View(await habitacao.ToListAsync());
+            return View("Index", habitacao.ToList());
         }
 
 

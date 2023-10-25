@@ -11,7 +11,7 @@
     <div class="card" style="background-color: #f5f5f5;">
         <div class="card-body">
             <h3>Pesquisar Habitação</h3>
-            <form asp-area="" asp-controller="Habitacoes" asp-action="InitialSearch" method="post">
+            <form asp-area="" asp-controller="Habitacoes" asp-action="Index" method="post">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <select name="category" class="form-control">
@@ -48,17 +48,30 @@
     </div>
     <div class="row p-3">
         <div class="col">
-            <a asp-action="FilterSearch" asp-controller="Habitacoes" class="btn btn-primary">Filtrar Pesquisa</a>
+
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#formDropdown1">Filtrar Por</button>
+            <div class="collapse" id="formDropdown1">
+                <form asp-area="" asp-controller="Habitacoes" asp-action="Filter" method="post">
+                    <label for="categoria">Categoria:</label>
+                    @foreach (var categoriaName in ViewData["CategoriaNames"] as List<string>)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" name="SelectedCategories" value="@categoriaName" class="form-check-input" id="categoria-@categoriaName">
+                            <label class="form-check-label" for="categoria-@categoriaName">@categoriaName</label>
+                        </div>
+                    }
+                    <button class="btn btn-info">Filtrar</button>
+                </form>
+            </div>
         </div>
         <div class="col">
             <button class="btn btn-warning" data-toggle="collapse" data-target="#formDropdown2">Ordenar Por</button>
-            <br />
-            <br />
             <div class="collapse" id="formDropdown2">
                 <form asp-area="" asp-controller="Habitacoes" asp-action="OrderSearch" method="post">
                     <label for="preco">
                         Preço:
                         <select name="preco" class="form-control">
+                            <option value="">Ordenar Preço</option>
                             <option value="crescente">Crescente</option>
                             <option value="decrescente">Decrescente</option>
                         </select>
@@ -66,11 +79,12 @@
                     <label for="avaliacao">
                         Avaliação:
                         <select name="avaliacao" class="form-control">
+                            <option value="">Ordenar Avaliação Locador</option>
                             <option value="crescente">Crescente</option>
                             <option value="decrescente">Decrescente</option>
                         </select>
                     </label>
-                    <button class="btn btn-secondary">Pesquisar</button>
+                    <button class="btn btn-info">Ordenar</button>
                 </form>
             </div>
         </div>
