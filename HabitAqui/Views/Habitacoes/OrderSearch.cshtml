@@ -40,43 +40,58 @@
     </div>
 </div>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Custo)
+                Custo do Arrendamento
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Locador)
+                Nome do Locador
+            </th>
+            <th>
+                Avaliação do Locador
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Any())
+        @foreach (var item in Model)
         {
-            @foreach (var item in Model)
+            @if (Model.Any())
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Custo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Locador.Nome)</td>
-                    <td><a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Custo) €
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="4">Nenhum resultado encontrado.</td>
-            </tr>
+            else
+            {
+                <tr>
+                    <td colspan="4">Nenhum resultado encontrado.</td>
+                </tr>
+            }
         }
     </tbody>
 </table>

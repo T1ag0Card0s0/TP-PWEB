@@ -10,16 +10,17 @@ namespace HabitAqui.Data
             : base(options)
         {
         }
-        public DbSet<HabitAqui.Models.Utilizador>? Utilizador { get; set; }
-        public DbSet<HabitAqui.Models.Habitacao>? Habitacao { get; set; }
-        public DbSet<HabitAqui.Models.Locador>? Locador { get; set; }
-        public DbSet<HabitAqui.Models.Arrendamento>? Arrendamento { get; set; }
-        public DbSet<HabitAqui.Models.Gestor>? Gestor { get; set; }
-        public DbSet<HabitAqui.Models.Cliente>? Cliente { get; set; }
-        public DbSet<HabitAqui.Models.Avaliacao>? Avaliacao { get; set; }
-        public DbSet<HabitAqui.Models.Funcionario>? Funcionario { get; set; }
-        public DbSet<HabitAqui.Models.Administrador>? Administrador { get; set; }
-        public DbSet<HabitAqui.Models.Categoria>? Categoria { get; set; }
-
-	}
+        public DbSet<Utilizador> Utilizadores { get; set; }
+        public DbSet<Habitacao> Habitacoes { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Arrendamento> Arrendamentos { get; set; }
+        public DbSet<AvaliacaoHabitacao> AvaliacoesHabitacao { get; set; }
+        public DbSet<AvaliacaoLocador> AvaliacoesLocador { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Dano> Danos { get; set; }
+        public DbSet<Equipamento> Equipamentos { get; set; }
+        public DbSet<Estado> Estados { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Locador> Locadores { get; set; }
+    }
 }

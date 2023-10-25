@@ -6,10 +6,47 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+<h1>Habitações</h1>
+<div class="container p-3">
+    <div class="card" style="background-color: #f5f5f5;">
+        <div class="card-body">
+            <h3>Pesquisar Habitação</h3>
+            <form asp-area="" asp-controller="Habitacoes" asp-action="InitialSearch" method="post">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <select name="category" class="form-control">
+                            <option value="" disabled selected>Tipo de Imóvel</option>
+                            <option value="Apartamentos">Apartamentos</option>
+                            <option value="Moradias">Moradias</option>
+                            <option value="Quartos">Quartos</option>
+                            <option value="Terrenos">Terrenos</option>
+                            <option value="Outra">Outra</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <input type="text" name="location" class="form-control" placeholder="Procurar por Localização">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="start_date">Data início</label>
+                        <input class="form-control" type="date" name="start_date">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="end_date">Data fim</label>
+                        <input class="form-control" type="date" name="end_date">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="periodo">Período mínimo</label>
+                        <input class="form-control" type="number" placeholder="Período mínimo" name="periodo">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-info">Procurar</button>
+            </form>
 
-<h1>Habitações Disponiveis</h1>
-<div class="container mt-5">
-    <div class="row">
+        </div>
+    </div>
+    <div class="row p-3">
         <div class="col">
             <a asp-action="FilterSearch" asp-controller="Habitacoes" class="btn btn-primary">Filtrar Pesquisa</a>
         </div>
@@ -29,7 +66,7 @@
                     <label for="avaliacao">
                         Avaliação:
                         <select name="avaliacao" class="form-control">
-                            <option value="crescente"  selected>Crescente</option>
+                            <option value="crescente">Crescente</option>
                             <option value="decrescente">Decrescente</option>
                         </select>
                     </label>
@@ -39,44 +76,57 @@
         </div>
     </div>
 </div>
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Custo)
+                Custo do Arrendamento
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Locador)
+                Nome do Locador
+            </th>
+            <th>
+                Avaliação do Locador
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Any()) 
-        {
-            @foreach (var item in Model)
+@foreach (var item in Model) {
+            @if (Model.Any())
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Custo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Locador.Nome)</td>
-                    <td><a asp-action="Details" asp-route-id="@item.HabitacaoId">Details</a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Custo) €
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="4">Nenhum resultado encontrado.</td>
-            </tr>
+            else
+            {
+                <tr>
+                    <td colspan="4">Nenhum resultado encontrado.</td>
+                </tr>
+            }
         }
     </tbody>
 </table>

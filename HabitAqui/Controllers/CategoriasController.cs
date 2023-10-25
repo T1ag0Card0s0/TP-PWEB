@@ -22,20 +22,20 @@ namespace HabitAqui.Controllers
         // GET: Categorias
         public async Task<IActionResult> Index()
         {
-              return _context.Categoria != null ? 
-                          View(await _context.Categoria.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Categoria'  is null.");
+              return _context.Categorias != null ? 
+                          View(await _context.Categorias.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Categorias'  is null.");
         }
 
         // GET: Categorias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Categoria == null)
+            if (id == null || _context.Categorias == null)
             {
                 return NotFound();
             }
 
-            var categoria = await _context.Categoria
+            var categoria = await _context.Categorias
                 .FirstOrDefaultAsync(m => m.CategoriaId == id);
             if (categoria == null)
             {
@@ -58,22 +58,24 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoriaId,Nome")] Categoria categoria)
         {
-            // ADICIONAR VERIFICAÇÕES 
-            // EX: SE JA EXISTE OU NAO
-            _context.Add(categoria);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _context.Add(categoria);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(categoria);
         }
 
         // GET: Categorias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Categoria == null)
+            if (id == null || _context.Categorias == null)
             {
                 return NotFound();
             }
 
-            var categoria = await _context.Categoria.FindAsync(id);
+            var categoria = await _context.Categorias.FindAsync(id);
             if (categoria == null)
             {
                 return NotFound();
@@ -119,12 +121,12 @@ namespace HabitAqui.Controllers
         // GET: Categorias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Categoria == null)
+            if (id == null || _context.Categorias == null)
             {
                 return NotFound();
             }
 
-            var categoria = await _context.Categoria
+            var categoria = await _context.Categorias
                 .FirstOrDefaultAsync(m => m.CategoriaId == id);
             if (categoria == null)
             {
@@ -139,14 +141,14 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categoria == null)
+            if (_context.Categorias == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Categoria'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Categorias'  is null.");
             }
-            var categoria = await _context.Categoria.FindAsync(id);
+            var categoria = await _context.Categorias.FindAsync(id);
             if (categoria != null)
             {
-                _context.Categoria.Remove(categoria);
+                _context.Categorias.Remove(categoria);
             }
             
             await _context.SaveChangesAsync();
@@ -155,7 +157,7 @@ namespace HabitAqui.Controllers
 
         private bool CategoriaExists(int id)
         {
-          return (_context.Categoria?.Any(e => e.CategoriaId == id)).GetValueOrDefault();
+          return (_context.Categorias?.Any(e => e.CategoriaId == id)).GetValueOrDefault();
         }
     }
 }

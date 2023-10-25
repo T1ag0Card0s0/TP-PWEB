@@ -1,15 +1,15 @@
-﻿namespace HabitAqui.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HabitAqui.Models
 {
-	public class Funcionario
-	{
-		public int FuncionarioId { get; set; }
-
-		public Utilizador Utilizador { get; set; }
-
-		public Locador Locador { get; set; }
-		public int LocadorId { get; set; }
-
-		// Lista de habitações geridas pelo funcionário
-		public ICollection<Habitacao> Habitacoes { get; set; }
-	}
+    public class Funcionario
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public ICollection<Locador>? Locadores { get; set; }
+        public ICollection<Estado>? Estados { get; set;}
+    }
 }

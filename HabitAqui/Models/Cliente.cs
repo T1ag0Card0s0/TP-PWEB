@@ -1,15 +1,11 @@
 ﻿namespace HabitAqui.Models
 {
-	public class Cliente
-	{
-		public int ClienteId { get; set; }
-
-		public Utilizador Utilizador { get; set; }
-
-		// Lista de arrendamentos efetuados pelo cliente
-		public ICollection<Arrendamento> Arrendamentos { get; set; }
-
-		// Lista de avaliacoes
-		public ICollection<Avaliacao>Avaliacoes { get; set; }
-	}
+    public class Cliente
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public ICollection<AvaliacaoHabitacao>? AvaliacoesHabitacao { get; set; }
+        public ICollection<AvaliacaoLocador>? AvaliacoesLocador { get; set; }
+        public ICollection<Arrendamento>? Arrendamentos { get; set; }
+    }
 }

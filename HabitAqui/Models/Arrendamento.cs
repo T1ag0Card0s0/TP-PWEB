@@ -1,22 +1,19 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace HabitAqui.Models
 {
-	public class Arrendamento
-	{
-		public int ArrendamentoId { get; set; }
-
-		// um arrendamento é feito por um cliente
-		public Cliente Cliente { get; set; }
-		public int ClienteId {  get; set; }
-
-		// um arrendamento tem uma habitacao 
-		public Habitacao Habitacao { get; set; }
-		public int HabitacaoId {  get; set; }
-
-		public int Periodo_min { get; set; }
-		public int Periodo_max { get; set; }
-		public DateTime Data_inicio { get; set; }
-		public DateTime Data_fim { get; set; }
-	}
-
+    public class Arrendamento
+    {
+        public int Id { get; set; }
+        public DateTime DataInicio { get; set; }
+        public DateTime DataFim { get; set; }
+        public string Confirmacao { get; set; } // "Em espera" "Confirmado" "Rejeitado"
+        public Cliente? Cliente { get; set; }
+        [ForeignKey("ClienteId")]
+        public int? ClienteId { get; set; }
+        public Habitacao? Habitacao { get; set; }
+        [ForeignKey("HabitacoesId")]
+        public int? HabitacoesId { get; set; }
+        public ICollection<Estado>? Estados { get; set; }//Max 2 ESTADOS
+    }
 }
