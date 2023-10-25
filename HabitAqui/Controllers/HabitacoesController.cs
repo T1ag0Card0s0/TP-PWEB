@@ -65,26 +65,27 @@ namespace HabitAqui.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderSearch(string preco, string avaliacao)
         {
-            // Retrieve the list of Categoria names from the database
-            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
-
-            // Pass the list of Categoria names to the view
-            ViewData["CategoriaNames"] = categoriaNames;
+        
             var habitacao = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).Include(h => h.Avaliacoes).AsQueryable();
 
             if (preco != null)
             {
-                if (preco != "crescente")
+                if (preco == "crescente")
                     habitacao = habitacao.OrderBy(h => h.Custo);
                 else
                     habitacao = habitacao.OrderByDescending(h => h.Custo);
             }
             if (avaliacao != null) {
-                if (avaliacao != "crescente")
+                if (avaliacao == "crescente")
                     habitacao = habitacao.OrderBy(h => h.Locador.MediaAvaliacao);
                 else
                     habitacao = habitacao.OrderByDescending(h => h.Locador.MediaAvaliacao);
             }
+            // Retrieve the list of Categoria names from the database
+            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
+
+            // Pass the list of Categoria names to the view
+            ViewData["CategoriaNames"] = categoriaNames;
 
             return View("Index", habitacao.ToList());
         }
