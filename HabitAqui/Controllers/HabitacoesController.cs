@@ -67,19 +67,28 @@ namespace HabitAqui.Controllers
         {
         
             var habitacao = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).Include(h => h.Avaliacoes).AsQueryable();
-
             if (preco != null)
             {
-                if (preco == "crescente")
-                    habitacao = habitacao.OrderBy(h => h.Custo);
-                else
-                    habitacao = habitacao.OrderByDescending(h => h.Custo);
+                // Verifique os parâmetros e determine a ordenação
+                if (preco.Equals("crescente", StringComparison.OrdinalIgnoreCase))
+                {
+                    habitacao = habitacao.OrderBy(h => h.Custo); // Ordenar o preço de forma crescente
+                }
+                else if (preco.Equals("decrescente", StringComparison.OrdinalIgnoreCase))
+                {
+                    habitacao = habitacao.OrderByDescending(h => h.Custo); // Ordenar o preço de forma decrescente
+                }
             }
-            if (avaliacao != null) {
-                if (avaliacao == "crescente")
-                    habitacao = habitacao.OrderBy(h => h.Locador.MediaAvaliacao);
-                else
-                    habitacao = habitacao.OrderByDescending(h => h.Locador.MediaAvaliacao);
+            if (avaliacao != null)
+            {
+                if (avaliacao.Equals("crescente", StringComparison.OrdinalIgnoreCase))
+                {
+                    habitacao = habitacao.OrderBy(h => h.MediaAvaliacao); // Ordenar a avaliação de forma crescente
+                }
+                else if (avaliacao.Equals("decrescente", StringComparison.OrdinalIgnoreCase))
+                {
+                    habitacao = habitacao.OrderByDescending(h => h.MediaAvaliacao); // Ordenar a avaliação de forma decrescente
+                }
             }
             // Retrieve the list of Categoria names from the database
             var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
