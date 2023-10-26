@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026221714_Migration_2")]
+    partial class Migration_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,35 +23,6 @@ namespace HabitAqui.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("HabitAqui.Models.Administrador", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Administrador");
-                });
 
             modelBuilder.Entity("HabitAqui.Models.Arrendamento", b =>
                 {
@@ -250,9 +223,6 @@ namespace HabitAqui.Data.Migrations
                     b.Property<int?>("FuncionarioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GestorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Observacoes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -262,8 +232,6 @@ namespace HabitAqui.Data.Migrations
                     b.HasIndex("ArrendamentoId");
 
                     b.HasIndex("FuncionarioId");
-
-                    b.HasIndex("GestorId");
 
                     b.ToTable("Estados");
                 });
@@ -295,35 +263,6 @@ namespace HabitAqui.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.Gestor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Gestores");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -395,9 +334,6 @@ namespace HabitAqui.Data.Migrations
                     b.Property<int?>("FuncionarioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GestorId")
-                        .HasColumnType("int");
-
                     b.Property<double?>("MediaAvaliacao")
                         .HasColumnType("float");
 
@@ -408,8 +344,6 @@ namespace HabitAqui.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
-
-                    b.HasIndex("GestorId");
 
                     b.ToTable("Locadores");
                 });
@@ -717,10 +651,6 @@ namespace HabitAqui.Data.Migrations
                         .WithMany("Estados")
                         .HasForeignKey("FuncionarioId");
 
-                    b.HasOne("HabitAqui.Models.Gestor", null)
-                        .WithMany("Estados")
-                        .HasForeignKey("GestorId");
-
                     b.Navigation("Arrendamento");
 
                     b.Navigation("Funcionario");
@@ -746,10 +676,6 @@ namespace HabitAqui.Data.Migrations
                     b.HasOne("HabitAqui.Models.Funcionario", "Funcionario")
                         .WithMany("Locadores")
                         .HasForeignKey("FuncionarioId");
-
-                    b.HasOne("HabitAqui.Models.Gestor", null)
-                        .WithMany("Locadores")
-                        .HasForeignKey("GestorId");
 
                     b.Navigation("Funcionario");
                 });
@@ -832,13 +758,6 @@ namespace HabitAqui.Data.Migrations
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Funcionario", b =>
-                {
-                    b.Navigation("Estados");
-
-                    b.Navigation("Locadores");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.Gestor", b =>
                 {
                     b.Navigation("Estados");
 

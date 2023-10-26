@@ -21,6 +21,9 @@ namespace HabitAqui.Data
         public DbSet<Equipamento> Equipamentos { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Gestor> Gestores { get; set; }
+        public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Locador> Locadores { get; set; }
+        public DbSet<HabitAqui.Models.Administrador>? Administrador_1 { get; set; }
     }
 }

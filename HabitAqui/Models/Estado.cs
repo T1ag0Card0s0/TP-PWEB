@@ -9,6 +9,7 @@ namespace HabitAqui.Models
         public Funcionario? Funcionario { get; set; }
         [ForeignKey("FuncionarioId")]
         public int? FuncionarioId { get; set; }
+       
         public ICollection<Equipamento>? Equipamentos { get; set; }
         public ICollection<Dano>? Danos { get; set; }
         public Arrendamento? Arrendamento { get; set; }
