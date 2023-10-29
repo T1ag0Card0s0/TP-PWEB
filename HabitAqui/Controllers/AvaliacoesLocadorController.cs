@@ -10,11 +10,11 @@ using HabitAqui.Models;
 
 namespace HabitAqui.Controllers
 {
-    public class AvaliacaoesLocadorController : Controller
+    public class AvaliacoesLocadorController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AvaliacaoesLocadorController(ApplicationDbContext context)
+        public AvaliacoesLocadorController(ApplicationDbContext context)
         {
             _context = context;
         }
