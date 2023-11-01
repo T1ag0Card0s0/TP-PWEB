@@ -1,0 +1,120 @@
+﻿@model IEnumerable<HabitAqui.Models.Habitacao>
+@{
+    ViewData["Title"] = "Search";
+}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<div class="container-fluid p-3" style="background-color:#D8D8D8">
+    <form asp-area="" asp-controller="Home" asp-action="Filter" method="post">
+        <div class="row g-3">
+            <div class="col-1">
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="checkboxDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categorias
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="checkboxDropdown">
+                        @foreach (var categoriaName in ViewData["CategoriaNames"] as List<string>)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" name="selectedCategories" value="@categoriaName" class="form-check-input">
+                                <label class="form-check-label" for="categoria-@categoriaName">@categoriaName</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <input type="search" name="local" class="form-control" placeholder="Pesquisa por local" />
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-dark btn-block">
+                    Procurar
+                </button>
+            </div>
+        </div>
+        <div class="row g-3 mt-2">
+            <div class="col-2">
+                <select name="minPrice" class="form-select">
+                    <option selected value="">Preço Min.</option>
+                    <option value="200">200€</option>
+                    <option value="400">400€</option>
+                    <option value="600">600€</option>
+                    <option value="800">800€</option>
+                    <option value="10000">10000€</option>
+                    <option value="12000">12000€</option>
+                    <option value="14000">14000€</option>
+                    <option value="16000">16000€</option>
+                    <option value="20000">20000€</option>
+                    <option value="30000">30000€</option>
+                    <option value="40000">40000€</option>
+                    <option value="50000">50000€</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select name="maxPrice" class="form-select">
+                    <option selected value="">Preço Max.</option>
+                    <option value="200">200€</option>
+                    <option value="400">400€</option>
+                    <option value="600">600€</option>
+                    <option value="800">800€</option>
+                    <option value="10000">10000€</option>
+                    <option value="12000">12000€</option>
+                    <option value="14000">14000€</option>
+                    <option value="16000">16000€</option>
+                    <option value="20000">20000€</option>
+                    <option value="30000">30000€</option>
+                    <option value="40000">40000€</option>
+                    <option value="50000">50000€</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <input type="text" name="locador" class="form-control" placeholder="Nome do Locador" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid d-flex justify-content-end p-3">
+    <form asp-area="" asp-controller="Home" asp-action="OrderSearch" method="post" name="form">
+        <select name="orderby" class="form-select">
+            <option selected value="">Ordenar Por</option>
+            <option value="PrecoCrescente">Preço (asc)</option>
+            <option value="PrecoDecrescente">Preço (desc)</option>
+            <option value="AvaliacaCrescente">Avaliação (asc)</option>
+            <option value="AvaliacaoDecrescente">Avaliação (desc)</option>
+        </select>
+    </form>
+</div>
+<div class="row m-auto">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3 text-center" style="width:18rem;">
+                <div class="card-header border-dark">
+                    <h5 class="card-title">
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </h5>
+                </div>
+                <div class="card-body text-dark">
+                    <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
+                    <p class="card-text-center">@Html.DisplayFor(modelItem => item.Cidade)</p>
+                </div>
+                <div class="card-footer border-dark">
+                    <p class="card-text-center">
+                        <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
+                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)<i class="fa-solid fa-star"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    const select = document.querySelector('select[name="orderby"]');
+    const form = document.querySelector('form[name="form"]');
+
+    select.addEventListener('change', () => {
+        form.submit();
+    });
+</script>

@@ -2,52 +2,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Cliente</h5>
-                    <p class="card-text">Card content for Cliente.</p>
-                    <a asp-controller="Cliente" asp-action="Index"><button class="btn btn-primary">Login</button></a>
+<div class="d-flex justify-content-center align-items-center vh-100 bg-image" style="background-image:url('https://img.freepik.com/premium-photo/empty-minimal-room-interior-design-with-fishbone-flooring_327072-21366.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697760000&semt=ais'); background-size:cover; height:100vh;">
+    <div class="d-flex justify-content-center align-items-center v-100">
+        <form asp-area="" asp-controller="Home" asp-action="Search" method="post">
+            <div class="row g-0">
+                <div class="col-5 opacity-90">
+                    <select name="category" class="form-select form-select-lg">
+                        <option selected value="">Tipo de Imóvel</option>
+                        <option value="Apartamentos">Apartamentos</option>
+                        <option value="Moradias">Moradias</option>
+                        <option value="Quartos">Quartos</option>
+                        <option value="Escritórios">Escritórios</option>
+                        <option value="Terrenos">Terrenos</option>
+                        <option value="Garagens">Garagens</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <input type="search" name="local" class="form-control form-control-lg opacity-90" placeholder="Pesquisa por local" />
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-dark btn-lg btn-block">
+                        Procurar
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Funcionario</h5>
-                    <p class="card-text">Card content for Funcionario.</p>
-                    <a asp-controller="Funcionario" asp-action="Index"><button class="btn btn-primary">Login</button></a>
+            <div class="row g-3 my-3">
+                <div class="col">
+                    <input class="form-control form-control-lg opacity-90" type="date" name="start_date" placeholder="Data de Início">
+                </div>
+                <div class="col">
+                    <input class="form-control form-control-lg opacity-90" type="date" name="end_date" placeholder="Data de Fim">
+                </div>
+                <div class="col">
+                    <input class="form-control form-control-lg opacity-90" type="number" placeholder="Período mínimo" name="periodo">
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Gestor</h5>
-                    <p class="card-text">Card content for Gestor.</p>
-                    <a asp-controller="Gestor" asp-action="Index"><button class="btn btn-primary">Login</button></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Administrador</h5>
-                    <p class="card-text">Card content for Administrador.</p>
-                    <a asp-controller="Administrador" asp-action="Index"><button class="btn btn-primary">Login</button></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Anonimo</h5>
-                    <p class="card-text">Card content for Anonimo.</p>
-                    <a asp-controller="Anonimo" asp-action="Index"><button class="btn btn-primary">Login</button></a>
-                </div>
-            </div>
-        </div>
+        </form>
+
     </div>
 </div>
+

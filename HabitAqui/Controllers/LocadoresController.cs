@@ -36,7 +36,7 @@ namespace HabitAqui.Controllers
 
             var locador = await _context.Locadores
                 .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
                 return NotFound();
@@ -94,7 +94,7 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EstadoDeSubscricao,MediaAvaliacao,FuncionarioId")] Locador locador)
         {
-            if (id != locador.Id)
+            if (id != locador.LocadorId)
             {
                 return NotFound();
             }
@@ -108,7 +108,7 @@ namespace HabitAqui.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LocadorExists(locador.Id))
+                    if (!LocadorExists(locador.LocadorId))
                     {
                         return NotFound();
                     }
@@ -133,7 +133,7 @@ namespace HabitAqui.Controllers
 
             var locador = await _context.Locadores
                 .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace HabitAqui.Controllers
 
         private bool LocadorExists(int id)
         {
-          return (_context.Locadores?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Locadores?.Any(e => e.LocadorId == id)).GetValueOrDefault();
         }
     }
 }

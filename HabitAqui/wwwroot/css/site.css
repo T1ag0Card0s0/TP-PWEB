@@ -13,27 +13,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
-/* Sidebar Styles */
-.sidebar {
-    background-color: #333;
- 
-}
-.sidebar .sidebar-header {
-    background-color: #222;
-}
-.sidebar ul li:hover {
-    background: #222;
-}
-.log-partialbtn:hover {
-    background: #222;
-}
-.sidebar ul li a {
-    color: #fff;
-}
-.content {
-    padding-left:200px
+.navbar-custom {
+    min-height: 80px; /* Defina a altura desejada */
 }

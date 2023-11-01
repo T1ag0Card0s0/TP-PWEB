@@ -4,13 +4,14 @@ using HabitAqui.Models;
 
 namespace HabitAqui.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Utilizador>
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        public DbSet<Utilizador> Utilizadores { get; set; }
+      
         public DbSet<Habitacao> Habitacoes { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Arrendamento> Arrendamentos { get; set; }
@@ -24,6 +25,5 @@ namespace HabitAqui.Data
         public DbSet<Gestor> Gestores { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Locador> Locadores { get; set; }
-        public DbSet<HabitAqui.Models.Administrador>? Administrador_1 { get; set; }
     }
 }

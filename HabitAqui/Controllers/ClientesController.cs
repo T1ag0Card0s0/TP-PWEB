@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    [Authorize(Roles = "Admin,Customer")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        //private readonly UserManager<Utilizador> _userManager;
 
         public ClientesController(ApplicationDbContext context)
         {
             _context = context;
+            //_userManager = userManager;
         }
 
         // GET: Clientes
@@ -36,7 +35,7 @@ namespace HabitAqui.Controllers
             }
 
             var cliente = await _context.Clientes
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ClienteId == id);
             if (cliente == null)
             {
                 return NotFound();
@@ -56,7 +55,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("ClienteId,Nome,UtilizadorId")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -88,9 +87,9 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("ClienteId,Nome,UtilizadorId")] Cliente cliente)
         {
-            if (id != cliente.Id)
+            if (id != cliente.ClienteId)
             {
                 return NotFound();
             }
@@ -104,7 +103,7 @@ namespace HabitAqui.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.Id))
+                    if (!ClienteExists(cliente.ClienteId))
                     {
                         return NotFound();
                     }
@@ -127,7 +126,7 @@ namespace HabitAqui.Controllers
             }
 
             var cliente = await _context.Clientes
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ClienteId == id);
             if (cliente == null)
             {
                 return NotFound();
@@ -157,7 +156,7 @@ namespace HabitAqui.Controllers
 
         private bool ClienteExists(int id)
         {
-          return (_context.Clientes?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Clientes?.Any(e => e.ClienteId == id)).GetValueOrDefault();
         }
     }
 }

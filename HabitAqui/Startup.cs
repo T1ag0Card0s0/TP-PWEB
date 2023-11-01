@@ -18,12 +18,15 @@ namespace HabitAqui
         public void ConfigureServices(IServiceCollection services)
         {
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "AppData");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "DataBase");
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")
                     .Replace("[DataDirectory]", path)));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<Utilizador>(options => options.SignIn.RequireConfirmedAccount = true)

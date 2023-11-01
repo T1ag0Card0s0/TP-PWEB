@@ -2,12 +2,10 @@
 {
     public class Gestor
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public int GestorId { get; set; }
         public ICollection<Locador>? Locadores { get; set; }
         public ICollection<Estado>? Estados { get; set; }
+        public Utilizador Utilizador { get; set; }
+        public int UtilizadorId { get; set; }
     }
 }
