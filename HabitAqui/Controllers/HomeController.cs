@@ -8,13 +8,14 @@ using System.Diagnostics;
 
 namespace HabitAqui.Controllers
 {
+    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Cliente,Gestor, Funcionario")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
 
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _context = context;
@@ -138,21 +139,6 @@ namespace HabitAqui.Controllers
 
             return View("Search", habitacao.ToList());
         }
-
-        // to change for Signin view
-        public IActionResult SignIn()
-        {
-            return View();
-        }
-
-        
-
-        // to change for SignUp view
-        public IActionResult SignUp()
-        {
-            return View();
-        }
-
        
         public IActionResult Privacy()
         {

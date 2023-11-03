@@ -13,94 +13,89 @@ using Microsoft.AspNetCore.Authorization;
 namespace HabitAqui.Controllers
 {
     [Authorize(Roles = "Admin,Gestor, Funcionario")]
-    public class LocadoresController : Controller
+    public class FuncionariosController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public LocadoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public FuncionariosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-
-        // GET: Locadores
+        // GET: Funcionarios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Locadores.Include(l => l.Funcionario);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.Funcionarios != null ? 
+                          View(await _context.Funcionarios.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Funcionarios'  is null.");
         }
 
-        // GET: Locadores/Details/5
+        // GET: Funcionarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Funcionarios == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.LocadorId == id);
-            if (locador == null)
+            var funcionario = await _context.Funcionarios
+                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+            if (funcionario == null)
             {
                 return NotFound();
             }
 
-            return View(locador);
+            return View(funcionario);
         }
 
-        // GET: Locadores/Create
+        // GET: Funcionarios/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id");
             return View();
         }
 
-        // POST: Locadores/Create
+        // POST: Funcionarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,EstadoDeSubscricao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Create([Bind("FuncionarioId")] Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
-                locador.MediaAvaliacao = 0;
-                _context.Add(locador);
+                _context.Add(funcionario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(funcionario);
         }
 
-        // GET: Locadores/Edit/5
+        // GET: Funcionarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Funcionarios == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores.FindAsync(id);
-            if (locador == null)
+            var funcionario = await _context.Funcionarios.FindAsync(id);
+            if (funcionario == null)
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(funcionario);
         }
 
-        // POST: Locadores/Edit/5
+        // POST: Funcionarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EstadoDeSubscricao,MediaAvaliacao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId")] Funcionario funcionario)
         {
-            if (id != locador.LocadorId)
+            if (id != funcionario.FuncionarioId)
             {
                 return NotFound();
             }
@@ -109,12 +104,12 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
-                    _context.Update(locador);
+                    _context.Update(funcionario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LocadorExists(locador.LocadorId))
+                    if (!FuncionarioExists(funcionario.FuncionarioId))
                     {
                         return NotFound();
                     }
@@ -125,51 +120,49 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(funcionario);
         }
 
-        // GET: Locadores/Delete/5
+        // GET: Funcionarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Funcionarios == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.LocadorId == id);
-            if (locador == null)
+            var funcionario = await _context.Funcionarios
+                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+            if (funcionario == null)
             {
                 return NotFound();
             }
 
-            return View(locador);
+            return View(funcionario);
         }
 
-        // POST: Locadores/Delete/5
+        // POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Locadores == null)
+            if (_context.Funcionarios == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Funcionarios'  is null.");
             }
-            var locador = await _context.Locadores.FindAsync(id);
-            if (locador != null)
+            var funcionario = await _context.Funcionarios.FindAsync(id);
+            if (funcionario != null)
             {
-                _context.Locadores.Remove(locador);
+                _context.Funcionarios.Remove(funcionario);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LocadorExists(int id)
+        private bool FuncionarioExists(int id)
         {
-          return (_context.Locadores?.Any(e => e.LocadorId == id)).GetValueOrDefault();
+          return (_context.Funcionarios?.Any(e => e.FuncionarioId == id)).GetValueOrDefault();
         }
     }
 }

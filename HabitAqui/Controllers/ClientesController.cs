@@ -3,28 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Admin,Customer")]
+    [Authorize(Roles = "Admin,Cliente")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        //private readonly UserManager<Utilizador> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ClientesController(ApplicationDbContext context)
+        public ClientesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            //_userManager = userManager;
+            _userManager = userManager;
         }
 
-        // GET: Clientes
-        public async Task<IActionResult> Index()
-        {
-              return _context.Clientes != null ? 
-                          View(await _context.Clientes.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Clientes'  is null.");
-        }
 
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -41,28 +35,6 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            return View(cliente);
-        }
-
-        // GET: Clientes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Clientes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClienteId,Nome,UtilizadorId")] Cliente cliente)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(cliente);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
             return View(cliente);
         }
 

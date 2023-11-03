@@ -10,35 +10,66 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true" />
     
 </head>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                <i class="fa-solid fa-house"></i>
-                HabitAqui
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse"id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignIn">
-                            <i class="fa-regular fa-user"></i>
-                            Iniciar Sessão
-                        </a>
-                    </li>
-                  <!--  <partial name="_LoginPartial" /> -->
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<body>
 
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fa-solid fa-house"></i>
+                    HabitAqui
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto text-white">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index">Categories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Habitacoes" asp-action="Index">Reservations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Administradores" asp-action="ListManagers">List Managers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Administradores" asp-action="ListCustomers">List Customers</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListBookings">My Reservations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListRatings">My Ratings</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Gestor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Gestores" asp-action="ListAccomodations">My Accomodations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Gestores" asp-action="ListEmployees">My Employees</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Funcionario"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageBookings">Manage Bookings</a>
+                            </li>
+                        }
+                        <partial name="_LoginPartial" />
+                    </ul>
+                   
+                </div>
+            </div>
+        </nav>
+    </header>
     @RenderBody()
       
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -12,95 +12,91 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Admin,Gestor, Funcionario")]
-    public class LocadoresController : Controller
+    [Authorize(Roles = "Admin")]
+    public class AdministradoresController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public LocadoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AdministradoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
+            
         }
 
-
-        // GET: Locadores
+        // GET: Administradores
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Locadores.Include(l => l.Funcionario);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.Administradores != null ? 
+                          View(await _context.Administradores.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Administradores'  is null.");
         }
 
-        // GET: Locadores/Details/5
+        // GET: Administradores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Administradores == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.LocadorId == id);
-            if (locador == null)
+            var administrador = await _context.Administradores
+                .FirstOrDefaultAsync(m => m.AdministradorId == id);
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(locador);
+            return View(administrador);
         }
 
-        // GET: Locadores/Create
+        // GET: Administradores/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id");
             return View();
         }
 
-        // POST: Locadores/Create
+        // POST: Administradores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,EstadoDeSubscricao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Create([Bind("AdministradorId,Name")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                locador.MediaAvaliacao = 0;
-                _context.Add(locador);
+                _context.Add(administrador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(administrador);
         }
 
-        // GET: Locadores/Edit/5
+        // GET: Administradores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Administradores == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores.FindAsync(id);
-            if (locador == null)
+            var administrador = await _context.Administradores.FindAsync(id);
+            if (administrador == null)
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(administrador);
         }
 
-        // POST: Locadores/Edit/5
+        // POST: Administradores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EstadoDeSubscricao,MediaAvaliacao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Edit(int id, [Bind("AdministradorId,Name")] Administrador administrador)
         {
-            if (id != locador.LocadorId)
+            if (id != administrador.AdministradorId)
             {
                 return NotFound();
             }
@@ -109,12 +105,12 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
-                    _context.Update(locador);
+                    _context.Update(administrador);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LocadorExists(locador.LocadorId))
+                    if (!AdministradorExists(administrador.AdministradorId))
                     {
                         return NotFound();
                     }
@@ -125,51 +121,49 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
-            return View(locador);
+            return View(administrador);
         }
 
-        // GET: Locadores/Delete/5
+        // GET: Administradores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Locadores == null)
+            if (id == null || _context.Administradores == null)
             {
                 return NotFound();
             }
 
-            var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
-                .FirstOrDefaultAsync(m => m.LocadorId == id);
-            if (locador == null)
+            var administrador = await _context.Administradores
+                .FirstOrDefaultAsync(m => m.AdministradorId == id);
+            if (administrador == null)
             {
                 return NotFound();
             }
 
-            return View(locador);
+            return View(administrador);
         }
 
-        // POST: Locadores/Delete/5
+        // POST: Administradores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Locadores == null)
+            if (_context.Administradores == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Administradores'  is null.");
             }
-            var locador = await _context.Locadores.FindAsync(id);
-            if (locador != null)
+            var administrador = await _context.Administradores.FindAsync(id);
+            if (administrador != null)
             {
-                _context.Locadores.Remove(locador);
+                _context.Administradores.Remove(administrador);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LocadorExists(int id)
+        private bool AdministradorExists(int id)
         {
-          return (_context.Locadores?.Any(e => e.LocadorId == id)).GetValueOrDefault();
+          return (_context.Administradores?.Any(e => e.AdministradorId == id)).GetValueOrDefault();
         }
     }
 }

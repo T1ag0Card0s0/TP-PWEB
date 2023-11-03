@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HabitAqui.Models.Cliente>
+﻿@model IEnumerable<HabitAqui.Models.Categoria>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,9 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UtilizadorId)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -28,12 +25,9 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UtilizadorId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ClienteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClienteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ClienteId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.CategoriaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CategoriaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CategoriaId">Delete</a>
             </td>
         </tr>
 }

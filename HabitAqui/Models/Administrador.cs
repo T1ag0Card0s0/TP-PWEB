@@ -4,7 +4,7 @@
     {
         public int AdministradorId { get; set; }
         public string Name { get; set; }
-        public Utilizador Utilizador { get; set; }
-        public int UtilizadorId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

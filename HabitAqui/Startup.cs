@@ -1,6 +1,7 @@
 ﻿using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HabitAqui
@@ -17,7 +18,6 @@ namespace HabitAqui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             string path = Path.Combine(Directory.GetCurrentDirectory(), "DataBase");
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -26,19 +26,16 @@ namespace HabitAqui
                     .Replace("[DataDirectory]", path)));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-
-            services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<Utilizador>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
-           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -72,8 +69,8 @@ namespace HabitAqui
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<Utilizador>>();
-            string[] rolesNames = { "Administrador", "Cliente", "Funcionario", "Locador" };
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] rolesNames = { "Admin", "Cliente", "Gestor", "Funcionario" };
             IdentityResult result;
             foreach (var namesRole in rolesNames)
             {
@@ -84,8 +81,6 @@ namespace HabitAqui
                 }
             }
         }
-
-
     }
 
 }
