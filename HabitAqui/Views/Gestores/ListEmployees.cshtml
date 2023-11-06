@@ -1,0 +1,65 @@
+﻿@model HabitAqui.Models.MyEmployees;
+@{
+    ViewData["Title"] = "List Employees";
+}
+
+<div class="container">
+    <h1>List of Employees</h1>
+
+    @if (Model.Gestores.Any())
+    {
+        <h2>Gestores</h2>
+        <div class="row">
+            @foreach (var gestor in Model.Gestores)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@gestor.Nome</h5>
+                            <p class="card-text">Gestor ID: @gestor.GestorId</p>
+                            @if (gestor.ApplicationUser != null)
+                            {
+                                <p class="card-text">User Information:</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Username: @gestor.ApplicationUser.UserName</li>
+                                    <li class="list-group-item">Email: @gestor.ApplicationUser.Email</li>
+                                    <!-- Add other relevant ApplicationUser information -->
+                                </ul>
+                            }
+                            <!-- Add other relevant information from Gestor -->
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.Funcionarios.Any())
+    {
+        <h2>Funcionarios</h2>
+        <div class="row">
+            @foreach (var funcionario in Model.Funcionarios)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@funcionario.Nome</h5>
+                            <p class="card-text">Funcionario ID: @funcionario.FuncionarioId</p>
+                            @if (funcionario.ApplicationUser != null)
+                            {
+                                <p class="card-text">User Information:</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Username: @funcionario.ApplicationUser.UserName</li>
+                                    <li class="list-group-item">Email: @funcionario.ApplicationUser.Email</li>
+                                    <!-- Add other relevant ApplicationUser information -->
+                                </ul>
+                            }
+                            <!-- Add other relevant information from Funcionario -->
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
