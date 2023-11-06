@@ -9,6 +9,7 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HabitAqui.Controllers
 {
@@ -164,5 +165,26 @@ namespace HabitAqui.Controllers
         {
           return (_context.Gestores?.Any(e => e.GestorId == id)).GetValueOrDefault();
         }
+
+        public IActionResult ListEmployees()
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            MyEmployees myEmployees = new MyEmployees();
+            myEmployees.Funcionarios = _context.Funcionarios
+                .Include(f => f.ApplicationUser)
+                .ToList();
+            myEmployees.Gestores = _context.Gestores
+                .Include(g => g.ApplicationUser)
+                .Where(g => g.ApplicationUser.Email != email)
+                .ToList();
+
+            return View(myEmployees);
+        }
+
+        public async Task<IActionResult> ListAccomodations()
+        {
+            return View();
+        }
     }
+   
 }
