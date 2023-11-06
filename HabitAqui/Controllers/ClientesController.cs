@@ -121,14 +121,25 @@ namespace HabitAqui.Controllers
             {
                 _context.Clientes.Remove(cliente);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ClienteExists(int id)
         {
-          return (_context.Clientes?.Any(e => e.ClienteId == id)).GetValueOrDefault();
+            return (_context.Clientes?.Any(e => e.ClienteId == id)).GetValueOrDefault();
         }
+
+        // metodo de pesquisa inicial
+        [HttpGet]
+        public IActionResult ListBookings()
+        {
+            var habitacoes = _context.Arrendamentos.Include(h => h.Habitacao).Include(h => h.Habitacao.Locador).Include(h => h.Habitacao.Categoria).AsQueryable();
+            var resultado = habitacoes.ToList();
+
+            return View("ListBookings", resultado);
+        }
+
     }
 }

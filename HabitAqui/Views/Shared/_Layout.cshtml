@@ -42,10 +42,10 @@
                         @if (User.IsInRole("Cliente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListBookings">My Reservations</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListBookings">My Reservations</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListRatings">My Ratings</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListRatings">My Ratings</a>
                             </li>
                         }
                         @if (User.IsInRole("Gestor"))
