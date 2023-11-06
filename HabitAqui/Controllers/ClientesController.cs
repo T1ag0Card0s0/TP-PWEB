@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using HabitAqui.Migrations;
 
 namespace HabitAqui.Controllers
 {
@@ -133,12 +134,20 @@ namespace HabitAqui.Controllers
 
         // metodo de pesquisa inicial
         [HttpGet]
-        public IActionResult ListBookings()
+        public IActionResult ListArrendamentos()
         {
-            var habitacoes = _context.Arrendamentos.Include(h => h.Habitacao).Include(h => h.Habitacao.Locador).Include(h => h.Habitacao.Categoria).AsQueryable();
+            var habitacoes = _context.Arrendamentos
+                .Include(h => h.Habitacao)
+                .Include(h => h.Habitacao.Locador)
+                .Include(h => h.Habitacao.Categoria)
+                .AsQueryable();
+
+            habitacoes = habitacoes.Where(h => h.Cliente.ApplicationUser.Email.Contains(User.Identity.Name));
+            Console.WriteLine("User.Identity.Name: " + User.Identity.Name);
+
             var resultado = habitacoes.ToList();
 
-            return View("ListBookings", resultado);
+            return View("ListArrendamentos", resultado);
         }
 
     }

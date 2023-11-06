@@ -42,7 +42,7 @@
                         @if (User.IsInRole("Cliente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListBookings">My Reservations</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListArrendamentos">Os meus arrendamentos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListRatings">My Ratings</a>
@@ -60,7 +60,7 @@
                         @if (User.IsInRole("Funcionario"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageBookings">Manage Bookings</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageArrendamentos">Manage Arrendamentos</a>
                             </li>
                         }
                         <partial name="_LoginPartial" />
