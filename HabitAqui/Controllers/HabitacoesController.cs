@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    
     [Authorize(Roles = "Admin,Cliente,Gestor, Funcionario")]
     public class HabitacoesController : Controller
     {
