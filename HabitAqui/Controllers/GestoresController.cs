@@ -28,9 +28,9 @@ namespace HabitAqui.Controllers
         // GET: Gestores
         public async Task<IActionResult> Index()
         {
-              return _context.Gestores != null ? 
-                          View(await _context.Gestores.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Gestores'  is null.");
+            return _context.Gestores != null ?
+                        View(await _context.Gestores.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Gestores'  is null.");
         }
 
         // GET: Gestores/Details/5
@@ -156,14 +156,14 @@ namespace HabitAqui.Controllers
             {
                 _context.Gestores.Remove(gestor);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GestorExists(int id)
         {
-          return (_context.Gestores?.Any(e => e.GestorId == id)).GetValueOrDefault();
+            return (_context.Gestores?.Any(e => e.GestorId == id)).GetValueOrDefault();
         }
 
         public IActionResult ListEmployees()
@@ -173,6 +173,9 @@ namespace HabitAqui.Controllers
             myEmployees.Funcionarios = _context.Funcionarios
                 .Include(f => f.ApplicationUser)
                 .ToList();
+            myEmployees.Clientes = _context.Clientes
+                .Include(c => c.ApplicationUser)
+                .ToList();
             myEmployees.Gestores = _context.Gestores
                 .Include(g => g.ApplicationUser)
                 .Where(g => g.ApplicationUser.Email != email)
@@ -180,11 +183,24 @@ namespace HabitAqui.Controllers
 
             return View(myEmployees);
         }
-
         public async Task<IActionResult> ListAccomodations()
         {
-            return View();
+            string email = User.FindFirstValue(ClaimTypes.Email);
+
+            // Carregar o Gestor com os Locadores e Habitacoes em uma única consulta
+            Gestor gestor = await _context.Gestores
+                .Include(g => g.Locadores)
+                .ThenInclude(locador => locador.Habitacoes)
+                .FirstOrDefaultAsync(g => g.ApplicationUser.Email == email);
+
+            // Extrair todas as habitacoes diretamente, evitando o loop
+            List<Habitacao> habitacoes = gestor.Locadores
+                .SelectMany(locador => locador.Habitacoes)
+                .ToList();
+
+            return View(habitacoes);
         }
+
+
     }
-   
 }

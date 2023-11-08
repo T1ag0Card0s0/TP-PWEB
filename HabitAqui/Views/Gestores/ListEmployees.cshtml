@@ -61,5 +61,32 @@
             }
         </div>
     }
+    @if (Model.Clientes.Any())
+    {
+        <h2>Clientes</h2>
+        <div class="row">
+            @foreach (var cliente in Model.Clientes)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@cliente.Nome</h5>
+                            <p class="card-text">Funcionario ID: @cliente.ClienteId</p>
+                            @if (cliente.ApplicationUser != null)
+                            {
+                                <p class="card-text">User Information:</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Username: @cliente.ApplicationUser.UserName</li>
+                                    <li class="list-group-item">Email: @cliente.ApplicationUser.Email</li>
+                                    <!-- Add other relevant ApplicationUser information -->
+                                </ul>
+                            }
+                            <!-- Add other relevant information from Funcionario -->
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 
 </div>
