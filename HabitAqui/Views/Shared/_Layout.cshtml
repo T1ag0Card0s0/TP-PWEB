@@ -42,10 +42,10 @@
                         @if (User.IsInRole("Cliente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListBookings">My Reservations</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListArrendamentos">Os meus arrendamentos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="ListRatings">My Ratings</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListRatings">My Ratings</a>
                             </li>
                         }
                         @if (User.IsInRole("Gestor"))
@@ -60,7 +60,7 @@
                         @if (User.IsInRole("Funcionario"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageBookings">Manage Bookings</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageArrendamentos">Manage Arrendamentos</a>
                             </li>
                         }
                         <partial name="_LoginPartial" />
@@ -70,9 +70,15 @@
             </div>
         </nav>
     </header>
+<<<<<<< HEAD
     <div>
         @RenderBody()
     </div>
+=======
+
+    @RenderBody()
+
+>>>>>>> b8ca4bf5625239d783c235596ccb02aef42a123a
     <footer class="text-center text-lg-start bg-dark text-muted border-top footer">
 
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">

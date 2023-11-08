@@ -6,7 +6,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="container-fluid p-3">
     <h4>Habitacao</h4>
     <hr />
     <dl class="row">
@@ -35,12 +35,6 @@
             @Html.DisplayFor(model => model.MediaAvaliacao)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Cidade)
         </dt>
         <dd class = "col-sm-10">
@@ -53,38 +47,19 @@
             @Html.DisplayFor(model => model.Rua)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Numero)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Numero)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Andar)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Andar)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumeroPorta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumeroPorta)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Categoria)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria.CategoriaId)
+            @Html.DisplayFor(model => model.Categoria.Nome)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Locador)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locador.LocadorId)
+            @Html.DisplayFor(model => model.Locador.Nome)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

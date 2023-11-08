@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HabitAqui.Controllers
 {
+    
     [Authorize(Roles = "Admin,Cliente,Gestor, Funcionario")]
     public class HabitacoesController : Controller
     {
@@ -54,6 +55,85 @@ namespace HabitAqui.Controllers
 
             return View(habitacao);
         }
+
+        // GET: Habitacoes/Avaliar/5
+        public IActionResult Avaliar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var habitacao = _context.Habitacoes
+                .Include(h => h.Categoria)
+                .Include(h => h.Locador)
+                .FirstOrDefault(m => m.Id == id);
+
+            if (habitacao == null)
+            {
+                return NotFound();
+            }
+
+            var avaliacao = new AvaliacaoHabitacao
+            {
+                HabitacaoId = id.Value
+            };
+
+            return View(avaliacao);
+        }
+
+        // POST: Habitacoes/Avaliar/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Avaliar(int id, [Bind("Classificacao,Descricao,HabitacaoId")] AvaliacaoHabitacao avaliacao)
+        {
+            if (id != avaliacao.HabitacaoId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Associar a avaliação à Habitacao
+                    avaliacao.Habitacao = _context.Habitacoes.Find(avaliacao.HabitacaoId);
+
+                    avaliacao.Id = 0;
+
+                    _context.Add(avaliacao);
+                    await _context.SaveChangesAsync();
+
+                    // Atualizar a média de avaliação na Habitacao
+                    var habitacao = _context.Habitacoes.Find(avaliacao.HabitacaoId);
+                    if (habitacao != null)
+                    {
+                        var avaliacoes = _context.AvaliacoesHabitacao.Where(a => a.HabitacaoId == habitacao.Id).ToList();
+                        if (avaliacoes.Any())
+                        {
+                            habitacao.MediaAvaliacao = avaliacoes.Average(a => a.Classificacao);
+                        }
+                        else
+                        {
+                            habitacao.MediaAvaliacao = 0;
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
+
+                    return RedirectToAction("Details", new { id = id });
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(string.Empty, "Ocorreu um erro ao salvar a avaliação.");
+                }
+            }
+
+            return View(avaliacao);
+        }
+
+
+
 
         // GET: Habitacoes/Create
         public IActionResult Create()
