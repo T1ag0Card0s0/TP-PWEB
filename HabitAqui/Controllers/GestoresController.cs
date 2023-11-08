@@ -201,6 +201,5 @@ namespace HabitAqui.Controllers
             return View(habitacoes);
         }
 
-
     }
 }

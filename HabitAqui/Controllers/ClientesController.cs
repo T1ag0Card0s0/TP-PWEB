@@ -150,5 +150,9 @@ namespace HabitAqui.Controllers
             return View("ListArrendamentos", resultado);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

@@ -4,11 +4,12 @@
 }
 
 <div class="container">
-    <h1>List of Employees</h1>
 
+    <h1>Lista de Utilizadores</h1>
+    
+    <h2>Gestores  <a asp-action="Create" asp-controller="Gestores" class="btn btn-primary rounded-pill">Adicionar um novo Gestor</a></h2>
     @if (Model.Gestores.Any())
     {
-        <h2>Gestores</h2>
         <div class="row">
             @foreach (var gestor in Model.Gestores)
             {
@@ -32,11 +33,13 @@
                 </div>
             }
         </div>
+        <hr />
     }
-
+    
+    <h2>Funcionarios <a asp-action="Create" asp-controller="Funcionarios" class="btn btn-primary rounded-pill">Adicionar um novo Funcinário</a></h2>
+   
     @if (Model.Funcionarios.Any())
     {
-        <h2>Funcionarios</h2>
         <div class="row">
             @foreach (var funcionario in Model.Funcionarios)
             {
@@ -60,10 +63,13 @@
                 </div>
             }
         </div>
+        <hr />
     }
+   
+    <h2>Clientes <a asp-action="Create" asp-controller="Clientes" class="btn btn-primary rounded-pill">Adicionar um novo Cliente</a></h2>
+   
     @if (Model.Clientes.Any())
     {
-        <h2>Clientes</h2>
         <div class="row">
             @foreach (var cliente in Model.Clientes)
             {
@@ -88,5 +94,4 @@
             }
         </div>
     }
-
 </div>
