@@ -186,7 +186,7 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> ListAccomodations()
         {
             string email = User.FindFirstValue(ClaimTypes.Email);
-
+            
             // Carregar o Gestor com os Locadores e Habitacoes em uma única consulta
             Gestor gestor = await _context.Gestores
                 .Include(g => g.Locadores)

@@ -7,7 +7,7 @@
 
     <h1>Lista de Utilizadores</h1>
     
-    <h2>Gestores  <a asp-action="Create" asp-controller="Gestores" class="btn btn-primary rounded-pill">Adicionar um novo Gestor</a></h2>
+    <h2>Gestores  <a class="btn btn-primary rounded-pill">Adicionar um novo Gestor</a></h2>
     @if (Model.Gestores.Any())
     {
         <div class="row">
@@ -36,7 +36,7 @@
         <hr />
     }
     
-    <h2>Funcionarios <a asp-action="Create" asp-controller="Funcionarios" class="btn btn-primary rounded-pill">Adicionar um novo Funcinário</a></h2>
+    <h2>Funcionarios <a class="btn btn-primary rounded-pill">Adicionar um novo Funcinário</a></h2>
    
     @if (Model.Funcionarios.Any())
     {
@@ -66,7 +66,7 @@
         <hr />
     }
    
-    <h2>Clientes <a asp-action="Create" asp-controller="Clientes" class="btn btn-primary rounded-pill">Adicionar um novo Cliente</a></h2>
+    <h2>Clientes <a class="btn btn-primary rounded-pill">Adicionar um novo Cliente</a></h2>
    
     @if (Model.Clientes.Any())
     {
