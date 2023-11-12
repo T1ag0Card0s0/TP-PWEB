@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<HabitAqui.Models.Categoria>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,13 +10,24 @@
                 <div class="col-5 opacity-90">
                     <select name="category" class="form-select form-select-lg">
                         <option selected value="">Tipo de Imóvel</option>
+                        @if (Model.Any())
+                        {
+                            @foreach (var categoria in Model)
+                            {
+                                <option value="@categoria.Nome">@categoria.Nome</option>
+                            }
+
+                        }
+                    </select>
+                   <!-- <select name="category" class="form-select form-select-lg">
+                        <option selected value="">Tipo de Imóvel</option>
                         <option value="Apartamentos">Apartamentos</option>
                         <option value="Moradias">Moradias</option>
                         <option value="Quartos">Quartos</option>
                         <option value="Escritórios">Escritórios</option>
                         <option value="Terrenos">Terrenos</option>
                         <option value="Garagens">Garagens</option>
-                    </select>
+                         </select>-->
                 </div>
                 <div class="col-5">
                     <input type="search" name="local" class="form-control form-control-lg opacity-90" placeholder="Pesquisa por local" />
