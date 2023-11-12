@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HabitAqui.Models.Habitacao>
+
+@{
+    ViewData["Title"] = "ListHabitacoes";
+}
+
+<div class="row m-auto">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3 text-center" style="width:18rem;">
+                <div class="card-header border-dark">
+                    <h5 class="card-title">
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </h5>
+                </div>
+                <div class="card-body text-dark">
+                    <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
+                    <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
+                </div>
+                <div class="card-footer border-dark">
+                    <p class="card-text-center">
+                        <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
+                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)<i class="fa-solid fa-star"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

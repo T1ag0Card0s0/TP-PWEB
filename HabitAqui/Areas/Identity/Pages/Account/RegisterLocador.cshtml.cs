@@ -139,14 +139,17 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var administrador = new Administrador
+                    var locador = new Locador
                     {
                         ApplicationUser = user,
-                        Name = user.FirstName + " " + user.LastName
+                        Nome = user.FirstName + " " + user.LastName,
+                        EstadoDeSubscricao = true,
+                        MediaAvaliacao = 0
                     };
-                    _context.Update(administrador);
+                    
+                    _context.Update(locador);
                     await _context.SaveChangesAsync();
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(user, "Gestor");
 
                     _logger.LogInformation("User created a new account with password.");
 

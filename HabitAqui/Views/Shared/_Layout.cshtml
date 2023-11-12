@@ -27,16 +27,30 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index">Categories</a>
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Locadores
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Locadores" asp-action="Index">
+                                            Listar Locadores
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/RegisterLocador">
+                                            Registar Locador
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Habitacoes" asp-action="Index">Reservations</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Habitacoes" asp-action="Index">Habitações</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Administradores" asp-action="ListManagers">List Managers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Administradores" asp-action="ListCustomers">List Customers</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="ApplicationUser" asp-action="Index">Utilizadores</a>
                             </li>
                         }
                         @if (User.IsInRole("Cliente"))
@@ -44,23 +58,59 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListArrendamentos">Os meus arrendamentos</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListRatings">My Ratings</a>
-                            </li>
                         }
                         @if (User.IsInRole("Gestor"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Gestores" asp-action="ListAccomodations">My Accomodations</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Gestores" asp-action="ListEmployees">My Employees</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Gestores" asp-action="ListEmployees">Utilizadores</a>
                             </li>
                         }
-                        @if (User.IsInRole("Funcionario"))
+                        @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Funcionarios" asp-action="ManageArrendamentos">Manage Arrendamentos</a>
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Habitações
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Habitacoes" asp-action="IndexFuncionario">
+                                            Listar Habitações
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Habitacoes" asp-action="Create">
+                                            Adicionar Habitação
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Alugueres
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Funcionarios" asp-action="ListAlugueres">
+                                            Listar Reservas
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Funcionarios" asp-action="...">
+                                            Entregar uma habitação
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Funcionarios" asp-action="...">
+                                            Receber uma habitação
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         <partial name="_LoginPartial" />
@@ -83,10 +133,10 @@
         </div>
 
     </footer>
-      
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

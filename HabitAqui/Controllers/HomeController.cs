@@ -37,7 +37,7 @@ namespace HabitAqui.Controllers
                 habitacoes = habitacoes.Where(h => h.Categoria.Nome.Contains(category));
             }
             if(!string.IsNullOrEmpty(local)) {
-                habitacoes = habitacoes.Where(h => h.Cidade.Contains(local));
+                habitacoes = habitacoes.Where(h => h.Localizacao.Contains(local));
             }
             if(start_date != default(DateTime))
             {
@@ -97,7 +97,7 @@ namespace HabitAqui.Controllers
 
             if (!string.IsNullOrEmpty(local))
             {
-                habitacao = habitacao.Where(h => h.Cidade.Contains(local));
+                habitacao = habitacao.Where(h => h.Localizacao.Contains(local));
             }
 
             var resultado = habitacao.ToList();

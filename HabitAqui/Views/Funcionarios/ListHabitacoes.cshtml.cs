@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HabitAqui.Views.Home
+namespace HabitAqui.Views.Funcionarios
 {
-    public class SignInModel : PageModel
+    public class ListHabitacoesModel : PageModel
     {
         public void OnGet()
         {

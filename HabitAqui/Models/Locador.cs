@@ -10,12 +10,10 @@ namespace HabitAqui.Models
         public double? MediaAvaliacao { get; set; }
         public ICollection<Habitacao>? Habitacoes { get; set; }
         public ICollection<AvaliacaoLocador>? Avaliacoes { get; set; }
-        public Funcionario? Funcionario { get; set; }
-        [ForeignKey("FuncionarioId")]
-        public int? FuncionarioId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }
+        public ICollection<Funcionario> Funcionarios { get; set; }
+        public ICollection<Gestor> Gestores { get; set; }
+        public ICollection<Arrendamento>? Arrendamentos { get; set; }
         
-        //public ApplicationUser applicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

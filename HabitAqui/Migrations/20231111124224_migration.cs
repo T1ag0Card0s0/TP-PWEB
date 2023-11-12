@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HabitAqui.Migrations
 {
-    public partial class migration_1 : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,9 +28,8 @@ namespace HabitAqui.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -49,19 +48,6 @@ namespace HabitAqui.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categorias",
-                columns: table => new
-                {
-                    CategoriaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categorias", x => x.CategoriaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,18 +78,16 @@ namespace HabitAqui.Migrations
                     AdministradorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UtilizadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UtilizadorId = table.Column<int>(type: "int", nullable: false)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Administradores", x => x.AdministradorId);
                     table.ForeignKey(
-                        name: "FK_Administradores_AspNetUsers_UtilizadorId1",
-                        column: x => x.UtilizadorId1,
+                        name: "FK_Administradores_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -198,58 +182,35 @@ namespace HabitAqui.Migrations
                     ClienteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UtilizadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UtilizadorId = table.Column<int>(type: "int", nullable: false)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.ClienteId);
                     table.ForeignKey(
-                        name: "FK_Clientes_AspNetUsers_UtilizadorId1",
-                        column: x => x.UtilizadorId1,
+                        name: "FK_Clientes_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionarios",
+                name: "Categorias",
                 columns: table => new
                 {
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false)
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UtilizadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UtilizadorId = table.Column<int>(type: "int", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdministradorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionarios", x => x.FuncionarioId);
+                    table.PrimaryKey("PK_Categorias", x => x.CategoriaId);
                     table.ForeignKey(
-                        name: "FK_Funcionarios_AspNetUsers_UtilizadorId1",
-                        column: x => x.UtilizadorId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Gestores",
-                columns: table => new
-                {
-                    GestorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UtilizadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UtilizadorId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Gestores", x => x.GestorId);
-                    table.ForeignKey(
-                        name: "FK_Gestores_AspNetUsers_UtilizadorId1",
-                        column: x => x.UtilizadorId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Categorias_Administradores_AdministradorId",
+                        column: x => x.AdministradorId,
+                        principalTable: "Administradores",
+                        principalColumn: "AdministradorId");
                 });
 
             migrationBuilder.CreateTable(
@@ -261,30 +222,22 @@ namespace HabitAqui.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstadoDeSubscricao = table.Column<bool>(type: "bit", nullable: false),
                     MediaAvaliacao = table.Column<double>(type: "float", nullable: true),
-                    FuncionarioId = table.Column<int>(type: "int", nullable: true),
-                    UtilizadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UtilizadorId = table.Column<int>(type: "int", nullable: false),
-                    GestorId = table.Column<int>(type: "int", nullable: true)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AdministradorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locadores", x => x.LocadorId);
                     table.ForeignKey(
-                        name: "FK_Locadores_AspNetUsers_UtilizadorId1",
-                        column: x => x.UtilizadorId1,
+                        name: "FK_Locadores_Administradores_AdministradorId",
+                        column: x => x.AdministradorId,
+                        principalTable: "Administradores",
+                        principalColumn: "AdministradorId");
+                    table.ForeignKey(
+                        name: "FK_Locadores_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Locadores_Funcionarios_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionarios",
-                        principalColumn: "FuncionarioId");
-                    table.ForeignKey(
-                        name: "FK_Locadores_Gestores_GestorId",
-                        column: x => x.GestorId,
-                        principalTable: "Gestores",
-                        principalColumn: "GestorId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -314,21 +267,43 @@ namespace HabitAqui.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Gestores",
+                columns: table => new
+                {
+                    GestorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocadorId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gestores", x => x.GestorId);
+                    table.ForeignKey(
+                        name: "FK_Gestores_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Gestores_Locadores_LocadorId",
+                        column: x => x.LocadorId,
+                        principalTable: "Locadores",
+                        principalColumn: "LocadorId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Habitacoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MediaAvaliacao = table.Column<double>(type: "float", nullable: true),
+                    Custo = table.Column<int>(type: "int", nullable: false),
                     PeriodoMinimoArrendamento = table.Column<int>(type: "int", nullable: false),
                     PeriodoMaximoArrendamento = table.Column<int>(type: "int", nullable: false),
-                    Custo = table.Column<double>(type: "float", nullable: false),
-                    MediaAvaliacao = table.Column<double>(type: "float", nullable: true),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rua = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Numero = table.Column<int>(type: "int", nullable: false),
-                    Andar = table.Column<int>(type: "int", nullable: true),
-                    NumeroPorta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Localizacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: true),
                     LocadorId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -348,31 +323,35 @@ namespace HabitAqui.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Arrendamentos",
+                name: "Funcionarios",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    FuncionarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Confirmacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: true),
-                    HabitacaoId = table.Column<int>(type: "int", nullable: true),
-                    HabitacoesId = table.Column<int>(type: "int", nullable: true)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocadorId = table.Column<int>(type: "int", nullable: false),
+                    GestorId = table.Column<int>(type: "int", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Arrendamentos", x => x.Id);
+                    table.PrimaryKey("PK_Funcionarios", x => x.FuncionarioId);
                     table.ForeignKey(
-                        name: "FK_Arrendamentos_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "ClienteId");
-                    table.ForeignKey(
-                        name: "FK_Arrendamentos_Habitacoes_HabitacaoId",
-                        column: x => x.HabitacaoId,
-                        principalTable: "Habitacoes",
+                        name: "FK_Funcionarios_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Funcionarios_Gestores_GestorId",
+                        column: x => x.GestorId,
+                        principalTable: "Gestores",
+                        principalColumn: "GestorId");
+                    table.ForeignKey(
+                        name: "FK_Funcionarios_Locadores_LocadorId",
+                        column: x => x.LocadorId,
+                        principalTable: "Locadores",
+                        principalColumn: "LocadorId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -402,6 +381,50 @@ namespace HabitAqui.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Arrendamentos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Custo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    HabitacaoId = table.Column<int>(type: "int", nullable: false),
+                    Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FuncionarioEntregaFuncionarioId = table.Column<int>(type: "int", nullable: false),
+                    DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LocadorId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Arrendamentos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Arrendamentos_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Arrendamentos_Funcionarios_FuncionarioEntregaFuncionarioId",
+                        column: x => x.FuncionarioEntregaFuncionarioId,
+                        principalTable: "Funcionarios",
+                        principalColumn: "FuncionarioId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Arrendamentos_Habitacoes_HabitacaoId",
+                        column: x => x.HabitacaoId,
+                        principalTable: "Habitacoes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Arrendamentos_Locadores_LocadorId",
+                        column: x => x.LocadorId,
+                        principalTable: "Locadores",
+                        principalColumn: "LocadorId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Estados",
                 columns: table => new
                 {
@@ -409,8 +432,7 @@ namespace HabitAqui.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FuncionarioId = table.Column<int>(type: "int", nullable: true),
-                    ArrendamentoId = table.Column<int>(type: "int", nullable: true),
-                    GestorId = table.Column<int>(type: "int", nullable: true)
+                    ArrendamentoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -425,11 +447,6 @@ namespace HabitAqui.Migrations
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionarios",
                         principalColumn: "FuncionarioId");
-                    table.ForeignKey(
-                        name: "FK_Estados_Gestores_GestorId",
-                        column: x => x.GestorId,
-                        principalTable: "Gestores",
-                        principalColumn: "GestorId");
                 });
 
             migrationBuilder.CreateTable(
@@ -441,11 +458,17 @@ namespace HabitAqui.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Fomat = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArrendamentoId = table.Column<int>(type: "int", nullable: true),
                     EstadoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Danos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Danos_Arrendamentos_ArrendamentoId",
+                        column: x => x.ArrendamentoId,
+                        principalTable: "Arrendamentos",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Danos_Estados_EstadoId",
                         column: x => x.EstadoId,
@@ -462,11 +485,17 @@ namespace HabitAqui.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Existencia = table.Column<bool>(type: "bit", nullable: false),
                     DescricaoEstado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArrendamentoId = table.Column<int>(type: "int", nullable: true),
                     EstadoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipamentos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Equipamentos_Arrendamentos_ArrendamentoId",
+                        column: x => x.ArrendamentoId,
+                        principalTable: "Arrendamentos",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Equipamentos_Estados_EstadoId",
                         column: x => x.EstadoId,
@@ -475,9 +504,9 @@ namespace HabitAqui.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Administradores_UtilizadorId1",
+                name: "IX_Administradores_ApplicationUserId",
                 table: "Administradores",
-                column: "UtilizadorId1");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Arrendamentos_ClienteId",
@@ -485,9 +514,19 @@ namespace HabitAqui.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Arrendamentos_FuncionarioEntregaFuncionarioId",
+                table: "Arrendamentos",
+                column: "FuncionarioEntregaFuncionarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Arrendamentos_HabitacaoId",
                 table: "Arrendamentos",
                 column: "HabitacaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Arrendamentos_LocadorId",
+                table: "Arrendamentos",
+                column: "LocadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -549,14 +588,29 @@ namespace HabitAqui.Migrations
                 column: "LocadorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_UtilizadorId1",
+                name: "IX_Categorias_AdministradorId",
+                table: "Categorias",
+                column: "AdministradorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_ApplicationUserId",
                 table: "Clientes",
-                column: "UtilizadorId1");
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Danos_ArrendamentoId",
+                table: "Danos",
+                column: "ArrendamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Danos_EstadoId",
                 table: "Danos",
                 column: "EstadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipamentos_ArrendamentoId",
+                table: "Equipamentos",
+                column: "ArrendamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipamentos_EstadoId",
@@ -574,19 +628,29 @@ namespace HabitAqui.Migrations
                 column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estados_GestorId",
-                table: "Estados",
+                name: "IX_Funcionarios_ApplicationUserId",
+                table: "Funcionarios",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Funcionarios_GestorId",
+                table: "Funcionarios",
                 column: "GestorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionarios_UtilizadorId1",
+                name: "IX_Funcionarios_LocadorId",
                 table: "Funcionarios",
-                column: "UtilizadorId1");
+                column: "LocadorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Gestores_UtilizadorId1",
+                name: "IX_Gestores_ApplicationUserId",
                 table: "Gestores",
-                column: "UtilizadorId1");
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gestores_LocadorId",
+                table: "Gestores",
+                column: "LocadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Habitacoes_CategoriaId",
@@ -599,26 +663,18 @@ namespace HabitAqui.Migrations
                 column: "LocadorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locadores_FuncionarioId",
+                name: "IX_Locadores_AdministradorId",
                 table: "Locadores",
-                column: "FuncionarioId");
+                column: "AdministradorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locadores_GestorId",
+                name: "IX_Locadores_ApplicationUserId",
                 table: "Locadores",
-                column: "GestorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Locadores_UtilizadorId1",
-                table: "Locadores",
-                column: "UtilizadorId1");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Administradores");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -659,7 +715,13 @@ namespace HabitAqui.Migrations
                 name: "Clientes");
 
             migrationBuilder.DropTable(
+                name: "Funcionarios");
+
+            migrationBuilder.DropTable(
                 name: "Habitacoes");
+
+            migrationBuilder.DropTable(
+                name: "Gestores");
 
             migrationBuilder.DropTable(
                 name: "Categorias");
@@ -668,10 +730,7 @@ namespace HabitAqui.Migrations
                 name: "Locadores");
 
             migrationBuilder.DropTable(
-                name: "Funcionarios");
-
-            migrationBuilder.DropTable(
-                name: "Gestores");
+                name: "Administradores");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

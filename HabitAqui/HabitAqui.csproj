@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="DataBase\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\font-awesome\" />
   </ItemGroup>
 

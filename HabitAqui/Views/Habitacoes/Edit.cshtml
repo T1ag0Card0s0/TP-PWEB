@@ -20,6 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PeriodoMaximoArrendamento" class="control-label"></label>
+
                 <input asp-for="PeriodoMaximoArrendamento" class="form-control" />
                 <span asp-validation-for="PeriodoMaximoArrendamento" class="text-danger"></span>
             </div>
@@ -28,50 +29,20 @@
                 <input asp-for="Custo" class="form-control" />
                 <span asp-validation-for="Custo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MediaAvaliacao" class="control-label"></label>
-                <input asp-for="MediaAvaliacao" class="form-control" />
-                <span asp-validation-for="MediaAvaliacao" class="text-danger"></span>
-            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Cidade" class="control-label"></label>
-                <input asp-for="Cidade" class="form-control" />
-                <span asp-validation-for="Cidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rua" class="control-label"></label>
-                <input asp-for="Rua" class="form-control" />
-                <span asp-validation-for="Rua" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Numero" class="control-label"></label>
-                <input asp-for="Numero" class="form-control" />
-                <span asp-validation-for="Numero" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Andar" class="control-label"></label>
-                <input asp-for="Andar" class="form-control" />
-                <span asp-validation-for="Andar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumeroPorta" class="control-label"></label>
-                <input asp-for="NumeroPorta" class="form-control" />
-                <span asp-validation-for="NumeroPorta" class="text-danger"></span>
+                <label asp-for="Localizacao" class="control-label"></label>
+                <input asp-for="Localizacao" class="form-control" />
+                <span asp-validation-for="Localizacao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.Categorias"></select>
                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LocadorId" class="control-label"></label>
-                <select asp-for="LocadorId" class="form-control" asp-items="ViewBag.LocadorId"></select>
-                <span asp-validation-for="LocadorId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -81,6 +52,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="IndexFuncionario">Back to List</a>
 </div>
 

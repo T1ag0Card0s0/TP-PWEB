@@ -32,6 +32,20 @@ namespace HabitAqui.Controllers
                           Problem("Entity set 'ApplicationDbContext.Funcionarios'  is null.");
         }
 
+        public async Task<IActionResult> ListHabitacoes()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            // Recupere o Funcionário com base no ID
+            var funcionario = _context.Funcionarios.Include(f => f.Locador) // Inclua os locadores relacionados
+            .FirstOrDefault(f => f.ApplicationUser.Id == user.Id);
+            var locador = funcionario.Locador;
+
+            var habitacoes = locador.Habitacoes.ToList();
+            // se locador nao tiver nenhuma habitaçao
+
+            return View(habitacoes);
+        }
+        
         // GET: Funcionarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {

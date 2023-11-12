@@ -10,6 +10,7 @@ using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using HabitAqui.ViewModels;
 
 namespace HabitAqui.Controllers
 {
@@ -168,22 +169,24 @@ namespace HabitAqui.Controllers
 
         public IActionResult ListEmployees()
         {
-            string email = User.FindFirstValue(ClaimTypes.Email);
-            MyEmployees myEmployees = new MyEmployees();
-            myEmployees.Funcionarios = _context.Funcionarios
-                .Include(f => f.ApplicationUser)
-                .ToList();
-            myEmployees.Clientes = _context.Clientes
-                .Include(c => c.ApplicationUser)
-                .ToList();
-            myEmployees.Gestores = _context.Gestores
-                .Include(g => g.ApplicationUser)
-                .Where(g => g.ApplicationUser.Email != email)
-                .ToList();
+            var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser).ToList();
+            var gestores = _context.Gestores.Include(g => g.Locador).Include(g => g.ApplicationUser).ToList();
+            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
+            var clientes = _context.Clientes.Include(c => c.ApplicationUser).ToList();
 
-            return View(myEmployees);
+            var viewModel = new ListEmployeesViewModel
+            {
+                Funcionarios = funcionarios,
+                Gestores = gestores,
+                Clientes = clientes,
+                Locadores = locadores
+            };
+
+            return View(viewModel);
         }
-        public async Task<IActionResult> ListAccomodations()
+
+
+        /*public async Task<IActionResult> ListAccomodations()
         {
             string email = User.FindFirstValue(ClaimTypes.Email);
             
@@ -199,7 +202,7 @@ namespace HabitAqui.Controllers
                 .ToList();
 
             return View(habitacoes);
-        }
+        }*/
 
     }
 }

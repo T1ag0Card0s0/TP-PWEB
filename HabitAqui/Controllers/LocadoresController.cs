@@ -28,8 +28,16 @@ namespace HabitAqui.Controllers
         // GET: Locadores
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Locadores.Include(l => l.Funcionario);
+            var applicationDbContext = _context.Locadores.Include(l => l.Funcionarios);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        public IActionResult ListHabitacoes()
+        {
+            var locador = _context.Locadores.Include(l => l.Funcionarios).Include(l => l.Habitacoes).ToList();
+
+
+            return View("Index", locador);
         }
 
         // GET: Locadores/Details/5
@@ -41,7 +49,7 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
+                .Include(l => l.Funcionarios)
                 .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
@@ -72,7 +80,7 @@ namespace HabitAqui.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -89,7 +97,7 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -125,7 +133,7 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.FuncionarioId);
+            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -138,7 +146,7 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
-                .Include(l => l.Funcionario)
+                .Include(l => l.Funcionarios)
                 .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {

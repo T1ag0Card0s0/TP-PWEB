@@ -1,97 +1,108 @@
-﻿@model HabitAqui.Models.MyEmployees;
-@{
-    ViewData["Title"] = "List Employees";
-}
+@model HabitAqui.ViewModels.ListEmployeesViewModel
+
 
 <div class="container">
 
     <h1>Lista de Utilizadores</h1>
-    
-    <h2>Gestores  <a class="btn btn-primary rounded-pill">Adicionar um novo Gestor</a></h2>
-    @if (Model.Gestores.Any())
+
+    <h2>Gestores <a asp-area="Identity" asp-page="/Account/RegisterGestor" class="btn btn-link">Criar Novo</a></h2>
+ 
+    <div class="row m-auto">
+    @foreach (var gestor in Model.Gestores)
     {
-        <div class="row">
-            @foreach (var gestor in Model.Gestores)
-            {
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@gestor.Nome</h5>
-                            <p class="card-text">Gestor ID: @gestor.GestorId</p>
-                            @if (gestor.ApplicationUser != null)
-                            {
-                                <p class="card-text">User Information:</p>
-                                <ul class="list-group">
-                                    <li class="list-group-item">Username: @gestor.ApplicationUser.UserName</li>
-                                    <li class="list-group-item">Email: @gestor.ApplicationUser.Email</li>
-                                    <!-- Add other relevant ApplicationUser information -->
-                                </ul>
-                            }
-                            <!-- Add other relevant information from Gestor -->
-                        </div>
-                    </div>
+        <div class="col-md-3">
+            <div class="card border-dark mb-3" style="width:18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@gestor.Nome</h5>
+                    <p class="card-text">
+                        ID: @gestor.GestorId
+                    </p>
+                    <p class="card-text">
+                        Email: @gestor.ApplicationUser.Email
+                    </p>
+                    <p class="card-text">
+                        Locador: @gestor.Locador.Nome
+                    </p>
+                    <p class="card-text">
+                        <a asp-action="Edit" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-secondary">Editar</a>
+                        <a asp-action="Delete" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-danger">Apagar</a>
+                    </p>
                 </div>
-            }
-        </div>
-        <hr />
-    }
-    
-    <h2>Funcionarios <a class="btn btn-primary rounded-pill">Adicionar um novo Funcinário</a></h2>
-   
-    @if (Model.Funcionarios.Any())
-    {
-        <div class="row">
-            @foreach (var funcionario in Model.Funcionarios)
-            {
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@funcionario.Nome</h5>
-                            <p class="card-text">Funcionario ID: @funcionario.FuncionarioId</p>
-                            @if (funcionario.ApplicationUser != null)
-                            {
-                                <p class="card-text">User Information:</p>
-                                <ul class="list-group">
-                                    <li class="list-group-item">Username: @funcionario.ApplicationUser.UserName</li>
-                                    <li class="list-group-item">Email: @funcionario.ApplicationUser.Email</li>
-                                    <!-- Add other relevant ApplicationUser information -->
-                                </ul>
-                            }
-                            <!-- Add other relevant information from Funcionario -->
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-        <hr />
-    }
-   
-    <h2>Clientes <a class="btn btn-primary rounded-pill">Adicionar um novo Cliente</a></h2>
-   
-    @if (Model.Clientes.Any())
-    {
-        <div class="row">
-            @foreach (var cliente in Model.Clientes)
-            {
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@cliente.Nome</h5>
-                            <p class="card-text">Funcionario ID: @cliente.ClienteId</p>
-                            @if (cliente.ApplicationUser != null)
-                            {
-                                <p class="card-text">User Information:</p>
-                                <ul class="list-group">
-                                    <li class="list-group-item">Username: @cliente.ApplicationUser.UserName</li>
-                                    <li class="list-group-item">Email: @cliente.ApplicationUser.Email</li>
-                                    <!-- Add other relevant ApplicationUser information -->
-                                </ul>
-                            }
-                            <!-- Add other relevant information from Funcionario -->
-                        </div>
-                    </div>
-                </div>
-            }
+            </div>
         </div>
     }
+    </div>
+    <h2>Funcionarios <a asp-area="Identity" asp-page="/Account/RegisterFunc" class="btn btn-link">Criar Novo</a></h2>
+    <div class="row m-auto">
+    @foreach (var funcionario in Model.Funcionarios)
+     {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3" style="width:18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@funcionario.Nome</h5>
+                    <p class="card-text">
+                        ID: @funcionario.FuncionarioId
+                    </p>
+                    <p class="card-text">
+                        Email: @funcionario.ApplicationUser.Email
+                    </p>
+                    <p class="card-text">
+                        Locador: @funcionario.Locador.Nome
+                    </p>
+                    <p class="card-text">
+                        <a asp-action="Edit" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-secondary">Editar</a>
+                        <a asp-action="Delete" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-danger">Apagar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+     }
+     </div>
+
+    <h2>Locadores</h2>
+    <div class="row m-auto">
+    @foreach (var locador in Model.Locadores)
+    {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3" style="width:18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@locador.Nome</h5>
+                    <p class="card-text">
+                        ID: @locador.LocadorId
+                    </p>
+                    <p class="card-text">
+                        Email: @locador.ApplicationUser.Email
+                    </p>
+                    <p class="card-text">
+                        <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
+                        <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    <h2>Clientes</h2>
+    <div class="row m-auto">
+    @foreach (var cliente in Model.Clientes)
+    {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3" style="width:18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@cliente.Nome</h5>
+                    <p class="card-text">
+                        ID: @cliente.ClienteId
+                    </p>
+                    <p class="card-text">
+                        Email: @cliente.ApplicationUser.Email
+                    </p>
+                    <p class="card-text">
+                        <a asp-action="Edit" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-secondary">Editar</a>
+                        <a asp-action="Delete" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
 </div>

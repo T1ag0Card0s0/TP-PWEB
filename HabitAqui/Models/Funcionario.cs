@@ -6,8 +6,14 @@ namespace HabitAqui.Models
     {
         public int FuncionarioId { get; set; }
         public string Nome {  get; set; }
-        public ICollection<Locador>? Locadores { get; set; }
-        public ICollection<Estado>? Estados { get; set; }
+
+        public Locador Locador { get; set; }
+        [ForeignKey("LocadorId")]
+        public int LocadorId { get; set; }
+
+        public Gestor Gestor { get; set; }
+        [ForeignKey("GestorId")]
+        public int? GestorId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
     }
