@@ -62,13 +62,11 @@ namespace HabitAqui.Controllers
 
         // metodo chamado para aplicar os filtros 
         [HttpPost]
-        public IActionResult Filter(string[] selectedCategories, string? local, string? minPrice, string? maxPrice, string? locador)
+        public IActionResult Filter(string selectedCategories, string? local, string? minPrice, string? maxPrice, string? locador)
         {
-            // Retrieve the list of Categoria names from the database
             var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
-
-            // Pass the list of Categoria names to the view
             ViewData["CategoriaNames"] = categoriaNames;
+
             var habitacao = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).AsQueryable();
 
 
@@ -77,7 +75,7 @@ namespace HabitAqui.Controllers
                 habitacao = habitacao.Where(h => h.Locador.Nome.Contains(locador));
             }
 
-            if (selectedCategories != null && selectedCategories.Length > 0)
+            if (!string.IsNullOrEmpty(selectedCategories))
             {
                 habitacao = habitacao.Where(h => selectedCategories.Contains(h.Categoria.Nome));
             }

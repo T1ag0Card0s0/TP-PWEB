@@ -1,29 +1,31 @@
-﻿@model IEnumerable<HabitAqui.Models.Funcionario>
+﻿@model IEnumerable<HabitAqui.Models.Habitacao>
 
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FuncionarioId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FuncionarioId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h2>Escolha uma habitação</h2>
+<div class="row m-auto">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card border-dark mb-3 text-center" style="width:18rem;">
+                <div class="card-header border-dark">
+                    <h5 class="card-title">
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </h5>
+                </div>
+                <div class="card-body text-dark">
+                    <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
+                    <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
+                    <p class="card-text-center">
+                        <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
+                        <i class="fa-solid fa-star"></i> @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)
+                    </p>
+                </div>
+                <div class="card-footer border-dark">
+                    <a asp-controller="Arrendamentos" asp-action="Create" class="btn btn-secondary">Entregar</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

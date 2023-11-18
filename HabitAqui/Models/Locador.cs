@@ -12,6 +12,7 @@ namespace HabitAqui.Models
         public ICollection<AvaliacaoLocador>? Avaliacoes { get; set; }
         public ICollection<Funcionario> Funcionarios { get; set; }
         public ICollection<Gestor> Gestores { get; set; }
+
         public ICollection<Arrendamento>? Arrendamentos { get; set; }
         
         public ApplicationUser ApplicationUser { get; set; }

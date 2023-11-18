@@ -52,11 +52,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="ApplicationUser" asp-action="Index">Utilizadores</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                            </li>
                         }
                         @if (User.IsInRole("Cliente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListArrendamentos">Os meus arrendamentos</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Arrendamentos" asp-action="ListClienteArrendamentos">Os meus arrendamentos</a>
                             </li>
                         }
                         @if (User.IsInRole("Gestor"))
@@ -73,7 +76,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Habitacoes" asp-action="IndexFuncionario">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Habitacoes" asp-action="Listar">
                                             Listar Habitações
                                         </a>
                                     </li>
@@ -93,7 +96,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Funcionarios" asp-action="ListAlugueres">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Arrendamentos" asp-action="ListArrendamentos">
                                             Listar Reservas
                                         </a>
                                     </li>
@@ -101,7 +104,7 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Funcionarios" asp-action="...">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Arrendamentos" asp-action="Create">
                                             Entregar uma habitação
                                         </a>
                                     </li>
@@ -122,6 +125,7 @@
     </header>
 
     <div>
+       
         @RenderBody()
     </div>
 
@@ -138,5 +142,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 </html>

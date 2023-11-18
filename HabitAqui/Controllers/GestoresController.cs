@@ -185,24 +185,5 @@ namespace HabitAqui.Controllers
             return View(viewModel);
         }
 
-
-        /*public async Task<IActionResult> ListAccomodations()
-        {
-            string email = User.FindFirstValue(ClaimTypes.Email);
-            
-            // Carregar o Gestor com os Locadores e Habitacoes em uma única consulta
-            Gestor gestor = await _context.Gestores
-                .Include(g => g.Locadores)
-                .ThenInclude(locador => locador.Habitacoes)
-                .FirstOrDefaultAsync(g => g.ApplicationUser.Email == email);
-
-            // Extrair todas as habitacoes diretamente, evitando o loop
-            List<Habitacao> habitacoes = gestor.Locadores
-                .SelectMany(locador => locador.Habitacoes)
-                .ToList();
-
-            return View(habitacoes);
-        }*/
-
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HabitAqui.Migrations
 {
-    public partial class migration : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -392,9 +392,9 @@ namespace HabitAqui.Migrations
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     HabitacaoId = table.Column<int>(type: "int", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FuncionarioEntregaFuncionarioId = table.Column<int>(type: "int", nullable: false),
-                    DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LocadorId = table.Column<int>(type: "int", nullable: true)
+                    FuncionarioEntregaId = table.Column<int>(type: "int", nullable: false),
+                    LocadorId = table.Column<int>(type: "int", nullable: false),
+                    DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -406,8 +406,8 @@ namespace HabitAqui.Migrations
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Arrendamentos_Funcionarios_FuncionarioEntregaFuncionarioId",
-                        column: x => x.FuncionarioEntregaFuncionarioId,
+                        name: "FK_Arrendamentos_Funcionarios_FuncionarioEntregaId",
+                        column: x => x.FuncionarioEntregaId,
                         principalTable: "Funcionarios",
                         principalColumn: "FuncionarioId",
                         onDelete: ReferentialAction.Cascade);
@@ -421,7 +421,8 @@ namespace HabitAqui.Migrations
                         name: "FK_Arrendamentos_Locadores_LocadorId",
                         column: x => x.LocadorId,
                         principalTable: "Locadores",
-                        principalColumn: "LocadorId");
+                        principalColumn: "LocadorId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -514,9 +515,9 @@ namespace HabitAqui.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Arrendamentos_FuncionarioEntregaFuncionarioId",
+                name: "IX_Arrendamentos_FuncionarioEntregaId",
                 table: "Arrendamentos",
-                column: "FuncionarioEntregaFuncionarioId");
+                column: "FuncionarioEntregaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Arrendamentos_HabitacaoId",

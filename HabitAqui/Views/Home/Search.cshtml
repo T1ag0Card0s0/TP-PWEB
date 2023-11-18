@@ -5,24 +5,19 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+
 <div class="container-fluid p-3" style="background-color:#D8D8D8">
     <form asp-area="" asp-controller="Home" asp-action="Filter" method="post">
         <div class="row g-3">
             <div class="col-1">
-                <div class="dropdown">
-                    <button class="btn btn-dark dropdown-toggle" type="button" id="checkboxDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categorias
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="checkboxDropdown">
-                        @foreach (var categoriaName in ViewData["CategoriaNames"] as List<string>)
-                        {
-                            <div class="form-check">
-                                <input type="checkbox" name="selectedCategories" value="@categoriaName" class="form-check-input">
-                                <label class="form-check-label" for="categoria-@categoriaName">@categoriaName</label>
-                            </div>
-                        }
-                    </div>
-                </div>
+                <select name="selectedCategories" class="form-select ">
+                    <option selected value="">Categoria</option>
+
+                    @foreach (var categoriaName in ViewBag.CategoriaNames)
+                    {
+                        <option value="@categoriaName">@categoriaName</option>
+                    }
+                </select>
             </div>
             <div class="col-5">
                 <input type="search" name="local" class="form-control" placeholder="Pesquisa por local" />

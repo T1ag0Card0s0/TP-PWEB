@@ -10,6 +10,7 @@ using HabitAqui.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using HabitAqui.ViewModels;
 
 namespace HabitAqui.Controllers
 {
@@ -30,8 +31,6 @@ namespace HabitAqui.Controllers
         // GET: Habitacoes
         public IActionResult Index(List<Habitacao> habitacoes)
         {
-            var categoriaNames = _context.Categorias.ToList();
-            ViewData["Categorias"] = categoriaNames;
 
             // Se habitacoes for nulo (ou seja, nenhum resultado de pesquisa), carrega todas as habitacoes
             if (habitacoes == null || !habitacoes.Any())
@@ -43,7 +42,7 @@ namespace HabitAqui.Controllers
         }
 
         [Authorize(Roles = "Gestor, Funcionario")]
-        public IActionResult IndexFuncionario()
+        public IActionResult Listar()
         {
             var categoriaNames = _context.Categorias.ToList();
             ViewData["Categorias"] = categoriaNames;
@@ -121,6 +120,7 @@ namespace HabitAqui.Controllers
             return -1;
         }
 
+       
         // GET: Habitacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -217,9 +217,6 @@ namespace HabitAqui.Controllers
 
             return View(avaliacao);
         }
-
-
-
 
         // GET: Habitacoes/Create
         [Authorize(Roles = "Gestor, Funcionario")]

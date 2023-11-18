@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231111124224_migration")]
-    partial class migration
+    [Migration("20231117232715_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,13 +142,13 @@ namespace HabitAqui.Migrations
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FuncionarioEntregaFuncionarioId")
+                    b.Property<int>("FuncionarioEntregaId")
                         .HasColumnType("int");
 
                     b.Property<int>("HabitacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocadorId")
+                    b.Property<int>("LocadorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Observacoes")
@@ -159,7 +159,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("FuncionarioEntregaFuncionarioId");
+                    b.HasIndex("FuncionarioEntregaId");
 
                     b.HasIndex("HabitacaoId");
 
@@ -654,7 +654,7 @@ namespace HabitAqui.Migrations
 
                     b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioEntrega")
                         .WithMany()
-                        .HasForeignKey("FuncionarioEntregaFuncionarioId")
+                        .HasForeignKey("FuncionarioEntregaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -664,15 +664,19 @@ namespace HabitAqui.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HabitAqui.Models.Locador", null)
+                    b.HasOne("HabitAqui.Models.Locador", "Locador")
                         .WithMany("Arrendamentos")
-                        .HasForeignKey("LocadorId");
+                        .HasForeignKey("LocadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cliente");
 
                     b.Navigation("FuncionarioEntrega");
 
                     b.Navigation("Habitacao");
+
+                    b.Navigation("Locador");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.AvaliacaoHabitacao", b =>

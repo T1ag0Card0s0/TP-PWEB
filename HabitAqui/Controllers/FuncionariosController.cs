@@ -24,12 +24,12 @@ namespace HabitAqui.Controllers
             _userManager = userManager;
         }
 
-        // GET: Funcionarios
+        // GET: Habitacoes
         public async Task<IActionResult> Index()
         {
-              return _context.Funcionarios != null ? 
-                          View(await _context.Funcionarios.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Funcionarios'  is null.");
+            var habitacoes = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).ToList();
+
+            return View(habitacoes);
         }
 
         public async Task<IActionResult> ListHabitacoes()
@@ -41,11 +41,11 @@ namespace HabitAqui.Controllers
             var locador = funcionario.Locador;
 
             var habitacoes = locador.Habitacoes.ToList();
-            // se locador nao tiver nenhuma habitaçao
+            // se locador nao tiver nenhuma habitaçao IMPLEMENTAR
 
             return View(habitacoes);
         }
-        
+
         // GET: Funcionarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -84,6 +84,11 @@ namespace HabitAqui.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(funcionario);
+        }
+
+        public async Task<IActionResult> EntregaHabitacao()
+        {
+            return View();
         }
 
         // GET: Funcionarios/Edit/5
