@@ -9,7 +9,9 @@ namespace HabitAqui.Models
      
         public int Id { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataInicio { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
         public decimal Custo { get; set; }
@@ -35,6 +37,6 @@ namespace HabitAqui.Models
 
         public DateTime DataEntrega { get; set; }
 
-        //public bool? Ativo { get; set; } // confirmado ou rejeitado
+        public bool Ativo { get; set; } // confirmado ou rejeitado
     }
 }

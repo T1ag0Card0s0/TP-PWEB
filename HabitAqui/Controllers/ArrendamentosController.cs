@@ -259,7 +259,45 @@ namespace HabitAqui.Controllers
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "LocadorId", arrendamento.LocadorId);
             return View(arrendamento);
         }
+        // GET: Arrendamentos/Confirm/5
+        public async Task<IActionResult> Confirm(int? id)
+        {
+            if (id == null || _context.Arrendamentos == null)
+            {
+                return NotFound();
+            }
 
+            var arrendamento = await _context.Arrendamentos
+                .Include(a => a.Cliente)
+                .Include(a => a.FuncionarioEntrega)
+                .Include(a => a.Habitacao)
+                .Include(a => a.Locador)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (arrendamento == null)
+            {
+                return NotFound();
+            }
+
+            return View(arrendamento);
+        }
+        // POST: Arrendamentos/Confirm/5
+        [HttpPost, ActionName("Confirm")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmConfirmed(int id)
+        {
+            if (_context.Arrendamentos == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
+            }
+            var arrendamento = await _context.Arrendamentos.FindAsync(id);
+            if (arrendamento != null)
+            {
+                arrendamento.Ativo = true;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Arrendamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

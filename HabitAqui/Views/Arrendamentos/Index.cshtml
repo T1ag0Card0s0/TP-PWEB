@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<HabitAqui.Models.Arrendamento>
-
 @{
     ViewData["Title"] = "Index";
 }
+<h1>Arrendamentos</h1>
 <div class="container-fluid p-3" style="background-color:#D8D8D8">
     <form asp-area="" asp-controller="Arrendamentos" asp-action="Filter" method="post">
         <div class="row g-3 mt-2">
@@ -53,25 +53,51 @@
                         @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome)
                     </h5>
                 </div>
-                <div class="card-body text-dark">
-                    <p class="card-text-center">Data Inicio:@Html.DisplayFor(modelItem => item.DataInicio)</p>
-                    <p class="card-text-center">Data Fim:@Html.DisplayFor(modelItem => item.DataFim)</p>
-                    <p class="card-text-center">Funcionario Entrega:@Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</p>
-                </div>
-                <div class="card-footer border-dark">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Data Inicio: @Html.DisplayFor(modelItem => item.DataInicio)</li>
+                    <li class="list-group-item">Data Fim: @Html.DisplayFor(modelItem => item.DataFim)</li>
+                    <li class="list-group-item">Funcionário: @Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</li>
+                </ul>
+                <div class="card-body">
                     <p class="card-text-center">
-                        <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                        <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
                     </p>
-                    @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-                    {
-                        <p class="card-text-center">
-                            <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-secondary">Editar</a>
-                            <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Apagar</a>
-                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
-                        </p>
-                    }
+                    <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Editar</a>
+                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Detalhes</a>
                 </div>
+                @if(!item.Ativo){
+                    <div class="card-footer border-dark">
+                    
+                        @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+                        {
+                            <p class="card-text-center">
+                                    <a asp-action="Confirm" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">Confirmar</a>
+                                    <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Rejeitar</a>
+                            </p>
+                        }
+                    </div>
+                }
             </div>
         </div>
     }
+</div>
+<!-- HTML para o modal -->
+<div class="modal fade" id="confirmarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem a certeza que deseja confirmar o respetivo aluguer?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
 </div>
