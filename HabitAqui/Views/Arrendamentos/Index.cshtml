@@ -2,19 +2,25 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Arrendamentos</h1>
 <div class="container-fluid p-3" style="background-color:#D8D8D8">
     <form asp-area="" asp-controller="Arrendamentos" asp-action="Filter" method="post">
         <div class="row g-3 mt-2">
             <div class="col-2">
                 <select name="categoria" class="form-select">
                     <option value="">Selecione uma Categoria</option>
-                   
+                    @foreach (var categoria in ViewBag.Categorias)
+                    {
+                        <option value="@categoria.Nome">@categoria.Nome</option>
+                    }
                 </select>
             </div>
             <div class="col-2">
                 <select name="cliente" class="form-select">
                     <option value="">Selecione um Cliente</option>
+                    @foreach (var cliente in ViewBag.Clientes)
+                    {
+                        <option value="@cliente.Nome">@cliente.Nome</option>
+                    }
                 </select>
             </div>
             <div class="col-1">
@@ -39,7 +45,15 @@
                     <option value="AvaliacaoDecrescente">Avaliação (desc)</option>
                 </select>
             </div>
+            <div class="col-2">
+                <select name="estado" class="form-select">
+                    <option value="">Selecione um Estado</option>
+                    <option value="Ativo">Confirmado</option>
+                    <option value="Inativo">Por Confirmar</option>
+                </select>
+            </div>
         </div>
+
     </form>
 </div>
 
@@ -47,57 +61,70 @@
     @foreach (var item in Model)
     {
         <div class="col-md-3">
-            <div class="card border-dark mb-3 text-center" style="width:18rem;">
-                <div class="card-header border-dark">
-                    <h5 class="card-title">
-                        @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome)
-                    </h5>
+
+            @if (item.Ativo)
+            {
+                <div class="card text-white bg-success mb-3 border-dark" style="max-width: 18rem;">
+
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
+                            @Html.DisplayFor(modelItem => item.Custo)€
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-dark">Data Inicio: @Html.DisplayFor(modelItem => item.DataInicio)</li>
+                        <li class="list-group-item border-dark">Data Fim: @Html.DisplayFor(modelItem => item.DataFim)</li>
+                        <li class="list-group-item border-dark">Funcionário: @Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</li>
+                    </ul>
+                    <div class="card-body">
+                        <p class="text-center">
+                            <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                        </p>
+                        <p class="text-center">
+                            <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link text-white">Editar</a>
+                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link text-white">Detalhes</a>
+                        </p>
+                        
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Data Inicio: @Html.DisplayFor(modelItem => item.DataInicio)</li>
-                    <li class="list-group-item">Data Fim: @Html.DisplayFor(modelItem => item.DataFim)</li>
-                    <li class="list-group-item">Funcionário: @Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</li>
-                </ul>
-                <div class="card-body">
-                    <p class="card-text-center">
-                        <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
-                    </p>
-                    <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Editar</a>
-                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Detalhes</a>
-                </div>
-                @if(!item.Ativo){
-                    <div class="card-footer border-dark">
-                    
-                        @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-                        {
-                            <p class="card-text-center">
+            }
+            else
+            {
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                    <div class="card-header border-dark">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) - @Html.DisplayFor(modelItem => item.Custo)€
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Data Inicio: @Html.DisplayFor(modelItem => item.DataInicio)</li>
+                        <li class="list-group-item">Data Fim: @Html.DisplayFor(modelItem => item.DataFim)</li>
+                        <li class="list-group-item">Funcionário: @Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</li>
+                    </ul>
+                    <div class="card-body">
+                        <p class="card-text-center">
+                            <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                        </p>
+                        <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Editar</a>
+                        <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Detalhes</a>
+                    </div>
+                    @if (!item.Ativo)
+                    {
+                        <div class="card-footer border-dark">
+
+                            @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+                            {
+                                <p class="card-text-center">
                                     <a asp-action="Confirm" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">Confirmar</a>
                                     <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Rejeitar</a>
-                            </p>
-                        }
-                    </div>
-                }
-            </div>
+                                </p>
+                            }
+                        </div>
+                    }
+                </div>
+            }
         </div>
-    }
-</div>
-<!-- HTML para o modal -->
-<div class="modal fade" id="confirmarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmarModalLabel">Confirmação</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Tem a certeza que deseja confirmar o respetivo aluguer?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmarBtn">Confirmar</button>
-            </div>
-        </div>
-    </div>
+      }
 </div>

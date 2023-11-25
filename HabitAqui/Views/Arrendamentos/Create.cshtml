@@ -32,8 +32,13 @@
                 <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="HabitacaoId" class="control-label"></label>
-                <select asp-for="HabitacaoId"class ="form-control" asp-items="ViewBag.HabitacaoId"></select>
+                <label class="control-label">Equipamentos Opcionais</label>
+                <div>
+                    @foreach (var equipamento in ViewBag.Equipamentos)
+                    {
+                        <input class="form-check-input" type="checkbox" name="EquipamentosOpcionais" value="@equipamento.Id">@equipamento.Nome
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Observacoes" class="control-label"></label>
@@ -43,10 +48,6 @@
             <div class="form-group">
                 <label asp-for="FuncionarioEntregaId" class="control-label">Funcionario de Entrega</label>
                 <select asp-for="FuncionarioEntregaId" class ="form-control" asp-items="ViewBag.FuncionarioEntregaId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="LocadorId" class="control-label">Locador</label>
-                <select asp-for="LocadorId" class ="form-control" asp-items="ViewBag.LocadorId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="DataEntrega" class="control-label"></label>
@@ -61,6 +62,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Habitacoes" asp-action="Listar">Back to List</a>
 </div>
 

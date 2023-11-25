@@ -30,6 +30,7 @@ namespace HabitAqui.Controllers
 
             var clientesNames = _context.Clientes.ToList();
             ViewData["Clientes"] = clientesNames;
+
             if (arrendamentos == null || !arrendamentos.Any())
             {
                 arrendamentos = _context.Arrendamentos
@@ -37,6 +38,7 @@ namespace HabitAqui.Controllers
                     Include(a => a.FuncionarioEntrega)
                     .Include(a => a.Habitacao)
                     .Include(a => a.Habitacao.Categoria)
+                    .Include(a => a.EquipamentosOpcionais)
                     .Include(a => a.Locador).ToList();
             }
 
@@ -45,26 +47,20 @@ namespace HabitAqui.Controllers
 
         public IActionResult ListArrendamentos()
         {
+            var categoriaNames = _context.Categorias.ToList();
+            ViewData["Categorias"] = categoriaNames;
+
+            var clientesNames = _context.Clientes.ToList();
+            ViewData["Clientes"] = clientesNames;
             var arrendamentos = _context.Arrendamentos
                 .Include(a => a.Cliente)
                 .Include(a => a.FuncionarioEntrega)
                 .Include(a => a.Habitacao)
                 .Include(a => a.Habitacao.Categoria)
+                .Include(a => a.EquipamentosOpcionais)
                 .Include(a => a.Locador).AsQueryable();
 
-            // substituir por funcao obterlocador id
-            var user_atual = _userManager.GetUserAsync(User).Result;
-            int id = -1;
-            if (_userManager.IsInRoleAsync(user_atual, "Funcionario").Result)
-            {
-                var user = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                id = user.LocadorId;
-            }
-            else if (_userManager.IsInRoleAsync(user_atual, "Gestor").Result)
-            {
-                var user = _context.Gestores.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                id = user.LocadorId;
-            }
+            int id = ObterLocadorIdAtual();
 
             if (id != -1)
                 arrendamentos = arrendamentos.Where(a => a.LocadorId == id);
@@ -74,6 +70,7 @@ namespace HabitAqui.Controllers
         }
         public IActionResult ListClienteArrendamentos()
         {
+
             var cliente = _userManager.GetUserAsync(User).Result;
 
             var arrendamentos = _context.Arrendamentos.Include(a => a.Cliente).
@@ -84,7 +81,7 @@ namespace HabitAqui.Controllers
             return View("Index", arrendamentos);
         }
 
-        public IActionResult Filter(string categoria, string cliente, DateTime start_date, DateTime end_date, string order)
+        public IActionResult Filter(string categoria, string cliente, DateTime start_date, DateTime end_date, string order, string estado)
         {
             var categoriaNames = _context.Categorias.ToList();
             ViewData["Categorias"] = categoriaNames;
@@ -99,6 +96,7 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Habitacao.Categoria)
                 .Include(h => h.Cliente)
                 .Include(h => h.Locador)
+                .Include(a => a.EquipamentosOpcionais)
                 .Where(h => h.LocadorId == locadorId);
 
             if (!string.IsNullOrEmpty(categoria))
@@ -106,6 +104,18 @@ namespace HabitAqui.Controllers
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Habitacao.Categoria.Nome.Contains(categoria));
             }
 
+            if (!string.IsNullOrEmpty(estado))
+            {
+                if (estado.Equals("Ativo"))
+                {
+                    arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Ativo == true);
+                }
+                else
+                {
+                    arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Ativo != true);
+                }
+            }
+            
             if (start_date != default(DateTime))
             {
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(a => a.DataInicio >= start_date);
@@ -168,6 +178,7 @@ namespace HabitAqui.Controllers
                 .Include(a => a.FuncionarioEntrega)
                 .Include(a => a.Habitacao)
                 .Include(a => a.Locador)
+                .Include(a => a.EquipamentosOpcionais)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (arrendamento == null)
             {
@@ -183,8 +194,9 @@ namespace HabitAqui.Controllers
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Nome");
             ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "Nome");
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
-            ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id");
-           
+            var equipamentos = _context.Equipamentos.ToList();
+            ViewData["Equipamentos"] = equipamentos;
+            TempData["HabitacaoId"] = id;
             return View();
         }
 
@@ -193,8 +205,26 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento)
+        public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento, List<int> EquipamentosOpcionais)
         {
+
+            arrendamento.EquipamentosOpcionais = new List<Equipamento>();
+
+            foreach (var equipamentoId in EquipamentosOpcionais)
+            {
+                var equipamento = await _context.Equipamentos.FindAsync(equipamentoId);
+
+                if (equipamento != null)
+                {
+                    arrendamento.EquipamentosOpcionais.Add(equipamento);
+                }
+            }
+            // Recupere o valor da TempData
+            if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
+            {
+                arrendamento.HabitacaoId = (int)habitacaoId;
+            }
+            arrendamento.LocadorId = ObterLocadorIdAtual();
             _context.Add(arrendamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

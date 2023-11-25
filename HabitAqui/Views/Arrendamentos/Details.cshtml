@@ -58,15 +58,22 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Locador.LocadorId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataEntrega)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EquipamentosOpcionais)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataEntrega)
+        <dd class="col-sm-10">
+            @if (Model.EquipamentosOpcionais != null){
+                <ul>
+                    @foreach (var equipamento in Model.EquipamentosOpcionais)
+                    {
+                        <li>@equipamento.Nome</li>
+                    }
+                </ul>
+            }
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ListArrendamentos">Back to List</a>
 </div>

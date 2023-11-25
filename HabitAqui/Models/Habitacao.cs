@@ -26,5 +26,8 @@ namespace HabitAqui.Models
 
         public ICollection<AvaliacaoHabitacao>? Avaliacoes { get; set; }
         public ICollection<Arrendamento>? Arrendamentos { get; set; }
+
+        [NotMapped]
+        public List<IFormFile>? Fotos { get; set; }
     }
 }
