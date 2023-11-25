@@ -177,6 +177,7 @@ namespace HabitAqui.Controllers
                 .Include(a => a.Cliente)
                 .Include(a => a.FuncionarioEntrega)
                 .Include(a => a.Habitacao)
+                .Include(a => a.Habitacao.Categoria)
                 .Include(a => a.Locador)
                 .Include(a => a.EquipamentosOpcionais)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -244,10 +245,13 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "ClienteId", arrendamento.ClienteId);
-            ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "FuncionarioId", arrendamento.FuncionarioEntregaId);
-            ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id", arrendamento.HabitacaoId);
-            ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "LocadorId", arrendamento.LocadorId);
+
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Nome");
+            ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "Nome");
+            ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
+            var equipamentos = _context.Equipamentos.ToList();
+            ViewData["Equipamentos"] = equipamentos;
+            TempData["HabitacaoId"] = id;
             return View(arrendamento);
         }
 
@@ -256,7 +260,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento ,List<int> EquipamentosOpcionais)
         {
             if (id != arrendamento.Id)
             {
@@ -267,7 +271,24 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
-                    _context.Update(arrendamento);
+                    arrendamento.EquipamentosOpcionais = new List<Equipamento>();
+
+                    foreach (var equipamentoId in EquipamentosOpcionais)
+                    {
+                        var equipamento = await _context.Equipamentos.FindAsync(equipamentoId);
+
+                        if (equipamento != null)
+                        {
+                            arrendamento.EquipamentosOpcionais.Add(equipamento);
+                        }
+                    }
+                    // Recupere o valor da TempData
+                    if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
+                    {
+                        arrendamento.HabitacaoId = (int)habitacaoId;
+                    }
+                    arrendamento.LocadorId = ObterLocadorIdAtual();
+                    _context.Add(arrendamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

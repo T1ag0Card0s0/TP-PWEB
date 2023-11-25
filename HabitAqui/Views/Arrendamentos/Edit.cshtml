@@ -29,14 +29,19 @@
                 <span asp-validation-for="Custo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
+                <label asp-for="ClienteId" class="control-label">Cliente</label>
                 <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HabitacaoId" class="control-label"></label>
-                <select asp-for="HabitacaoId" class="form-control" asp-items="ViewBag.HabitacaoId"></select>
-                <span asp-validation-for="HabitacaoId" class="text-danger"></span>
+                <label class="control-label">Equipamentos Opcionais</label>
+                <div>
+                    @foreach (var equipamento in ViewBag.Equipamentos)
+                    {
+                        <input class="form-check-input" type="checkbox" name="EquipamentosOpcionais" value="@equipamento.Id">
+
+                        @equipamento.Nome
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Observacoes" class="control-label"></label>
@@ -47,11 +52,6 @@
                 <label asp-for="FuncionarioEntregaId" class="control-label"></label>
                 <select asp-for="FuncionarioEntregaId" class="form-control" asp-items="ViewBag.FuncionarioEntregaId"></select>
                 <span asp-validation-for="FuncionarioEntregaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LocadorId" class="control-label"></label>
-                <select asp-for="LocadorId" class="form-control" asp-items="ViewBag.LocadorId"></select>
-                <span asp-validation-for="LocadorId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataEntrega" class="control-label"></label>
