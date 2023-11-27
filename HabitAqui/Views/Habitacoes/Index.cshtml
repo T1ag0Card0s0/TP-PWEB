@@ -3,26 +3,24 @@
 @{
     ViewData["Title"] = "Index";
 }
+
 <div class="container-fluid p-3" style="background-color:#D8D8D8">
-    <form asp-area="" asp-controller="Habitacoes" asp-action="Filter" method="post">
-        <div class="row g-3 mt-2">
-            <div class="col-2">
-                <select name="categoria" class="form-select">
-                    <option value="">Selecione uma Categoria</option>
+    <form asp-area="" asp-controller="Home" asp-action="Filter" method="post">
+        <div class="row g-3">
+            <div class="col-1">
+                <select name="selectedCategories" class="form-select ">
+                    <option selected value="">Categoria</option>
+
                     @foreach (var categoria in ViewBag.Categorias)
                     {
                         <option value="@categoria.Nome">@categoria.Nome</option>
                     }
                 </select>
             </div>
-            <div class="col-2">
-                <select name="estado" class="form-select">
-                    <option value="">Selecione um estado</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="nao_ativo">Não Ativo</option>
-                </select>
+            <div class="col-5">
+                <input type="search" name="local" class="form-control" placeholder="Pesquisa por local" />
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <button type="submit" class="btn btn-dark btn-block">
                     Procurar
                 </button>
@@ -63,28 +61,28 @@
                     <option value="50000">50000€</option>
                 </select>
             </div>
-            <div class="col-2">
-                <select name="order" class="form-select">
-                    <option selected value="">Ordenar Por</option>
-                    <option value="PrecoCrescente">Preço (asc)</option>
-                    <option value="PrecoDecrescente">Preço (desc)</option>
-                    <option value="AvaliacaoCrescente">Avaliação (asc)</option>
-                    <option value="AvaliacaoDecrescente">Avaliação (desc)</option>
-                </select>
+            <div class="col-4">
+                <input type="text" name="locador" class="form-control" placeholder="Nome do Locador" />
             </div>
         </div>
     </form>
 </div>
-
-<div class="row m-auto mt-2">
+<div class="container-fluid d-flex justify-content-end p-3">
+    <form asp-area="" asp-controller="Home" asp-action="OrderSearch" method="post" name="form">
+        <select name="orderby" class="form-select">
+            <option selected value="">Ordenar Por</option>
+            <option value="PrecoCrescente">Preço (asc)</option>
+            <option value="PrecoDecrescente">Preço (desc)</option>
+            <option value="AvaliacaCrescente">Avaliação (asc)</option>
+            <option value="AvaliacaoDecrescente">Avaliação (desc)</option>
+        </select>
+    </form>
+</div>
+<div class="row m-auto">
     @foreach (var item in Model)
     {
         <div class="col-md-3">
             <div class="card border-dark mb-3 text-center" style="width:18rem;">
-                @if (item.Fotos != null && item.Fotos.Any())
-                {
-                    <img class="card-img-top" src="@Url.Content(item.Fotos.First().ToString())" alt="Card image cap">
-                }
                 <div class="card-header border-dark">
                     <h5 class="card-title">
                         @Html.DisplayFor(modelItem => item.Categoria.Nome)
@@ -107,8 +105,23 @@
                             <a asp-action="Create" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-warning">Arrendar</a>
                         </p>
                     }
+                    else if (User.IsInRole("Cliente"))
+                    {
+                        <p class="card-text-center">
+                            <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
+                        </p>
+                    }
                 </div>
             </div>
         </div>
     }
 </div>
+
+<script>
+    const select = document.querySelector('select[name="orderby"]');
+    const form = document.querySelector('form[name="form"]');
+
+    select.addEventListener('change', () => {
+        form.submit();
+    });
+</script>

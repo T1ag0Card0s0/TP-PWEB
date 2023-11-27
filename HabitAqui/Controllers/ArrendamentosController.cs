@@ -70,6 +70,11 @@ namespace HabitAqui.Controllers
         }
         public IActionResult ListClienteArrendamentos()
         {
+            var categoriaNames = _context.Categorias.ToList();
+            ViewData["Categorias"] = categoriaNames;
+
+            var clientesNames = _context.Clientes.ToList();
+            ViewData["Clientes"] = clientesNames;
 
             var cliente = _userManager.GetUserAsync(User).Result;
 
@@ -260,7 +265,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento ,List<int> EquipamentosOpcionais)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataInicio,DataFim,Custo,ClienteId,HabitacaoId,Observacoes,FuncionarioEntregaId,LocadorId,DataEntrega")] Arrendamento arrendamento, List<int> EquipamentosOpcionais)
         {
             if (id != arrendamento.Id)
             {
@@ -304,11 +309,14 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "ClienteId", arrendamento.ClienteId);
             ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "FuncionarioId", arrendamento.FuncionarioEntregaId);
             ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id", arrendamento.HabitacaoId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "LocadorId", arrendamento.LocadorId);
-            return View(arrendamento);
+            var equipamentos = _context.Equipamentos.ToList();
+            ViewData["Equipamentos"] = equipamentos;
+            return RedirectToAction(nameof(Index));
         }
         // GET: Arrendamentos/Confirm/5
         public async Task<IActionResult> Confirm(int? id)

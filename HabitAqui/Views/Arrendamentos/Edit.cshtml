@@ -37,9 +37,7 @@
                 <div>
                     @foreach (var equipamento in ViewBag.Equipamentos)
                     {
-                        <input class="form-check-input" type="checkbox" name="EquipamentosOpcionais" value="@equipamento.Id">
-
-                        @equipamento.Nome
+                        <input class="form-check-input" type="checkbox" name="EquipamentosOpcionais" value="@equipamento.Id">@equipamento.Nome
                     }
                 </div>
             </div>

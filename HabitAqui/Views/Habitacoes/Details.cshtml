@@ -49,5 +49,14 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Habitacoes" asp-action="Listar">Back to List</a>
+    @if (User.IsInRole("Cliente"))
+    {
+        <a asp-controller="Habitacoes" asp-action="Index">Back to List</a>
+    }
+
+    else
+    {
+        <a asp-controller="Habitacoes" asp-action="Listar">Back to List</a>
+    }
+   
 </div>

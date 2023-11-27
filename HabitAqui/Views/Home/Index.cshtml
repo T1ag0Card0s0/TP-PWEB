@@ -3,6 +3,10 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (User.IsInRole("Funcionario") || User.IsInRole("Gestor") )
+{
+    <canvas id="barChart"></canvas>
+}else{
 <div class="d-flex justify-content-center align-items-center vh-100 bg-image" style="background-image:url('https://img.freepik.com/premium-photo/empty-minimal-room-interior-design-with-fishbone-flooring_327072-21366.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697760000&semt=ais'); background-size:cover; height:100vh;">
     <div class="d-flex justify-content-center align-items-center v-100">
         <form asp-area="" asp-controller="Home" asp-action="Search" method="post">
@@ -44,4 +48,4 @@
 
     </div>
 </div>
-
+}

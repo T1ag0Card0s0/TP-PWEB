@@ -28,17 +28,26 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Custo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cliente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cliente.Nome)
-        </dd>
+        @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Cliente)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cliente.Nome)
+            </dd>
+        }
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Habitacao)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Habitacao.Categoria.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Habitacao.MediaAvaliacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Observacoes)
@@ -74,6 +83,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="ListArrendamentos">Back to List</a>
+    @if(User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a asp-action="ListArrendamentos">Back to List</a>
+    }else if (User.IsInRole("Cliente"))
+    {
+        <a asp-action="ListClienteArrendamentos">Back to List</a>
+    }   
 </div>

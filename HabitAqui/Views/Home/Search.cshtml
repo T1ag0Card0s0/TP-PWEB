@@ -102,7 +102,7 @@
                     @if (User.IsInRole("Cliente") || User.IsInRole("Funcionario") || User.IsInRole("Gestor") || User.IsInRole("Admin"))
                     {
                         <p class="card-text-center">
-                            <a href="@Url.Action("Details", "Habitacoes", new { id = item.Id })" class="btn btn-secondary">Detalhes</a>
+                            <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
                         </p>
                     }
                 </div>
