@@ -86,16 +86,12 @@
                             <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
                         </p>
                         <p class="text-center">
-                            @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-                            {
-                                <a asp-action="Edit" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Editar</a>
-                            }
                             @if (User.IsInRole("Cliente"))
                             {
-                                <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="card-link">Avaliar</a>
+                                <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-dark">Avaliar</a>
                             }
-                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Detalhes</a>
-
+                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                        </p>
                     </div>
                 </div>
             }
@@ -114,19 +110,31 @@
                         <li class="list-group-item">Funcionário: @Html.DisplayFor(modelItem => item.FuncionarioEntrega.Nome)</li>
                     </ul>
                     <div class="card-body">
-                        <p class="card-text-center">
+                        <p class="text-center">
                             <i class="fa-solid fa-circle-user"></i> Cliente: @Html.DisplayFor(modelItem => item.Cliente.Nome)
                         </p>
                         @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
                         {
-                            <p class="card-text-center">
-                                <a asp-action="Confirm" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">Confirmar</a>
-                                <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Rejeitar</a>
+                               
+                            <p class="text-center">
+                                <a asp-action="Confirm" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">
+                                    <i class="fas fa-check"></i>
+                                </a>
+                                <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                            </p>
+                            
+
+                        }
+                        else
+                        {
+                            <p class="text-center">
+                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
                             </p>
                         }
-                        <p class="card-text-center">
-                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="card-link">Detalhes</a>
-                        </p>
+                        
                     </div>
                 </div>
             }
