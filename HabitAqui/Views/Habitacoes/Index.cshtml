@@ -83,25 +83,30 @@
         <div class="col-md-3">
             <div class="card border-dark mb-3 text-center" style="width:18rem;">
                 <div class="card-header border-dark">
+                    <div class="float-end">
+                        <a asp-action="Delete" asp-controller="Habitacoes" asp-route-id="@item.Id">
+                            <i class="fas fa-times text-danger"></i>
+                        </a>
+                    </div>
                     <h5 class="card-title">
                         @Html.DisplayFor(modelItem => item.Categoria.Nome)
                     </h5>
                 </div>
                 <div class="card-body text-dark">
                     <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
-                    <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
+                    <p class="card-text-center"><i class="fas fa-map-marker-alt"></i> @Html.DisplayFor(modelItem => item.Localizacao)</p>
+                    <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id">Ver Mais</a>
                 </div>
                 <div class="card-footer border-dark">
                     <p class="card-text-center">
                         <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
-                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)<i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i> @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)
                     </p>
                     @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
                     {
                         <p class="card-text-center">
                             <a asp-action="Edit" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Editar</a>
-                            <a asp-action="Delete" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-danger">Apagar</a>
-                            <a asp-action="Create" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-warning">Arrendar</a>
+                            <a asp-action="Create" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Arrendar</a>
                         </p>
                     }
                     else if (User.IsInRole("Cliente"))

@@ -9,6 +9,7 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.CodeAnalysis.RulesetToEditorconfig;
 
 namespace HabitAqui.Controllers
 {
@@ -102,6 +103,7 @@ namespace HabitAqui.Controllers
                 .Include(h => h.Cliente)
                 .Include(h => h.Locador)
                 .Include(a => a.EquipamentosOpcionais)
+                .Include(a => a.FuncionarioEntrega)
                 .Where(h => h.LocadorId == locadorId);
 
             if (!string.IsNullOrEmpty(categoria))
@@ -109,18 +111,18 @@ namespace HabitAqui.Controllers
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Habitacao.Categoria.Nome.Contains(categoria));
             }
 
-            if (!string.IsNullOrEmpty(estado))
+            if (!string.IsNullOrEmpty(cliente))
             {
-                if (estado.Equals("Ativo"))
-                {
-                    arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Ativo == true);
-                }
-                else
-                {
-                    arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Ativo != true);
-                }
+                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Cliente.Nome.Contains(cliente));
             }
-            
+
+            if(estado == "CONFIRMADO")
+                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.CONFIRMADO);
+            else if(estado == "NAO_CONFIRMADO")
+                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.NAO_CONFIRMADO);
+            else if(estado == "RECEBIDO")
+                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.RECEBIDO);
+
             if (start_date != default(DateTime))
             {
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(a => a.DataInicio >= start_date);
@@ -231,6 +233,7 @@ namespace HabitAqui.Controllers
                 arrendamento.HabitacaoId = (int)habitacaoId;
             }
             arrendamento.LocadorId = ObterLocadorIdAtual();
+            arrendamento.Estado = Estados.NAO_CONFIRMADO;
             _context.Add(arrendamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -318,6 +321,48 @@ namespace HabitAqui.Controllers
             ViewData["Equipamentos"] = equipamentos;
             return RedirectToAction(nameof(Index));
         }
+        // GET: Arrendamentos/Receber/5
+        public async Task<IActionResult> Receber(int? id)
+        {
+            if (id == null || _context.Arrendamentos == null)
+            {
+                return NotFound();
+            }
+
+            var arrendamento = await _context.Arrendamentos
+                .Include(a => a.Cliente)
+                .Include(a => a.FuncionarioEntrega)
+                .Include(a => a.Habitacao)
+                .Include(a => a.Locador)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (arrendamento == null)
+            {
+                return NotFound();
+            }
+            var equipamentos = _context.Equipamentos.ToList();
+            ViewData["Equipamentos"] = equipamentos;
+
+            return View(arrendamento);
+        }
+        // POST: Arrendamentos/Receber/5
+        [HttpPost, ActionName("Receber")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReceberConfirmed(int id)
+        {
+            if (_context.Arrendamentos == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
+            }
+            var arrendamento = await _context.Arrendamentos.FindAsync(id);
+            if (arrendamento != null)
+            {
+                arrendamento.Estado = Estados.RECEBIDO;
+            }
+           
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Arrendamentos/Confirm/5
         public async Task<IActionResult> Confirm(int? id)
         {
@@ -351,9 +396,9 @@ namespace HabitAqui.Controllers
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
             if (arrendamento != null)
             {
-                arrendamento.Ativo = true;
+                arrendamento.Estado = Estados.CONFIRMADO;
             }
-
+           
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
