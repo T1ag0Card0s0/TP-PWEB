@@ -37,7 +37,6 @@ namespace HabitAqui.Models
 
         public DateTime DataEntrega { get; set; }
 
-        public bool Ativo { get; set; } // confirmado ou rejeitado
         public Estados Estado { get; set; }
     }
 }
