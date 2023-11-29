@@ -28,7 +28,17 @@
                     }
                 </div>
             </div>
-          
+            <div class="form-group">
+                <label class="control-label">Funcionario:</label>
+                <div>
+                    <select class="form-control" name="FuncionarioRecebeuId">
+                        @foreach (var funcionario in ViewBag.Funcionarios)
+                        {
+                            <option value="@funcionario.FuncionarioId">@funcionario.Nome</option>
+                        }
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="Observacoes" class="control-label"></label>
                 <input asp-for="Observacoes" class="form-control" />

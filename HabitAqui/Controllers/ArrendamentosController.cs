@@ -352,7 +352,7 @@ namespace HabitAqui.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
             }
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
-            var user = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
+
             if (arrendamento != null)
             {
                 arrendamento.Estado = Estados.ENTREGUE;
@@ -360,7 +360,7 @@ namespace HabitAqui.Controllers
                 {
                     Observacoes = viewModel.Observacoes,
                     Danos = viewModel.Danos,
-                    FuncionarioEntregaId = user.FuncionarioId,
+                    FuncionarioEntregaId = viewModel.FuncionarioEntregaId,
                     DataEntrega = DateTime.Now
                 };
                 arrendamento.EntregarArrendamento = entregaArrendamento;
@@ -409,7 +409,7 @@ namespace HabitAqui.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
             }
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
-            var user = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
+           
             if (arrendamento != null)
             {
                 arrendamento.Estado = Estados.RECEBIDO;
@@ -417,7 +417,7 @@ namespace HabitAqui.Controllers
                 {
                     Equipamentos = viewModel.Equipamentos,
                     Danos = viewModel.Danos,
-                    FuncionarioRecebeuId = user.FuncionarioId,
+                    FuncionarioRecebeuId = viewModel.FuncionarioRecebeuId,
                     Observacoes = viewModel.Observacoes
                 };
                 arrendamento.ReceberArrendamento = receberArrendamento;

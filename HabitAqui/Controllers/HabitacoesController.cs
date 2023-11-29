@@ -208,7 +208,8 @@ namespace HabitAqui.Controllers
                         await _context.SaveChangesAsync();
                     }
 
-                    return RedirectToAction("Details", new { id = id });
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
@@ -237,29 +238,7 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PeriodoMinimoArrendamento,PeriodoMaximoArrendamento,Custo,Ativo,Localizacao,CategoriaId,Fotos")] Habitacao habitacao)
         {
-            // Lógica para salvar as fotos
-           /* if (habitacao.Fotos != null && habitacao.Fotos.Any())
-            {
-                habitacao.Fotos ??= new List<IFormFile>();
-
-                foreach (var foto in habitacao.Fotos)
-                {
-                    if (foto.Length > 0)
-                    {
-                        var caminhoFisico = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot", "Images", foto.FileName);
-                        using (var stream = new FileStream(caminhoFisico, FileMode.Create))
-                        {
-                            await foto.CopyToAsync(stream);
-                        }
-
-                        // Adicionar o caminho ao list de fotos da habitacao
-                        habitacao.Fotos.Add(foto);
-                    }
-                }
-
-                // Atualizar a Habitacao no banco de dados com os caminhos das fotos
-                await _context.SaveChangesAsync();
-            }*/
+           
             var user_atual = _userManager.GetUserAsync(User).Result;
             var categoriaNames = _context.Categorias.ToList();
             ViewData["Categorias"] = categoriaNames;

@@ -125,9 +125,31 @@
                         }
                     </div>
                 </div>
+            }else if (User.IsInRole("Cliente") && item.Estado == Estados.RECEBIDO)
+            {
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
+                            @Html.DisplayFor(modelItem => item.Custo)€
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item border-dark">
+                                <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
+                            </li>
+                            <li class="list-group-item border-dark"><i class="fas fa-user"></i> @Html.DisplayFor(modelItem => item.Cliente.Nome)</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-center">
+                            <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-success">Avaliar</a>
+                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                        </p>
+                    </div>
+                </div>
             }
-            <!-- Parte do cliente -->
-            
         </div>
       }
 </div>
