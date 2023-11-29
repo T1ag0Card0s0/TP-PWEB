@@ -31,29 +31,7 @@
                 <label asp-for="ClienteId" class="control-label">Cliente</label>
                 <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
             </div>
-            <div class="form-group">
-                <label class="control-label">Equipamentos Opcionais</label>
-                <div>
-                    @foreach (var equipamento in ViewBag.Equipamentos)
-                    {
-                        <input class="form-check-input" type="checkbox" name="EquipamentosOpcionais" value="@equipamento.Id">@equipamento.Nome
-                    }
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Observacoes" class="control-label"></label>
-                <input asp-for="Observacoes" class="form-control" />
-                <span asp-validation-for="Observacoes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FuncionarioEntregaId" class="control-label">Funcionario de Entrega</label>
-                <select asp-for="FuncionarioEntregaId" class ="form-control" asp-items="ViewBag.FuncionarioEntregaId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataEntrega" class="control-label"></label>
-                <input asp-for="DataEntrega" class="form-control" type="date"/>
-                <span asp-validation-for="DataEntrega" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

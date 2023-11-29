@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231128233028_migration7")]
+    partial class migration7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace HabitAqui.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ArrendamentoEquipamento", b =>
+                {
+                    b.Property<int>("ArrendamentosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipamentosOpcionaisId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArrendamentosId", "EquipamentosOpcionaisId");
+
+                    b.HasIndex("EquipamentosOpcionaisId");
+
+                    b.ToTable("ArrendamentoEquipamento");
+                });
 
             modelBuilder.Entity("HabitAqui.Models.Administrador", b =>
                 {
@@ -131,19 +148,19 @@ namespace HabitAqui.Migrations
                     b.Property<decimal>("Custo")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime>("DataEntrega")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EntregarArrendamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EquipamentoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FuncionarioEntregaId")
                         .HasColumnType("int");
 
                     b.Property<int>("HabitacaoId")
@@ -152,22 +169,19 @@ namespace HabitAqui.Migrations
                     b.Property<int>("LocadorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReceberArrendamentoId")
-                        .HasColumnType("int");
+                    b.Property<string>("Observacoes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("EntregarArrendamentoId");
-
-                    b.HasIndex("EquipamentoId");
+                    b.HasIndex("FuncionarioEntregaId");
 
                     b.HasIndex("HabitacaoId");
 
                     b.HasIndex("LocadorId");
-
-                    b.HasIndex("ReceberArrendamentoId");
 
                     b.ToTable("Arrendamentos");
                 });
@@ -282,6 +296,9 @@ namespace HabitAqui.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("ArrendamentoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -294,34 +311,9 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArrendamentoId");
+
                     b.ToTable("Danos");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.EntregarArrendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Danos")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataEntrega")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FuncionarioEntregaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Observacoes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FuncionarioEntregaId");
-
-                    b.ToTable("EntregarArrendamento");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Equipamento", b =>
@@ -333,29 +325,17 @@ namespace HabitAqui.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EntregarArrendamentoId")
-                        .HasColumnType("int");
 
                     b.Property<int>("EquipamentoEstado")
                         .HasColumnType("int");
-
-                    b.Property<bool?>("Existencia")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReceberArrendamentoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("EntregarArrendamentoId");
-
-                    b.HasIndex("ReceberArrendamentoId");
 
                     b.ToTable("Equipamentos");
                 });
@@ -492,30 +472,6 @@ namespace HabitAqui.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Locadores");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.ReceberArrendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Danos")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FuncionarioRecebeuId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Observacoes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FuncionarioRecebeuId");
-
-                    b.ToTable("ReceberArrendamento");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -655,6 +611,21 @@ namespace HabitAqui.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ArrendamentoEquipamento", b =>
+                {
+                    b.HasOne("HabitAqui.Models.Arrendamento", null)
+                        .WithMany()
+                        .HasForeignKey("ArrendamentosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HabitAqui.Models.Equipamento", null)
+                        .WithMany()
+                        .HasForeignKey("EquipamentosOpcionaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HabitAqui.Models.Administrador", b =>
                 {
                     b.HasOne("HabitAqui.Models.ApplicationUser", "ApplicationUser")
@@ -672,13 +643,11 @@ namespace HabitAqui.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HabitAqui.Models.EntregarArrendamento", "EntregarArrendamento")
+                    b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioEntrega")
                         .WithMany()
-                        .HasForeignKey("EntregarArrendamentoId");
-
-                    b.HasOne("HabitAqui.Models.Equipamento", null)
-                        .WithMany("Arrendamentos")
-                        .HasForeignKey("EquipamentoId");
+                        .HasForeignKey("FuncionarioEntregaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
                         .WithMany("Arrendamentos")
@@ -692,19 +661,13 @@ namespace HabitAqui.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HabitAqui.Models.ReceberArrendamento", "ReceberArrendamento")
-                        .WithMany()
-                        .HasForeignKey("ReceberArrendamentoId");
-
                     b.Navigation("Cliente");
 
-                    b.Navigation("EntregarArrendamento");
+                    b.Navigation("FuncionarioEntrega");
 
                     b.Navigation("Habitacao");
 
                     b.Navigation("Locador");
-
-                    b.Navigation("ReceberArrendamento");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.AvaliacaoHabitacao", b =>
@@ -753,26 +716,11 @@ namespace HabitAqui.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.EntregarArrendamento", b =>
+            modelBuilder.Entity("HabitAqui.Models.Dano", b =>
                 {
-                    b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioEntrega")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioEntregaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FuncionarioEntrega");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.Equipamento", b =>
-                {
-                    b.HasOne("HabitAqui.Models.EntregarArrendamento", null)
-                        .WithMany("Equipamentos")
-                        .HasForeignKey("EntregarArrendamentoId");
-
-                    b.HasOne("HabitAqui.Models.ReceberArrendamento", null)
-                        .WithMany("Equipamentos")
-                        .HasForeignKey("ReceberArrendamentoId");
+                    b.HasOne("HabitAqui.Models.Arrendamento", null)
+                        .WithMany("Danos")
+                        .HasForeignKey("ArrendamentoId");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Funcionario", b =>
@@ -843,17 +791,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.ReceberArrendamento", b =>
-                {
-                    b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioRecebeu")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioRecebeuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FuncionarioRecebeu");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -912,6 +849,11 @@ namespace HabitAqui.Migrations
                     b.Navigation("Locadores");
                 });
 
+            modelBuilder.Entity("HabitAqui.Models.Arrendamento", b =>
+                {
+                    b.Navigation("Danos");
+                });
+
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
                 {
                     b.Navigation("Habitacao");
@@ -922,16 +864,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Arrendamentos");
 
                     b.Navigation("AvaliacoesHabitacao");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.EntregarArrendamento", b =>
-                {
-                    b.Navigation("Equipamentos");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.Equipamento", b =>
-                {
-                    b.Navigation("Arrendamentos");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Gestor", b =>
@@ -957,11 +889,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Gestores");
 
                     b.Navigation("Habitacoes");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.ReceberArrendamento", b =>
-                {
-                    b.Navigation("Equipamentos");
                 });
 #pragma warning restore 612, 618
         }

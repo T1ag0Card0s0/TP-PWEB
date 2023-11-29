@@ -23,20 +23,17 @@ namespace HabitAqui.Models
         public int HabitacaoId { get; set; }
         public Habitacao Habitacao { get; set; }
 
-        public ICollection<Equipamento>?EquipamentosOpcionais { get; set; }
-        public ICollection<Dano>? Danos { get; set; }
-
-        public String Observacoes { get; set; }
-
-        public Funcionario FuncionarioEntrega { get; set; }
-        public int FuncionarioEntregaId { get; set; }
-
         public Locador Locador { get; set; }
         [ForeignKey("LocadorId")]
         public int LocadorId { get; set; }
 
-        public DateTime DataEntrega { get; set; }
-
         public Estados Estado { get; set; }
+
+        public ReceberArrendamento? ReceberArrendamento {  get; set; }
+        public int? ReceberArrendamentoId { get; set; }
+        
+        public EntregarArrendamento? EntregarArrendamento {  get; set; }
+        public int? EntregarArrendamentoId { get; set; }
+        
     }
 }

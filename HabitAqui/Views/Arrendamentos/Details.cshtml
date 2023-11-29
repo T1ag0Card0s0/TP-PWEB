@@ -49,37 +49,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observacoes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observacoes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FuncionarioEntrega)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FuncionarioEntrega.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Locador)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locador.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipamentosOpcionais)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.EquipamentosOpcionais != null){
-                <ul>
-                    @foreach (var equipamento in Model.EquipamentosOpcionais)
-                    {
-                        <li>@equipamento.Nome</li>
-                    }
-                </ul>
-            }
-        </dd>
     </dl>
 </div>
 <div>

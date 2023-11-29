@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231129133647_migration11")]
+    partial class migration11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,7 +313,7 @@ namespace HabitAqui.Migrations
                     b.Property<DateTime>("DataEntrega")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FuncionarioEntregaId")
+                    b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
                     b.Property<string>("Observacoes")
@@ -319,7 +321,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioEntregaId");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("EntregarArrendamento");
                 });
@@ -505,7 +507,7 @@ namespace HabitAqui.Migrations
                     b.Property<string>("Danos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FuncionarioRecebeuId")
+                    b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
                     b.Property<string>("Observacoes")
@@ -513,7 +515,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioRecebeuId");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("ReceberArrendamento");
                 });
@@ -757,7 +759,7 @@ namespace HabitAqui.Migrations
                 {
                     b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioEntrega")
                         .WithMany()
-                        .HasForeignKey("FuncionarioEntregaId")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -847,7 +849,7 @@ namespace HabitAqui.Migrations
                 {
                     b.HasOne("HabitAqui.Models.Funcionario", "FuncionarioRecebeu")
                         .WithMany()
-                        .HasForeignKey("FuncionarioRecebeuId")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
