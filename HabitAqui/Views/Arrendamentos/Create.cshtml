@@ -3,43 +3,45 @@
 @{
     ViewData["Title"] = "Create";
 }
+<div class="container mt-5">
+    <h4 class="mb-4">Criar Arrendamento</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h1>Create</h1>
+                <div class="mb-3">
+                    <label asp-for="DataInicio" class="form-label">Data de Início</label>
+                    <input asp-for="DataInicio" class="form-control" type="date" />
+                    <span asp-validation-for="DataInicio" class="text-danger"></span>
+                </div>
 
-<h4>Arrendamento</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" type="date" />
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" type="date" />
-                <span asp-validation-for="DataFim" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Custo" class="control-label"></label>
-                <input asp-for="Custo" class="form-control" />
-                <span asp-validation-for="Custo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClienteId" class="control-label">Cliente</label>
-                <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="mb-3">
+                    <label asp-for="DataFim" class="form-label">Data de Fim</label>
+                    <input asp-for="DataFim" class="form-control" type="date" />
+                    <span asp-validation-for="DataFim" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Custo" class="form-label">Custo</label>
+                    <input asp-for="Custo" class="form-control" />
+                    <span asp-validation-for="Custo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ClienteId" class="form-label">Cliente</label>
+                    <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-secondary" asp-controller="Habitacoes" asp-action="Listar">Voltar à Lista</a>
     </div>
 </div>
-
-<div>
-    <a asp-controller="Habitacoes" asp-action="Listar">Back to List</a>
-</div>
-

@@ -4,60 +4,46 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Detalhes do Arrendamento</h4>
+            <hr />
 
-<div>
-    <h4>Arrendamento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataInicio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataInicio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataFim)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataFim)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Custo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Custo)
-        </dd>
+            <dl class="row">
+                <dt class="col-sm-2">Data de Início</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.DataInicio)</dd>
+
+                <dt class="col-sm-2">Data de Fim</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.DataFim)</dd>
+
+                <dt class="col-sm-2">Custo</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Custo)</dd>
+
+                @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+                {
+                    <dt class="col-sm-2">Cliente</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Cliente.Nome)</dd>
+                }
+
+                <dt class="col-sm-2">Habitação</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Habitacao.Categoria.Nome)</dd>
+
+                <dt class="col-sm-2">Avaliação Média</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
         @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
         {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Cliente)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Cliente.Nome)
-            </dd>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Editar</a>
+            <a class="btn btn-secondary" asp-action="ListArrendamentos">Voltar à Lista</a>
         }
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Habitacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Habitacao.Categoria.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Habitacao.MediaAvaliacao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if(User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-        <a asp-action="ListArrendamentos">Back to List</a>
-    }else if (User.IsInRole("Cliente"))
-    {
-        <a asp-action="ListClienteArrendamentos">Back to List</a>
-    }   
+        else if (User.IsInRole("Cliente"))
+        {
+            <a class="btn btn-secondary" asp-action="ListClienteArrendamentos">Voltar à Lista</a>
+        }
+    </div>
 </div>

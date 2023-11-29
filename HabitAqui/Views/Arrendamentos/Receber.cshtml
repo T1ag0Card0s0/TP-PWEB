@@ -3,60 +3,68 @@
 @{
     ViewData["Title"] = "Receber";
 }
+<div class="container mt-5">
+    <h4>Receber Arrendamento</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Receber" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Receber Arrendamento</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Receber">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Equipamentos Opcionais</label>
-                <div>
-                    @foreach (var equipamento in ViewBag.Equipamentos)
-                    {
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                @equipamento.Nome - Estado:
-                                <select name="EquipamentoEstado[@equipamento.Id]">
-                                    <option value="BOM">Bom</option>
-                                    <option value="DANIFICADO">Danificado</option>
-                                    <option value="EM_FALTA">Em falta</option>
-                                </select>
-                            </label>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Funcionario:</label>
-                <div>
-                    <select class="form-control" name="FuncionarioRecebeuId">
-                        @foreach (var funcionario in ViewBag.Funcionarios)
+                <div class="form-group">
+                    <label class="control-label">Equipamentos Opcionais</label>
+                    <div>
+                        @foreach (var equipamento in ViewBag.Equipamentos)
                         {
-                            <option value="@funcionario.FuncionarioId">@funcionario.Nome</option>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    @equipamento.Nome - Estado:
+                                    <select class="form-control" name="EquipamentoEstado[@equipamento.Id]">
+                                        <option value="BOM">Bom</option>
+                                        <option value="DANIFICADO">Danificado</option>
+                                        <option value="EM_FALTA">Em falta</option>
+                                    </select>
+                                </label>
+                            </div>
                         }
-                    </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Observacoes" class="control-label"></label>
-                <input asp-for="Observacoes" class="form-control" />
-                <span asp-validation-for="Observacoes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Danos" class="control-label"></label>
-                <input asp-for="Danos" class="form-control" />
-                <span asp-validation-for="Danos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Receber" class="btn btn-primary" />
-            </div>
-        </form>
+
+                <div class="form-group">
+                    <label class="control-label">Funcionário:</label>
+                    <div>
+                        <select class="form-control" name="FuncionarioRecebeuId">
+                            @foreach (var funcionario in ViewBag.Funcionarios)
+                            {
+                                <option value="@funcionario.FuncionarioId">@funcionario.Nome</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Observacoes" class="control-label">Observações:</label>
+                    <textarea asp-for="Observacoes" class="form-control"></textarea>
+                    <span asp-validation-for="Observacoes" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Danos" class="control-label">Danos:</label>
+                    <textarea asp-for="Danos" class="form-control"></textarea>
+                    <span asp-validation-for="Danos" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Receber</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
 
-<div>
-        <a asp-action="Index">Back to List</a>
-</div>
+
 
