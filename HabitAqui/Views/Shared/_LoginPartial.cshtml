@@ -11,15 +11,24 @@
         await SignInManager.SignOutAsync();
         return;
     }
-   
-    <li class="nav-item">
-        <a  class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @user.UserName</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-white">Logout</button>
-        </form>
-    </li>
+        <li class="nav-item">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i> Conta
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li>
+                    <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Alterar Dados</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </li>
 }
 else
 {  

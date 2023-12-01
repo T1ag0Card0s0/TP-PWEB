@@ -3,42 +3,144 @@
 @{
     ViewData["Title"] = "Details";
 }
-
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Detalhes do Arrendamento</h4>
-            <hr />
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Detalhes do Arrendamento</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt>Data de Início</dt>
+                        <dd>@Html.DisplayFor(model => model.DataInicio)</dd>
 
-            <dl class="row">
-                <dt class="col-sm-2">Data de Início</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.DataInicio)</dd>
+                        <dt>Data de Fim</dt>
+                        <dd>@Html.DisplayFor(model => model.DataFim)</dd>
 
-                <dt class="col-sm-2">Data de Fim</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.DataFim)</dd>
+                        <dt>Custo</dt>
+                        <dd>@Html.DisplayFor(model => model.Custo)</dd>
 
-                <dt class="col-sm-2">Custo</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Custo)</dd>
+                        @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+                        {
+                            <dt>Cliente</dt>
+                            <dd>@Html.DisplayFor(model => model.Cliente.Nome)</dd>
+                        }
 
-                @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-                {
-                    <dt class="col-sm-2">Cliente</dt>
-                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Cliente.Nome)</dd>
-                }
+                        <dt>Habitação</dt>
+                        <dd>@Html.DisplayFor(model => model.Habitacao.Categoria.Nome)</dd>
 
-                <dt class="col-sm-2">Habitação</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Habitacao.Categoria.Nome)</dd>
-
-                <dt class="col-sm-2">Avaliação Média</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)</dd>
-            </dl>
+                        <dt>Avaliação Média</dt>
+                        <dd>@Html.DisplayFor(model => model.Habitacao.MediaAvaliacao)</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
+        @if (Model.Estado == Estados.ENTREGUE)
+        {
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Estado de Entrega</h4>
+                        <hr />
+
+                        <dl>
+                            <dt>Data de Entrega</dt>
+                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.DataEntrega)</dd>
+
+                            <dt>Funcionário de Entrega</dt>
+                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.FuncionarioEntrega.Nome)</dd>
+
+                            <dt>@Html.DisplayNameFor(model => model.EntregarArrendamento.Danos)</dt>
+                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Danos)</dd>
+
+                            <dt>Equipamentos</dt>
+                            <dd>
+                                @if (Model.EntregarArrendamento.Equipamentos != null && Model.EntregarArrendamento.Equipamentos.Any())
+                                {
+                                    foreach (var equip in Model.EntregarArrendamento.Equipamentos)
+                                    {
+                                        @equip.Nome
+
+                                        <br />
+                                    }
+                                }
+                                else
+                                {
+                                    <dd>Nenhum equipamento selecionado</dd>
+                                }
+                            </dd>
+
+                            <dt>Observações</dt>
+                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Observacoes)</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.Estado == Estados.RECEBIDO)
+        {
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Estado Final</h4>
+                        <hr />
+
+                        <dl>
+                            <dt>Funcionário de Entrega</dt>
+                            <dd>@Html.DisplayFor(model => model.ReceberArrendamento.FuncionarioRecebeu.Nome)</dd>
+
+                            <dt>@Html.DisplayNameFor(model => model.ReceberArrendamento.Danos)</dt>
+                            <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Danos)</dd>
+
+                            <dt>Equipamentos</dt>
+                            <dd>
+                                @if (Model.ReceberArrendamento.Equipamentos != null && Model.ReceberArrendamento.Equipamentos.Any())
+                                {
+                                    foreach (var equip in Model.ReceberArrendamento.Equipamentos)
+                                    {
+                                        @equip.Nome
+
+                                        <br />
+                                        @equip.EquipamentoEstado.ToString()
+
+                                        <br />
+                                    }
+                                }
+                                else
+                                {
+                                    <dd>Nenhum equipamento selecionado</dd>
+                                 }
+                            </dd>
+
+                            <dt>Observações</dt>
+                            <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Observacoes)</dd>
+
+                            @if (ViewBag.Fotos != null)
+                            {
+                                <div id="imagensDanos" style="display:none;">
+                                    @foreach (var imagePath in ViewBag.Fotos)
+                                    {
+                                        <img src="@Url.Content(imagePath)">
+                                    }
+                                </div>
+
+                                <button id="btnMostrarImagens" onclick="mostrarImagens()">Mostrar Imagens</button>
+                                <script>
+                                    function mostrarImagens() {
+                                        document.getElementById('imagensDanos').style.display = 'block';
+                                    }
+                                </script>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 
     <div class="mt-3">
         @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
         {
-            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Editar</a>
             <a class="btn btn-secondary" asp-action="ListArrendamentos">Voltar à Lista</a>
         }
         else if (User.IsInRole("Cliente"))

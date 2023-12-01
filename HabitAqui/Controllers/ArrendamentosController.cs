@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.RulesetToEditorconfig;
 using HabitAqui.ViewModels;
+using System.IO;
+using System.Collections;
 
 namespace HabitAqui.Controllers
 {
@@ -18,11 +20,14 @@ namespace HabitAqui.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<ArrendamentosController> _logger;
 
-        public ArrendamentosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+
+        public ArrendamentosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, ILogger<ArrendamentosController> logger)
         {
             _userManager = userManager;
             _context = context;
+            _logger = logger;
         }
 
         public IActionResult Index(List<Arrendamento> arrendamentos)
@@ -183,12 +188,23 @@ namespace HabitAqui.Controllers
 
             var arrendamento = await _context.Arrendamentos
                 .Include(a => a.Cliente)
-                //.Include(a => a.FuncionarioEntrega)
+                .Include(a => a.EntregarArrendamento)
+                .Include(a => a.EntregarArrendamento.FuncionarioEntrega)
+                .Include(a => a.EntregarArrendamento.Equipamentos)
                 .Include(a => a.Habitacao)
                 .Include(a => a.Habitacao.Categoria)
                 .Include(a => a.Locador)
-                //.Include(a => a.EquipamentosOpcionais)
+                .Include(a => a.ReceberArrendamento)
+                .Include(a => a.ReceberArrendamento.Equipamentos)
+                .Include(a => a.ReceberArrendamento.FuncionarioRecebeu)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "arrendamentos_danos", arrendamento.Id.ToString());
+            if (Directory.Exists(caminhoPasta))
+            {
+                ViewData["Fotos"] = Directory.GetFiles(caminhoPasta).ToList();
+            }
+            
             if (arrendamento == null)
             {
                 return NotFound();
@@ -201,10 +217,7 @@ namespace HabitAqui.Controllers
         public IActionResult Create(int id)
         {
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Nome");
-            //ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "Nome");
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
-            /*var equipamentos = _context.Equipamentos.ToList();
-            ViewData["Equipamentos"] = equipamentos;*/
             TempData["HabitacaoId"] = id;
             return View();
         }
@@ -304,7 +317,6 @@ namespace HabitAqui.Controllers
             }
 
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "ClienteId", arrendamento.ClienteId);
-            //ViewData["FuncionarioEntregaId"] = new SelectList(_context.Funcionarios, "FuncionarioId", "FuncionarioId", arrendamento.FuncionarioEntregaId);
             ViewData["HabitacaoId"] = new SelectList(_context.Habitacoes, "Id", "Id", arrendamento.HabitacaoId);
             ViewData["LocadorId"] = new SelectList(_context.Locadores, "LocadorId", "LocadorId", arrendamento.LocadorId);
             var equipamentos = _context.Equipamentos.ToList();
@@ -347,10 +359,6 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> EntregarConfirmed(int id, EntregaHabitacaoViewModel viewModel)
         {
             
-            if (_context.Arrendamentos == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
-            }
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
 
             if (arrendamento != null)
@@ -363,6 +371,8 @@ namespace HabitAqui.Controllers
                     FuncionarioEntregaId = viewModel.FuncionarioEntregaId,
                     DataEntrega = DateTime.Now
                 };
+
+                entregaArrendamento.Equipamentos = viewModel.Equipamentos ?? new List<Equipamento>();
                 arrendamento.EntregarArrendamento = entregaArrendamento;
             }
             await _context.SaveChangesAsync();
@@ -403,18 +413,33 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ReceberConfirmed(int id, RecebeHabitacaoViewModel viewModel)
         {
-            
-            if (_context.Arrendamentos == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
-            }
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
-           
+
             if (arrendamento != null)
             {
-                arrendamento.Estado = Estados.RECEBIDO;
+                if(viewModel.danosFotos != null && viewModel.danosFotos.Any())
+                {
+                    var caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "arrendamentos_danos", arrendamento.Id.ToString());
+                    arrendamento.Estado = Estados.RECEBIDO;
+
+                    if (!Directory.Exists(caminhoPasta))
+                    {
+                        Directory.CreateDirectory(caminhoPasta);
+                    }
+
+                    foreach (var file in viewModel.danosFotos)
+                    {
+                        var targetFilePath = Path.Combine(caminhoPasta, file.FileName);
+                        using (var stream = new FileStream(targetFilePath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+                    }
+                }
+                
                 ReceberArrendamento receberArrendamento = new ReceberArrendamento
                 {
+                   // danosFotos = Directory.GetFiles(caminhoPasta).ToList(),
                     Equipamentos = viewModel.Equipamentos,
                     Danos = viewModel.Danos,
                     FuncionarioRecebeuId = viewModel.FuncionarioRecebeuId,

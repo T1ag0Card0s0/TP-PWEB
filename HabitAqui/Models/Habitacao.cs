@@ -1,6 +1,7 @@
 ﻿using Microsoft.Build.Framework;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace HabitAqui.Models
 {
@@ -16,7 +17,7 @@ namespace HabitAqui.Models
         public bool Ativo { get; set; }
         public string Localizacao { get; set; }
 
-        public Categoria? Categoria { get; set; }
+        public Categoria Categoria { get; set; }
         [ForeignKey("CategoriaId")]
         public int? CategoriaId { get; set; }
 

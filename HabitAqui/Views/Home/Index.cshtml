@@ -1,11 +1,32 @@
-﻿@model IEnumerable<HabitAqui.Models.Categoria>
+﻿@using Newtonsoft.Json;
+@model IEnumerable<HabitAqui.Models.Categoria>
 @{
     ViewData["Title"] = "Home Page";
 }
 
 @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor") )
 {
-    <canvas id="barChart"></canvas>
+    /*<div class="container mt-4">
+        <div class="row">
+            @foreach (var categoria in ViewBag.Categorias)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@categoria.Nome</h5>
+                            <p class="card-text">Número de Habitações: @categoria.Count</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>*/
+
+    <div class="container mt-4">
+        <div class="row">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>
 }else{
 <div class="d-flex justify-content-center align-items-center vh-100 bg-image" style="background-image:url('https://img.freepik.com/premium-photo/empty-minimal-room-interior-design-with-fishbone-flooring_327072-21366.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697760000&semt=ais'); background-size:cover; height:100vh;">
     <div class="d-flex justify-content-center align-items-center v-100">
@@ -49,3 +70,42 @@
     </div>
 </div>
 }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var categorias = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Categorias, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+
+    // Prepara os dados para o gráfico
+    var labels = categorias.map(function (categoria) {
+        return categoria.Nome;
+    });
+
+    var data = categorias.map(function (categoria) {
+        return categoria.Count;
+    });
+    console.log(data);
+
+    // Cria o gráfico usando Chart.js
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Número de Habitações',
+                data: data,
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',  // Alterado para preto com uma opacidade de 0.2
+                borderColor: 'rgba(0, 0, 0, 1)',        // Alterado para preto
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

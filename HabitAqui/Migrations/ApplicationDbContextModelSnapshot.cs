@@ -41,7 +41,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Administradores");
+                    b.ToTable("Administradores", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.ApplicationUser", b =>
@@ -169,7 +169,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ReceberArrendamentoId");
 
-                    b.ToTable("Arrendamentos");
+                    b.ToTable("Arrendamentos", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.AvaliacaoHabitacao", b =>
@@ -198,7 +198,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("HabitacaoId");
 
-                    b.ToTable("AvaliacoesHabitacao");
+                    b.ToTable("AvaliacoesHabitacao", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.AvaliacaoLocador", b =>
@@ -227,7 +227,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("AvaliacoesLocador");
+                    b.ToTable("AvaliacoesLocador", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>
@@ -249,7 +249,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("AdministradorId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Cliente", b =>
@@ -271,7 +271,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Clientes", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Dano", b =>
@@ -294,7 +294,7 @@ namespace HabitAqui.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Danos");
+                    b.ToTable("Danos", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.EntregarArrendamento", b =>
@@ -321,7 +321,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioEntregaId");
 
-                    b.ToTable("EntregarArrendamento");
+                    b.ToTable("EntregarArrendamento", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Equipamento", b =>
@@ -357,7 +357,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ReceberArrendamentoId");
 
-                    b.ToTable("Equipamentos");
+                    b.ToTable("Equipamentos", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Funcionario", b =>
@@ -389,7 +389,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Funcionarios");
+                    b.ToTable("Funcionarios", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Gestor", b =>
@@ -416,7 +416,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Gestores");
+                    b.ToTable("Gestores", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Habitacao", b =>
@@ -458,7 +458,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("LocadorId");
 
-                    b.ToTable("Habitacoes");
+                    b.ToTable("Habitacoes", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
@@ -491,7 +491,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Locadores");
+                    b.ToTable("Locadores", (string)null);
                 });
 
             modelBuilder.Entity("HabitAqui.Models.ReceberArrendamento", b =>
@@ -515,7 +515,7 @@ namespace HabitAqui.Migrations
 
                     b.HasIndex("FuncionarioRecebeuId");
 
-                    b.ToTable("ReceberArrendamento");
+                    b.ToTable("ReceberArrendamento", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

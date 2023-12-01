@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace HabitAqui.Controllers
@@ -22,6 +23,13 @@ namespace HabitAqui.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var categorias = _context.Categorias.ToList(); // Substitua isso pelo método real que obtém suas categorias
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
+            ViewBag.Categorias = JsonConvert.SerializeObject(categorias, Formatting.None, jsonSettings);
             return View(await _context.Categorias.ToListAsync());
         }
 
