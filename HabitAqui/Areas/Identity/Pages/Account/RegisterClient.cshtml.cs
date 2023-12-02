@@ -132,7 +132,8 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    Ativo = true
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
