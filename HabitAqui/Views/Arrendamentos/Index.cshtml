@@ -130,7 +130,7 @@
                         }
                     </div>
                 </div>
-            }else if (User.IsInRole("Cliente") && item.Estado == Estados.RECEBIDO)
+            }else if (User.IsInRole("Cliente") && item.Estado == Estados.RECEBIDO || item.Estado == Estados.ENTREGUE)
             {
                 <div class="card border-dark mb-3" style="max-width: 18rem;">
                     <div class="card-header">
@@ -144,12 +144,14 @@
                             <li class="list-group-item border-dark">
                                 <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
                             </li>
-                            <li class="list-group-item border-dark"><i class="fas fa-user"></i> @Html.DisplayFor(modelItem => item.Cliente.Nome)</li>
                         </ul>
                     </div>
                     <div class="card-footer">
                         <p class="text-center">
-                            <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-success">Avaliar</a>
+                            @if(item.Estado == Estados.RECEBIDO)
+                            {
+                                <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-success">Avaliar</a>
+                            }
                             <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
                         </p>
                     </div>

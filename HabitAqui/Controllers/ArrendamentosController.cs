@@ -439,7 +439,6 @@ namespace HabitAqui.Controllers
                 
                 ReceberArrendamento receberArrendamento = new ReceberArrendamento
                 {
-                   // danosFotos = Directory.GetFiles(caminhoPasta).ToList(),
                     Equipamentos = viewModel.Equipamentos,
                     Danos = viewModel.Danos,
                     FuncionarioRecebeuId = viewModel.FuncionarioRecebeuId,

@@ -71,14 +71,15 @@
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var danosTextarea = document.getElementById('danos');
-            var fotosDanosGroup = document.getElementById('fotosDanosGroup');
-
-            danosTextarea.addEventListener('input', function () {
-                fotosDanosGroup.style.display = danosTextarea.value.trim() !== '' ? 'block' : 'none';
-            });
-        });
-    </script>
 </div>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var danosTextarea = document.getElementById('danos');
+        var fotosDanosGroup = document.getElementById('fotosDanosGroup');
+
+        danosTextarea.addEventListener('input', function () {
+            fotosDanosGroup.style.display = danosTextarea.value.trim() !== '' ? 'block' : 'none';
+        });
+    });
+
+</script>
