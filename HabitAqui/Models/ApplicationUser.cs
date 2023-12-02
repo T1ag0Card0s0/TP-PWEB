@@ -9,5 +9,7 @@ namespace HabitAqui.Models
 
         [PersonalData]
         public string LastName { get; set; }
+
+        public bool Ativo {  get; set; }
     }
 }

@@ -141,7 +141,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var locador = _context.Locadores.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
+                    var locador = _context.Funcionarios.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
 
                     if (locador != null)
                     {

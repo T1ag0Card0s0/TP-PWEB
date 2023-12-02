@@ -141,8 +141,10 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var locador = _context.Locadores.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
-
+                    var locador = _context.Gestores.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
+                    _logger.LogInformation($"UserID: {_userManager.GetUserId(User)}");
+                    _logger.LogInformation($"Locador: {locador}");
+                    
                     if (locador != null)
                     {
                         var gestor = new Gestor
@@ -152,7 +154,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                             LocadorId = locador.LocadorId // Associa o Gestor ao Locador existente
                         };
 
-                        _context.Update(gestor);
+                        _context.Add(gestor);
                         await _context.SaveChangesAsync();
 
                         await _userManager.AddToRoleAsync(user, "Gestor");
