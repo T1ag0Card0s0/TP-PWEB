@@ -9,6 +9,7 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using HabitAqui.ViewModels;
 
 namespace HabitAqui.Controllers
 {
@@ -164,6 +165,18 @@ namespace HabitAqui.Controllers
         private bool AdministradorExists(int id)
         {
           return (_context.Administradores?.Any(e => e.AdministradorId == id)).GetValueOrDefault();
+        }
+
+        public IActionResult ListLocadores()
+        {
+            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
+
+            var viewModel = new ListLocadoresViewModel
+            {
+                Locadores = locadores
+            };
+
+            return View(viewModel);
         }
     }
 }

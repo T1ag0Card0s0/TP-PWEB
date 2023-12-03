@@ -1,0 +1,31 @@
+@model HabitAqui.ViewModels.ListEmployeesViewModel
+
+<div class="container">
+    <h2>Lista de Locadores</h2>
+    <div class="row">
+        @foreach (var locador in Model.Locadores)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@locador.Nome</h5>
+                        <p class="card-text">ID: @locador.LocadorId</p>
+                        <p class="card-text">Email:</p>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
+                            <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
+                            @if (locador.EstadoDeSubscricao)
+                            {
+                                <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
