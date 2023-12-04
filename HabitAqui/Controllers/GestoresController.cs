@@ -184,8 +184,35 @@ namespace HabitAqui.Controllers
 
             return View(viewModel);
         }
+        public async Task<IActionResult> Ativar(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Ativo = true;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(ListEmployees));
+        }
+
+        public async Task<IActionResult> Desativar(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Ativo = false;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(ListEmployees));
+        }
 
     }
 
-   
+
 }
