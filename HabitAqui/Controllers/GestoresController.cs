@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using HabitAqui.ViewModels;
+using FluentNHibernate.Conventions;
 
 namespace HabitAqui.Controllers
 {
@@ -134,12 +135,27 @@ namespace HabitAqui.Controllers
             }
 
             var gestor = await _context.Gestores
+                .Include(m => m.ApplicationUser)
+                .Include(m => m.Locador)
+                .ThenInclude(locador => locador.Arrendamentos)
                 .FirstOrDefaultAsync(m => m.GestorId == id);
+
             if (gestor == null)
             {
                 return NotFound();
             }
 
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (gestor.ApplicationUser.Id == loggedInUserId)
+            {
+                return Forbid();
+            }
+            
+            if (gestor.Locador.Arrendamentos != null) {
+                if (!gestor.Locador.Arrendamentos.IsEmpty()) {
+                    return Forbid();
+                }
+            }
             return View(gestor);
         }
 
@@ -150,17 +166,22 @@ namespace HabitAqui.Controllers
         {
             if (_context.Gestores == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Gestores'  is null.");
-            }
-            var gestor = await _context.Gestores.FindAsync(id);
-            if (gestor != null)
-            {
-                _context.Gestores.Remove(gestor);
+                return Problem("Entity set 'ApplicationDbContext.Gestores' is null.");
             }
 
+            var gestor = await _context.Gestores
+                .FirstOrDefaultAsync(m => m.GestorId == id);
+
+            if (gestor == null)
+            {
+                return NotFound();
+            }
+
+            _context.Gestores.Remove(gestor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool GestorExists(int id)
         {
