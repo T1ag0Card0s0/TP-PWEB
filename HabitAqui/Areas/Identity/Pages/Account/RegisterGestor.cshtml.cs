@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Antlr.Runtime.Tree;
 using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -112,6 +114,10 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Choose locador")]
+            public int LocadorId { get; set; }
         }
 
 
@@ -119,6 +125,8 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            // Recupere os locadores do contexto e popule o ViewBag.LocadoresId
+            ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -152,7 +160,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         {
                             ApplicationUser = user,
                             Nome = user.FirstName + " " + user.LastName,
-                            LocadorId = locador.LocadorId // Associa o Gestor ao Locador existente
+                            LocadorId = Input.LocadorId // Associa o Gestor ao Locador existente
                         };
 
                         _context.Add(gestor);
