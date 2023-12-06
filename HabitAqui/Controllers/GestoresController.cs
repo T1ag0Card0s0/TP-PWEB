@@ -170,6 +170,7 @@ namespace HabitAqui.Controllers
             }
 
             var gestor = await _context.Gestores
+                .Include(m => m.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.GestorId == id);
 
             if (gestor == null)
@@ -177,9 +178,12 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
+            var appuser = gestor.ApplicationUser;
+            await _userManager.DeleteAsync(appuser);
+
             _context.Gestores.Remove(gestor);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ListEmployees));
         }
 
 
