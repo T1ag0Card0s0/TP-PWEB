@@ -61,7 +61,7 @@
         }
     </div>
 
-    <h2>Locadores</h2>
+    <h2>Locadores <a asp-area="Identity" asp-page="/Account/RegisterLocador" class="btn btn-link">Criar Novo</a></h2>
     <div class="row">
         @foreach (var locador in Model.Locadores)
         {
@@ -89,7 +89,7 @@
         }
     </div>
 
-    <h2>Clientes</h2>
+    <h2>Clientes <a asp-area="Identity" asp-page="/Account/RegisterClient" class="btn btn-link">Criar Novo</a></h2>
     <div class="row">
         @foreach (var cliente in Model.Clientes)
         {
