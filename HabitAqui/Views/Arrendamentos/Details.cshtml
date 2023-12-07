@@ -50,8 +50,15 @@
                             <dt>Funcionário de Entrega</dt>
                             <dd>@Html.DisplayFor(model => model.EntregarArrendamento.FuncionarioEntrega.Nome)</dd>
 
-                            <dt>@Html.DisplayNameFor(model => model.EntregarArrendamento.Danos)</dt>
-                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Danos)</dd>
+                            <dt>Danos</dt>
+                            @if (Model.EntregarArrendamento.Danos != null)
+                            {
+                                <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Danos)</dd>
+                            }
+                            else
+                            {
+                                <dd>Nenhum dano registado</dd>
+                            }
 
                             <dt>Equipamentos</dt>
                             <dd>
@@ -71,7 +78,14 @@
                             </dd>
 
                             <dt>Observações</dt>
-                            <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Observacoes)</dd>
+                            @if(Model.EntregarArrendamento.Observacoes != null)
+                            {
+                                <dd>@Html.DisplayFor(model => model.EntregarArrendamento.Observacoes)</dd>
+                            }
+                            else
+                            {
+                                <dd>Sem observações</dd>
+                            }
                         </dl>
                     </div>
                 </div>
@@ -89,21 +103,23 @@
                             <dt>Funcionário de Entrega</dt>
                             <dd>@Html.DisplayFor(model => model.ReceberArrendamento.FuncionarioRecebeu.Nome)</dd>
 
-                            <dt>@Html.DisplayNameFor(model => model.ReceberArrendamento.Danos)</dt>
-                            <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Danos)</dd>
+                            <dt>Danos</dt>
+                            @if (Model.ReceberArrendamento.Danos != null)
+                            {
+                                <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Danos)</dd>
+                            }
+                            else
+                            {
+                                <dd>Nenhum dano registado</dd>
+                            }
 
                             <dt>Equipamentos</dt>
                             <dd>
-                                @if (Model.ReceberArrendamento.Equipamentos != null && Model.ReceberArrendamento.Equipamentos.Any())
+                                @if (Model.EntregarArrendamento.Equipamentos != null && Model.EntregarArrendamento.Equipamentos.Any())
                                 {
-                                    foreach (var equip in Model.ReceberArrendamento.Equipamentos)
+                                    foreach (var equip in Model.EntregarArrendamento.Equipamentos)
                                     {
-                                        @equip.Nome
-
-                                        <br />
-                                        @equip.EquipamentoEstado.ToString()
-
-                                        <br />
+                                        <dd>@equip.Nome : @equip.EquipamentoEstado.ToString()</dd>
                                     }
                                 }
                                 else
@@ -113,7 +129,14 @@
                             </dd>
 
                             <dt>Observações</dt>
-                            <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Observacoes)</dd>
+                            @if (Model.ReceberArrendamento.Observacoes != null)
+                            {
+                                <dd>@Html.DisplayFor(model => model.ReceberArrendamento.Observacoes)</dd>
+                            }
+                            else
+                            {
+                                <dd>Sem observações</dd>
+                            }
 
                             @if (ViewBag.Fotos != null)
                             {

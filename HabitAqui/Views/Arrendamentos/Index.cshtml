@@ -51,7 +51,7 @@
                 <div class="col-2">
                     <select name="estado" class="form-select">
                         <option value="">Selecione um Estado</option>
-                        <option value="CONFIRMADO">Confirmado / A receber</option>
+                        <option value="CONFIRMADO">Confirmado</option>
                         <option value="NAO_CONFIRMADO">Por confirmar</option>
                         <option value="RECEBIDO">Terminado</option>
                     </select>
@@ -60,6 +60,26 @@
         </form>
     </div>
 }
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmacaoModal" tabindex="-1" role="dialog" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmacaoModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja confirmar o arrendamento?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a id="confirmarArrendamento" class="btn btn-success" href="#">Confirmar</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row m-auto mt-2">
     @foreach (var item in Model)
@@ -98,7 +118,7 @@
                         else if (Estados.NAO_CONFIRMADO == item.Estado)
                         {
                             <p class="text-center">
-                                <a asp-action="Confirm" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">
+                                <a asp-action="Confirmar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">
                                     <i class="fas fa-check"></i>
                                 </a>
                                 <a asp-action="Cancelar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">
@@ -160,3 +180,4 @@
         </div>
       }
 </div>
+

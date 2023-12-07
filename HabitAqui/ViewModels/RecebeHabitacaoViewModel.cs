@@ -7,7 +7,8 @@ namespace HabitAqui.ViewModels
         public List<Equipamento>? Equipamentos { get; set; }
         public int FuncionarioRecebeuId { get; set; }
         public string? Danos { get; set; }
-        public List<IFormFile> danosFotos { get; set; }
+        public List<IFormFile>? danosFotos { get; set; }
         public String? Observacoes { get; set; }
+        public Dictionary<int, string>? EquipamentoEstado { get; set; }
     }
 }
