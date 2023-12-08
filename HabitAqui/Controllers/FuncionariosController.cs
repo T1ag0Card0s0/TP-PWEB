@@ -9,6 +9,8 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Numerics;
+using FluentNHibernate.Conventions;
 
 namespace HabitAqui.Controllers
 {
@@ -151,10 +153,20 @@ namespace HabitAqui.Controllers
             }
 
             var funcionario = await _context.Funcionarios
+                .Include(m => m.ApplicationUser)
+                .Include(m => m.Locador)
+                .ThenInclude(locador => locador.Arrendamentos)
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
             if (funcionario == null)
             {
                 return NotFound();
+            }
+            if (funcionario.Locador.Arrendamentos != null)
+            {
+                if (!funcionario.Locador.Arrendamentos.IsEmpty())
+                {
+                    return Forbid();
+                }
             }
 
             return View(funcionario);
@@ -169,13 +181,24 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Funcionarios'  is null.");
             }
-            var funcionario = await _context.Funcionarios.FindAsync(id);
-            if (funcionario != null)
-            {
-                _context.Funcionarios.Remove(funcionario);
+            var funcionario = await _context.Funcionarios
+                .Include(m => m.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.FuncionarioId == id);
+
+            if (funcionario == null) {
+                return NotFound();
             }
-            
+
+            var appuser = funcionario.ApplicationUser;
+            await _userManager.DeleteAsync(appuser);
+
+            _context.Funcionarios.Remove(funcionario);
             await _context.SaveChangesAsync();
+
+            if (User.IsInRole("Gestor")) {
+                return RedirectToAction("ListEmployees", "Gestores");
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -125,7 +125,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            // Recupere os locadores do contexto e popule o ViewBag.LocadoresId
+            
             ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
         }
 
@@ -198,8 +198,9 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                     }
                 }
 
-                // If we got this far, something failed, redisplay form
-                return Page();
+            // If we got this far, something failed, redisplay form
+            ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
+            return Page();
             }
         }
     }
