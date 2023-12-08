@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -112,6 +113,10 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Choose locador")]
+            public int LocadorId { get; set; }
         }
 
 
@@ -119,6 +124,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -142,15 +148,17 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var locador = _context.Funcionarios.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
+                    var gestor = _context.Gestores.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
+                 
 
-                    if (locador != null)
+                    if (gestor != null)
                     {
                         var funcionario = new Funcionario
                         {
                             ApplicationUser = user,
                             Nome = user.FirstName + " " + user.LastName,
-                            LocadorId = locador.LocadorId // Associa o Funcionario ao Locador existente
+                            LocadorId = Input.LocadorId, // Associa o Funcionario ao Locador existente
+                            GestorId = gestor.GestorId
                         };
 
                         _context.Update(funcionario);
@@ -187,8 +195,9 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-                // Se houver erros de validação do modelo, retorne à página de registro
-                return Page();
+            // Se houver erros de validação do modelo, retorne à página de registro
+            ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
+            return Page();
             }
         }
     }
