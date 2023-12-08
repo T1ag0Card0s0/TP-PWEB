@@ -162,12 +162,9 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            var avaliacao = new AvaliacaoHabitacao
-            {
-                HabitacaoId = id.Value
-            };
+            TempData["HabitacaoId"] = id;
 
-            return View(avaliacao);
+            return View();
         }
 
         // POST: Habitacoes/Avaliar/5
@@ -175,42 +172,37 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Avaliar(int id, [Bind("Classificacao,Descricao,HabitacaoId")] AvaliacaoHabitacao avaliacao)
         {
-            if (id != avaliacao.HabitacaoId)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Associar a avaliação à Habitacao
-                    avaliacao.Habitacao = _context.Habitacoes.Find(avaliacao.HabitacaoId);
-
-                    avaliacao.Id = 0;
+                    // Recupere o valor da TempData
+                    if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
+                    {
+                        avaliacao.HabitacaoId = (int)habitacaoId;
+                    }
 
                     _context.Add(avaliacao);
-                    await _context.SaveChangesAsync();
+
+                    var habitacao = _context.Habitacoes.Find(avaliacao.HabitacaoId);
 
                     // Atualizar a média de avaliação na Habitacao
-                    var habitacao = _context.Habitacoes.Find(avaliacao.HabitacaoId);
                     if (habitacao != null)
                     {
+                        habitacao.Avaliacoes.Add(avaliacao);
+
                         var avaliacoes = _context.AvaliacoesHabitacao.Where(a => a.HabitacaoId == habitacao.Id).ToList();
+
                         if (avaliacoes.Any())
                         {
                             habitacao.MediaAvaliacao = avaliacoes.Average(a => a.Classificacao);
                         }
-                        else
-                        {
-                            habitacao.MediaAvaliacao = 0;
-                        }
-
+                        
                         await _context.SaveChangesAsync();
                     }
 
-
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("ListClienteArrendamentos", "Arrendamentos");
                 }
                 catch (Exception)
                 {
@@ -238,37 +230,50 @@ namespace HabitAqui.Controllers
         [Authorize(Roles = "Gestor, Funcionario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PeriodoMinimoArrendamento,PeriodoMaximoArrendamento,Custo,Ativo,Localizacao,CategoriaId,Fotos")] Habitacao habitacao)
+        public async Task<IActionResult> Create([Bind("Id,PeriodoMinimoArrendamento,PeriodoMaximoArrendamento,Custo,Ativo,Localizacao,CategoriaId")] Habitacao habitacao)
         {
+            List<Categoria> listaCategorias = _context.Categorias.ToList();
+
+            ViewData["Categorias"] = listaCategorias;
+
            
-            var user_atual = _userManager.GetUserAsync(User).Result;
-            var categoriaNames = _context.Categorias.ToList();
-            ViewData["Categorias"] = categoriaNames;
+            ModelState.Remove(nameof(habitacao.Avaliacoes));
+            ModelState.Remove(nameof(habitacao.Arrendamentos));
+            ModelState.Remove(nameof(habitacao.Categoria));
+            ModelState.Remove(nameof(habitacao.Locador));
 
-            if (_userManager.IsInRoleAsync(user_atual, "Funcionario").Result)
+            if (ModelState.IsValid)
             {
-                var funcionario = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                habitacao.MediaAvaliacao = 0;
-                habitacao.LocadorId = funcionario.LocadorId;
+                var user_atual = _userManager.GetUserAsync(User).Result;
+                var categoriaNames = _context.Categorias.ToList();
+                ViewData["Categorias"] = categoriaNames;
 
-                _context.Add(habitacao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (_userManager.IsInRoleAsync(user_atual, "Funcionario").Result)
+                {
+                    var funcionario = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
+                    habitacao.MediaAvaliacao = 0;
+                    habitacao.LocadorId = funcionario.LocadorId;
+
+                    _context.Add(habitacao);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
 
 
+                }
+                else if (_userManager.IsInRoleAsync(user_atual, "Gestor").Result)
+                {
+                    var gestor = _context.Gestores.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
+                    habitacao.MediaAvaliacao = 0;
+                    habitacao.LocadorId = gestor.LocadorId;
+
+                    _context.Add(habitacao);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+
+                }
             }
-            else if (_userManager.IsInRoleAsync(user_atual, "Gestor").Result)
-            {
-                var gestor = _context.Gestores.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                habitacao.MediaAvaliacao = 0;
-                habitacao.LocadorId = gestor.LocadorId;
-
-                _context.Add(habitacao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-
-
-            }
+            
             return View(habitacao);
         }
 
@@ -303,12 +308,16 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            ModelState.Remove(nameof(habitacao.Avaliacoes));
+            ModelState.Remove(nameof(habitacao.Arrendamentos));
+            ModelState.Remove(nameof(habitacao.Categoria));
+            ModelState.Remove(nameof(habitacao.Locador));
+
+            if(ModelState.IsValid)
             {
-                var funcionario = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
                 try
                 {
-                    habitacao.LocadorId = funcionario.LocadorId;
+                    habitacao.LocadorId = ObterLocadorIdAtual();
                     _context.Update(habitacao);
                     await _context.SaveChangesAsync();
                 }
@@ -325,8 +334,8 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Categorias"] = new SelectList(_context.Categorias, "CategoriaId", "Nome");
             return View(habitacao);
+            
         }
 
         // GET: Habitacoes/Delete/5

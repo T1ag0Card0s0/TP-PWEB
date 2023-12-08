@@ -1,22 +1,37 @@
-﻿using Microsoft.Build.Framework;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+
 
 namespace HabitAqui.Models
 {
     public class Habitacao
     {
         public int Id { get; set; }
+
+        [DataType("number")]
         public double? MediaAvaliacao { get; set; }
+
+        [Required]
+        [DataType("number")]
         public int Custo { get; set; }
 
+        [Required]
+        [DataType("number")]
         public int PeriodoMinimoArrendamento { get; set; }
+
+        [Required]
+        [DataType("number")]
         public int PeriodoMaximoArrendamento{ get; set; }
 
         public bool Ativo { get; set; }
+
+        [Required]
+        [DataType("text")]
         public string Localizacao { get; set; }
 
+        [Required]
+        [DataType("number")]
         public Categoria Categoria { get; set; }
         [ForeignKey("CategoriaId")]
         public int? CategoriaId { get; set; }
@@ -27,8 +42,5 @@ namespace HabitAqui.Models
 
         public ICollection<AvaliacaoHabitacao>? Avaliacoes { get; set; }
         public ICollection<Arrendamento>? Arrendamentos { get; set; }
-
-        [NotMapped]
-        public List<IFormFile>? Fotos { get; set; }
     }
 }

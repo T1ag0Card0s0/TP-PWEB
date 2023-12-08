@@ -12,25 +12,28 @@
             <form asp-action="Receber" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <label class="control-label">Equipamentos Opcionais</label>
-                    <div>
-                        @foreach (var equipamento in ViewBag.Equipamentos)
-                        {
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    @equipamento.Nome - Estado:
-                                    <select class="form-control" name="EquipamentoEstado[@equipamento.Id]">
-                                        <option value="BOM">Bom</option>
-                                        <option value="DANIFICADO">Danificado</option>
-                                        <option value="EM_FALTA">Em falta</option>
-                                    </select>
-                                </label>
-                            </div>
-                        }
+                @if (ViewBag.Equipamentos != null && ViewBag.Equipamentos.Count > 0)
+                {
+                    <div class="form-group">
+                        <label class="control-label">Equipamentos Opcionais</label>
+                        <div>
+                            @foreach (var equipamento in ViewBag.Equipamentos)
+                            {
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        @equipamento.Nome - Estado:
+                                        <select class="form-control" name="EquipamentoEstado[@equipamento.Id]">
+                                            <option value="BOM">Bom</option>
+                                            <option value="DANIFICADO">Danificado</option>
+                                            <option value="EM_FALTA">Em falta</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-
+                }
+                    
                 <div class="form-group">
                     <label class="control-label">Funcionário:</label>
                     <div>

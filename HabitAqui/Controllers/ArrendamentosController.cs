@@ -245,18 +245,31 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DataInicio,DataFim,Custo,ClienteId,HabitacaoId,LocadorId")] Arrendamento arrendamento)
         {
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Nome");
 
-            // Recupere o valor da TempData
-            if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
+            ModelState.Remove(nameof(arrendamento.EntregarArrendamento));
+            ModelState.Remove(nameof(arrendamento.Estado));
+            ModelState.Remove(nameof(arrendamento.Imagens));
+            ModelState.Remove(nameof(arrendamento.Habitacao));
+            ModelState.Remove(nameof(arrendamento.Locador));
+            ModelState.Remove(nameof(arrendamento.Cliente));
+            ModelState.Remove(nameof(arrendamento.ReceberArrendamento));
+
+            if (ModelState.IsValid)
             {
-                arrendamento.HabitacaoId = (int)habitacaoId;
+                // Recupere o valor da TempData
+                if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
+                {
+                    arrendamento.HabitacaoId = (int)habitacaoId;
+                }
+                arrendamento.LocadorId = ObterLocadorIdAtual();
+                arrendamento.Estado = Estados.NAO_CONFIRMADO;
+                _context.Add(arrendamento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            arrendamento.LocadorId = ObterLocadorIdAtual();
-            arrendamento.Estado = Estados.NAO_CONFIRMADO;
-            _context.Add(arrendamento);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-
+            
+            return View(arrendamento);
         }
 
         // GET: Arrendamentos/Edit/5
