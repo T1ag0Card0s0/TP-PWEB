@@ -126,15 +126,24 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            var locadores = _context.Locadores.Where(l => l.LocadorId == ObterLocadorIdAtual()).ToList();
+            if (User.IsInRole("Admin"))
+            {
+                var locadores = _context.Locadores.ToList();
+                ViewData["LocadoresId"] = new SelectList(locadores, "LocadorId", "Nome");
+            }
+            else
+            {
+                var locadores = _context.Locadores.Where(l => l.LocadorId == ObterLocadorIdAtual()).ToList();
 
-            ViewData["LocadoresId"] = locadores
-                .Select(locador => new SelectListItem
-                {
-                    Value = locador.LocadorId.ToString(),
-                    Text = locador.Nome
-                })
-                .ToList();
+                ViewData["LocadoresId"] = locadores
+                    .Select(locador => new SelectListItem
+                    {
+                        Value = locador.LocadorId.ToString(),
+                        Text = locador.Nome
+                    })
+                    .ToList();
+            }
+            
         }
 
         private int ObterLocadorIdAtual()

@@ -13,7 +13,7 @@ using HabitAqui.ViewModels;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class AdministradoresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -50,6 +50,22 @@ namespace HabitAqui.Controllers
             }
 
             return View(administrador);
+        }
+
+        public IActionResult ListUsers()
+        {
+            var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser).ToList();
+            var gestores = _context.Gestores.Include(g => g.Locador).Include(g => g.ApplicationUser).ToList();
+            var clientes = _context.Clientes.Include(g => g.ApplicationUser).ToList();
+
+            var viewModel = new ListUsersViewModel
+            {
+                Funcionarios = funcionarios,
+                Gestores = gestores,
+                Clientes = clientes
+            };
+
+            return View(viewModel);
         }
 
         // GET: Administradores/Create
