@@ -25,5 +25,6 @@ namespace HabitAqui.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Locador> Locadores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using HabitAqui.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitAqui.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231208020201_migration18")]
+    partial class migration18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -464,28 +466,6 @@ namespace HabitAqui.Migrations
                     b.ToTable("Habitacoes");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.Imagem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("ArrendamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArrendamentoId");
-
-                    b.ToTable("Imagens");
-                });
-
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
                 {
                     b.Property<int>("LocadorId")
@@ -855,13 +835,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Locador");
                 });
 
-            modelBuilder.Entity("HabitAqui.Models.Imagem", b =>
-                {
-                    b.HasOne("HabitAqui.Models.Arrendamento", null)
-                        .WithMany("Imagens")
-                        .HasForeignKey("ArrendamentoId");
-                });
-
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
                 {
                     b.HasOne("HabitAqui.Models.Administrador", null)
@@ -942,11 +915,6 @@ namespace HabitAqui.Migrations
                     b.Navigation("Categorias");
 
                     b.Navigation("Locadores");
-                });
-
-            modelBuilder.Entity("HabitAqui.Models.Arrendamento", b =>
-                {
-                    b.Navigation("Imagens");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Categoria", b =>

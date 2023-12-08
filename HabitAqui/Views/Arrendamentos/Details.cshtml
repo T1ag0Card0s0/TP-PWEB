@@ -138,22 +138,19 @@
                                 <dd>Sem observações</dd>
                             }
 
-                            @if (ViewBag.Fotos != null)
-                            {
+                            @if(Model.Imagens != null){
                                 <div id="imagensDanos" style="display:none;">
-                                    @foreach (var imagePath in ViewBag.Fotos)
+                                    @foreach (var imagem in Model.Imagens)
                                     {
-                                        <img src="@Url.Content(imagePath)">
+                                        <img src="~/@Url.Content(imagem.Path)">
                                     }
                                 </div>
 
                                 <button id="btnMostrarImagens" onclick="mostrarImagens()">Mostrar Imagens</button>
-                                <script>
-                                    function mostrarImagens() {
-                                        document.getElementById('imagensDanos').style.display = 'block';
-                                    }
-                                </script>
                             }
+                            
+
+
                         </dl>
                     </div>
                 </div>
@@ -172,3 +169,10 @@
         }
     </div>
 </div>
+
+
+<script>
+    function mostrarImagens() {
+        document.getElementById('imagensDanos').style.display = 'block';
+    }
+</script>

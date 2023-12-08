@@ -218,14 +218,9 @@ namespace HabitAqui.Controllers
                 .Include(a => a.ReceberArrendamento)
                 .Include(a => a.ReceberArrendamento.Equipamentos)
                 .Include(a => a.ReceberArrendamento.FuncionarioRecebeu)
+                .Include(a => a.Imagens)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            var caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "arrendamentos_danos", arrendamento.Id.ToString());
-            if (Directory.Exists(caminhoPasta))
-            {
-                ViewData["Fotos"] = Directory.GetFiles(caminhoPasta).ToList();
-            }
-            
             if (arrendamento == null)
             {
                 return NotFound();
@@ -442,17 +437,16 @@ namespace HabitAqui.Controllers
 
             if (arrendamento != null)
             {
-
-
+                // insere as fotos numa diretoria do tipo wwroot/img/arrendamentos_danos/id
                 if (viewModel.danosFotos != null && viewModel.danosFotos.Any())
                 {
                     var caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "arrendamentos_danos", arrendamento.Id.ToString());
-                   
+
                     if (!Directory.Exists(caminhoPasta))
                     {
                         Directory.CreateDirectory(caminhoPasta);
                     }
-
+                    
                     foreach (var file in viewModel.danosFotos)
                     {
                         var targetFilePath = Path.Combine(caminhoPasta, file.FileName);
@@ -460,9 +454,18 @@ namespace HabitAqui.Controllers
                         {
                             file.CopyTo(stream);
                         }
+                        var filePath = Path.Combine("img", "arrendamentos_danos", arrendamento.Id.ToString(), file.FileName);
+                        filePath = filePath.Replace('\\', '/');
+                        Imagem img = new Imagem()
+                        {
+                            Path = filePath
+                        };
+                        arrendamento.Imagens.Add(img);
                     }
+                    
                 }
-                if(viewModel.EquipamentoEstado.Any() || viewModel.EquipamentoEstado != null)
+
+                if(viewModel.EquipamentoEstado != null)
                 {
                     foreach (var equipamentoEstado in viewModel.EquipamentoEstado)
                     {
@@ -482,10 +485,8 @@ namespace HabitAqui.Controllers
                     }
                 }
                
-
                 ReceberArrendamento receberArrendamento = new ReceberArrendamento
                 {
-                    //Equipamentos = equipamentos,
                     Danos = viewModel.Danos,
                     FuncionarioRecebeuId = viewModel.FuncionarioRecebeuId,
                     Observacoes = viewModel.Observacoes
@@ -510,6 +511,7 @@ namespace HabitAqui.Controllers
                 .Include(a => a.Cliente)
                 .Include(a => a.Habitacao)
                 .Include(a => a.Locador)
+                .Include(a => a.Imagens)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (arrendamento == null)
             {
@@ -531,6 +533,10 @@ namespace HabitAqui.Controllers
             var arrendamento = await _context.Arrendamentos.FindAsync(id);
             if (arrendamento != null)
             {
+                foreach (var imagem in arrendamento.Imagens)
+                {
+                    _context.Imagens.Remove(imagem);
+                }
                 _context.Arrendamentos.Remove(arrendamento);
             }
             
