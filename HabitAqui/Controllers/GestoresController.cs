@@ -194,21 +194,32 @@ namespace HabitAqui.Controllers
 
         public IActionResult ListEmployees()
         {
-            var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser).ToList();
-            var gestores = _context.Gestores.Include(g => g.Locador).Include(g => g.ApplicationUser).ToList();
-            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
-            var clientes = _context.Clientes.Include(c => c.ApplicationUser).ToList();
-
+            var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser)
+                .Where(f => f.LocadorId == ObterLocadorIdAtual()).ToList();
+            var gestores = _context.Gestores.Include(g => g.Locador).Include(g => g.ApplicationUser)
+                .Where(f => f.LocadorId == ObterLocadorIdAtual()).ToList();
+          
             var viewModel = new ListEmployeesViewModel
             {
                 Funcionarios = funcionarios,
-                Gestores = gestores,
-                Clientes = clientes,
-                Locadores = locadores
+                Gestores = gestores
             };
 
             return View(viewModel);
         }
+
+        private int ObterLocadorIdAtual()
+        {
+            var user_atual = _userManager.GetUserAsync(User).Result;
+            if (_userManager.IsInRoleAsync(user_atual, "Gestor").Result)
+            {
+                var user = _context.Gestores.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
+                return (user.LocadorId);
+            }
+
+            return -1;
+        }
+
         public async Task<IActionResult> Ativar(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
