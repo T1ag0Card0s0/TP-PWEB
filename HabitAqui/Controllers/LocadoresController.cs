@@ -9,6 +9,8 @@ using HabitAqui.Data;
 using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Numerics;
+using FluentNHibernate.Conventions;
 
 namespace HabitAqui.Controllers
 {
@@ -146,13 +148,19 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
-                .Include(l => l.Funcionarios)
+                .Include(l => l.Arrendamentos)
                 .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
                 return NotFound();
             }
-
+            if (locador.Arrendamentos != null)
+            {
+                if (!locador.Arrendamentos.IsEmpty())
+                {
+                    return Forbid();
+                }
+            }
             return View(locador);
         }
 
@@ -165,13 +173,23 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
             }
-            var locador = await _context.Locadores.FindAsync(id);
-            if (locador != null)
+
+            var locador = await _context.Locadores
+                .Include(m => m.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.LocadorId == id);
+            if (locador == null)
             {
-                _context.Locadores.Remove(locador);
+                return NotFound();
             }
-            
+
+            var appuser = locador.ApplicationUser;
+            await _userManager.DeleteAsync(appuser);
+
+            _context.Locadores.Remove(locador);
             await _context.SaveChangesAsync();
+            if (User.IsInRole("Gestor")) {
+                return RedirectToAction("ListEmployees", "Gestores");
+            }
             return RedirectToAction(nameof(Index));
         }
 
