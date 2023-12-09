@@ -9,7 +9,7 @@ namespace HabitAqui.Models
 
         [ForeignKey("Arrendamento")]
         public int ArrendamentoId { get; set; }
-        public Arrendamento Arrendamento { get; set; }
+        public Arrendamento? Arrendamento { get; set; }
     }
 
 }

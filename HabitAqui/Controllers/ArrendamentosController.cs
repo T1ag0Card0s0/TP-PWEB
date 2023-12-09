@@ -117,7 +117,7 @@ namespace HabitAqui.Controllers
             }
 
             if (estado == "CONFIRMADO")
-                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.CONFIRMADO);
+                arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.CONFIRMADO || h.Estado ==Estados.ENTREGUE);
             else if (estado == "NAO_CONFIRMADO")
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(h => h.Estado == Estados.NAO_CONFIRMADO);
             else if (estado == "RECEBIDO")

@@ -244,34 +244,16 @@ namespace HabitAqui.Controllers
 
             if (ModelState.IsValid)
             {
-                var user_atual = _userManager.GetUserAsync(User).Result;
                 var categoriaNames = _context.Categorias.ToList();
                 ViewData["Categorias"] = categoriaNames;
 
-                if (_userManager.IsInRoleAsync(user_atual, "Funcionario").Result)
-                {
-                    var funcionario = _context.Funcionarios.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                    habitacao.MediaAvaliacao = 0;
-                    habitacao.LocadorId = funcionario.LocadorId;
 
-                    _context.Add(habitacao);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-
-
-                }
-                else if (_userManager.IsInRoleAsync(user_atual, "Gestor").Result)
-                {
-                    var gestor = _context.Gestores.FirstOrDefault(f => f.ApplicationUser.Id == _userManager.GetUserId(User));
-                    habitacao.MediaAvaliacao = 0;
-                    habitacao.LocadorId = gestor.LocadorId;
-
-                    _context.Add(habitacao);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-
-
-                }
+                habitacao.MediaAvaliacao = 0;
+                habitacao.LocadorId = ObterLocadorIdAtual();
+          
+                _context.Add(habitacao);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             
             return View(habitacao);

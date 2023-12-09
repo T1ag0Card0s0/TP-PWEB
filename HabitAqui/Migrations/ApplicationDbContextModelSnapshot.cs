@@ -476,6 +476,9 @@ namespace HabitAqui.Migrations
                     b.Property<int>("ArrendamentoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("HabitacaoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -483,6 +486,8 @@ namespace HabitAqui.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArrendamentoId");
+
+                    b.HasIndex("HabitacaoId");
 
                     b.ToTable("Imagens");
                 });
@@ -863,10 +868,18 @@ namespace HabitAqui.Migrations
                     b.HasOne("HabitAqui.Models.Arrendamento", "Arrendamento")
                         .WithMany("Imagens")
                         .HasForeignKey("ArrendamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HabitAqui.Models.Habitacao", "Habitacao")
+                        .WithMany("Imagens")
+                        .HasForeignKey("HabitacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Arrendamento");
+
+                    b.Navigation("Habitacao");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
@@ -988,6 +1001,8 @@ namespace HabitAqui.Migrations
                     b.Navigation("Arrendamentos");
 
                     b.Navigation("Avaliacoes");
+
+                    b.Navigation("Imagens");
                 });
 
             modelBuilder.Entity("HabitAqui.Models.Locador", b =>
