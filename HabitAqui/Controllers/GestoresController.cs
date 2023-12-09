@@ -231,6 +231,10 @@ namespace HabitAqui.Controllers
             user.Ativo = true;
             await _userManager.UpdateAsync(user);
 
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             return RedirectToAction(nameof(ListEmployees));
         }
 
@@ -244,7 +248,10 @@ namespace HabitAqui.Controllers
 
             user.Ativo = false;
             await _userManager.UpdateAsync(user);
-
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             return RedirectToAction(nameof(ListEmployees));
         }
 

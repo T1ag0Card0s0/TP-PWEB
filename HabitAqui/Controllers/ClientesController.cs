@@ -124,6 +124,13 @@ namespace HabitAqui.Controllers
             }
 
             await _context.SaveChangesAsync();
+            if (User.IsInRole("Gestores"))
+            {
+                return RedirectToAction("ListEmployees", "Gestores");
+            }else if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             return RedirectToAction(nameof(Index));
         }
 

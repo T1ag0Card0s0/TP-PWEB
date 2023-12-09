@@ -70,7 +70,7 @@
                         <h5 class="card-title">@cliente.Nome</h5>
                         <p class="card-text">Email: @cliente.ApplicationUser.Email</p>
                         <div class="d-flex justify-content-between mt-3">
-                            <a asp-action="Delete" asp-controller="Cliente" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
+                            <a asp-action="Delete" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
 
                             @if (cliente.ApplicationUser.Ativo)
                             {

@@ -58,6 +58,8 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoriaId,Nome")] Categoria categoria)
         {
+
+            ModelState.Remove(nameof(categoria.Habitacao));
             if (ModelState.IsValid)
             {
                 _context.Add(categoria);
@@ -94,7 +96,7 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-
+            ModelState.Remove(nameof(categoria.Habitacao));
             if (ModelState.IsValid)
             {
                 try

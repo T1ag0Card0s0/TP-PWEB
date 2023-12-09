@@ -95,6 +95,13 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove(nameof(locador.Habitacoes));
+            ModelState.Remove(nameof(locador.Arrendamentos));
+            ModelState.Remove(nameof(locador.Avaliacoes));
+            ModelState.Remove(nameof(locador.Funcionarios));
+            ModelState.Remove(nameof(locador.Gestores));
+            ModelState.Remove(nameof(locador.ApplicationUser));
+
             if (ModelState.IsValid)
             {
                 try
@@ -113,7 +120,7 @@ namespace HabitAqui.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListLocadores", "Administradores");
             }
             return View(locador);
         }
