@@ -14,13 +14,13 @@
                         <div class="d-flex justify-content-between mt-3">
                             <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
                             <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
-                            @if (locador.EstadoDeSubscricao)
+                            @if (locador.EstadoDeSubscricao == true)
                             {
-                                <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
+                                <a asp-action="DesativarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
                             }
                             else
                             {
-                                <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
+                                <a asp-action="AtivarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
                             }
                         </div>
                     </div>

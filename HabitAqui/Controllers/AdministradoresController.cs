@@ -10,6 +10,7 @@ using HabitAqui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using HabitAqui.ViewModels;
+using SQLitePCL;
 
 namespace HabitAqui.Controllers
 {
@@ -67,6 +68,29 @@ namespace HabitAqui.Controllers
 
             return View(viewModel);
         }
+
+        // Desativar locador
+        public async Task<IActionResult> DesativarLocador(int id)
+        {
+            var locador = _context.Locadores.Where(l => l.LocadorId == id).FirstOrDefault();
+
+            if (locador != null)
+                locador.EstadoDeSubscricao = false;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListLocadores));
+        }
+
+        // Atvar locador
+        public async Task<IActionResult> AtivarLocador(int id)
+        {
+            var locador = _context.Locadores.Where(l => l.LocadorId == id).FirstOrDefault();
+
+            if (locador != null)
+                locador.EstadoDeSubscricao = true;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListLocadores));
+        }
+
 
         // GET: Administradores/Create
         public IActionResult Create()

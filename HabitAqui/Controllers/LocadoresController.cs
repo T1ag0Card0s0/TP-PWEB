@@ -7,39 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using System.Numerics;
-using FluentNHibernate.Conventions;
 
 namespace HabitAqui.Controllers
 {
-    [Authorize(Roles = "Admin,Gestor, Funcionario")]
     public class LocadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LocadoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public LocadoresController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
-
 
         // GET: Locadores
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Locadores.Include(l => l.Funcionarios);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        public IActionResult ListHabitacoes()
-        {
-            var locador = _context.Locadores.Include(l => l.Funcionarios).Include(l => l.Habitacoes).ToList();
-
-
-            return View("Index", locador);
+              return _context.Locadores != null ? 
+                          View(await _context.Locadores.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
         }
 
         // GET: Locadores/Details/5
@@ -51,7 +36,6 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
-                .Include(l => l.Funcionarios)
                 .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
@@ -64,7 +48,6 @@ namespace HabitAqui.Controllers
         // GET: Locadores/Create
         public IActionResult Create()
         {
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id");
             return View();
         }
 
@@ -73,16 +56,14 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,EstadoDeSubscricao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Create([Bind("LocadorId,Nome,EstadoDeSubscricao,MediaAvaliacao")] Locador locador)
         {
             if (ModelState.IsValid)
             {
-                locador.MediaAvaliacao = 0;
                 _context.Add(locador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -99,7 +80,6 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -108,7 +88,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,EstadoDeSubscricao,MediaAvaliacao,FuncionarioId")] Locador locador)
+        public async Task<IActionResult> Edit(int id, [Bind("LocadorId,Nome,EstadoDeSubscricao,MediaAvaliacao")] Locador locador)
         {
             if (id != locador.LocadorId)
             {
@@ -135,7 +115,6 @@ namespace HabitAqui.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuncionarioId"] = new SelectList(_context.Funcionarios, "Id", "Id", locador.Funcionarios);
             return View(locador);
         }
 
@@ -148,19 +127,12 @@ namespace HabitAqui.Controllers
             }
 
             var locador = await _context.Locadores
-                .Include(l => l.Arrendamentos)
                 .FirstOrDefaultAsync(m => m.LocadorId == id);
             if (locador == null)
             {
                 return NotFound();
             }
-            if (locador.Arrendamentos != null)
-            {
-                if (!locador.Arrendamentos.IsEmpty())
-                {
-                    return Forbid();
-                }
-            }
+
             return View(locador);
         }
 
@@ -173,23 +145,13 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
             }
-
-            var locador = await _context.Locadores
-                .Include(m => m.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.LocadorId == id);
-            if (locador == null)
+            var locador = await _context.Locadores.FindAsync(id);
+            if (locador != null)
             {
-                return NotFound();
+                _context.Locadores.Remove(locador);
             }
-
-            var appuser = locador.ApplicationUser;
-            await _userManager.DeleteAsync(appuser);
-
-            _context.Locadores.Remove(locador);
+            
             await _context.SaveChangesAsync();
-            if (User.IsInRole("Gestor")) {
-                return RedirectToAction("ListEmployees", "Gestores");
-            }
             return RedirectToAction(nameof(Index));
         }
 
