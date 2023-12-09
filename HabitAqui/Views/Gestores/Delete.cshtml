@@ -16,6 +16,14 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="GestorId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ListEmployees">Back to List</a>
+        @if (User.IsInRole("Gestor"))
+        {
+            <a asp-action="ListEmployees" asp-controller="Gestores">Back to List</a>
+
+        }
+        else
+        {
+            <a asp-action="Index">Back to List</a>
+        }
     </form>
 </div>
