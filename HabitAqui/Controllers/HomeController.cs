@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace HabitAqui.Controllers
 {
@@ -24,30 +25,61 @@ namespace HabitAqui.Controllers
         public async Task<IActionResult> Index()
         {
             if(User.IsInRole("Funcionario") || User.IsInRole("Gestor")){
-                var categoriasWithCount = await _context.Categorias
-                    .Include(c => c.Habitacao)
-                    .Select(c => new
-                    {
-                        Categoria = c.Nome,
-                        Count = c.Habitacao.Count
-                    })
-                    .ToListAsync();
+                Locador locador = null;
 
-                ViewBag.CategoriasWithCount = categoriasWithCount;
-                var estadosCount = await _context.Arrendamentos
-                    .GroupBy(a => a.Estado)
-                    .Select(g => new { Estado = g.Key, Count = g.Count() })
-                    .ToListAsync();
-
-                ViewBag.EstadosCount = estadosCount;
-                var categorias = _context.Categorias.ToList(); // Substitua isso pelo método real que obtém suas categorias
-                var jsonSettings = new JsonSerializerSettings
+                if (User.IsInRole("Funcionario"))
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                };
+                    string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    Funcionario funcionario = await _context.Funcionarios
+                        .Include(f => f.Locador)
+                        .FirstOrDefaultAsync(f => f.ApplicationUser.Id == userId);
+                    if (funcionario != null)
+                    {
+                        locador = funcionario.Locador;
+                    }
+                }
+                else if (User.IsInRole("Gestor"))
+                {
+                    string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    Gestor gestor = await _context.Gestores
+                        .Include(g => g.Locador)
+                        .FirstOrDefaultAsync(g => g.ApplicationUser.Id == userId);
+                    if (gestor != null)
+                    {
+                        locador = gestor.Locador;
+                    }
+                }
 
+                if (locador != null)
+                {
+                    // Use locador.LocadorId to filter data for the specific Locador
+                    var categoriasWithCount = await _context.Categorias
+                        .Include(c => c.Habitacao)
+                        .Where(c => c.Habitacao.Any(h => h.Locador.LocadorId == locador.LocadorId))
+                        .Select(c => new
+                        {
+                            Categoria = c.Nome,
+                            Count = c.Habitacao.Count
+                        })
+                        .ToListAsync();
+
+                    ViewBag.CategoriasWithCount = categoriasWithCount;
+
+                    // Use locador.LocadorId to filter data for the specific Locador
+                    var estadosCount = await _context.Arrendamentos
+                        .Where(a => a.Locador.LocadorId == locador.LocadorId)
+                        .GroupBy(a => a.Estado)
+                        .Select(g => new { Estado = g.Key, Count = g.Count() })
+                        .ToListAsync();
+
+                    ViewBag.EstadosCount = estadosCount;
+
+                    var jsonSettings = new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    };
+                }
             }
-           
             return View(await _context.Categorias.ToListAsync());
         }
 
