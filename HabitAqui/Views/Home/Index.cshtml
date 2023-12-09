@@ -1,4 +1,5 @@
 ﻿@using Newtonsoft.Json;
+@using HabitAqui.Models
 @model IEnumerable<HabitAqui.Models.Categoria>
 @{
     ViewData["Title"] = "Home Page";
@@ -6,25 +7,16 @@
 
 @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor") )
 {
-    /*<div class="container mt-4">
-        <div class="row">
-            @foreach (var categoria in ViewBag.Categorias)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@categoria.Nome</h5>
-                            <p class="card-text">Número de Habitações: @categoria.Count</p>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>*/
-
     <div class="container mt-4">
         <div class="row">
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <div class="col" style="height: 400px; width: 400px;">
+                <h3>Habitações por categoria</h3>
+                <canvas id="habitacoesByCategoriaChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col" style="height: 400px; width: 400px;">
+                <h3>Estados dos Arrendamentos</h3>
+                <canvas id="arrendamentosByEstadoChart" width="400" height="400" ></canvas>
+            </div>
         </div>
     </div>
 }else{
@@ -73,37 +65,70 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    var categorias = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Categorias, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+    function getEstadoString(valor) {
+        switch (valor) {
+            case 0: return 'CONFIRMADO';
+            case 1: return 'REJEITADO';
+            case 2: return 'RECEBIDO';
+            case 3: return 'ENTREGUE';
+            case 4: return 'NAO_CONFIRMADO';
+            default: return '';
+        }
+    }
+    var estadosData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.EstadosCount));
+    var estadosLabels = estadosData.map(item => getEstadoString(item.Estado));
+    var estadosValues = estadosData.map(item => item.Count);
 
-
-    // Prepara os dados para o gráfico
-    var labels = categorias.map(function (categoria) {
-        return categoria.Nome;
-    });
-
-    var data = categorias.map(function (categoria) {
-        return categoria.Count;
-    });
-    console.log(data);
-
-    // Cria o gráfico usando Chart.js
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('arrendamentosByEstadoChart').getContext('2d');
     var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        height: 260,
+        data: {
+            labels: estadosLabels,
+            datasets: [{
+                data: estadosValues,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                ],
+            }],
+        },
+        options: {
+            responsive: true
+        }
+    });
+    var categoriasData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.CategoriasWithCount));
+
+    var categoriasLabels = categoriasData.map(item => item.Categoria);
+    var categoriasValues = categoriasData.map(item => item.Count);
+
+    var ctxCategoria = document.getElementById('habitacoesByCategoriaChart').getContext('2d');
+    var myCategoriaChart = new Chart(ctxCategoria, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: categoriasLabels,
             datasets: [{
-                label: 'Número de Habitações',
-                data: data,
-                backgroundColor: 'rgba(0, 0, 0, 0.2)',  // Alterado para preto com uma opacidade de 0.2
-                borderColor: 'rgba(0, 0, 0, 1)',        // Alterado para preto
+                label: 'Número de Habitacoes',
+                data: categoriasValues,
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
         options: {
+            responsive: true,
             scales: {
-                y: {
+                x: { // Configure the x-axis
                     beginAtZero: true
+                },
+                y: { // Configure the y-axis
+                    beginAtZero: true,
+                    steps: 10,
+                    stepValue: 1
                 }
             }
         }

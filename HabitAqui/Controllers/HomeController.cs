@@ -23,13 +23,31 @@ namespace HabitAqui.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var categorias = _context.Categorias.ToList(); // Substitua isso pelo método real que obtém suas categorias
-            var jsonSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
+            if(User.IsInRole("Funcionario") || User.IsInRole("Gestor")){
+                var categoriasWithCount = await _context.Categorias
+                    .Include(c => c.Habitacao)
+                    .Select(c => new
+                    {
+                        Categoria = c.Nome,
+                        Count = c.Habitacao.Count
+                    })
+                    .ToListAsync();
 
-            ViewBag.Categorias = JsonConvert.SerializeObject(categorias, Formatting.None, jsonSettings);
+                ViewBag.CategoriasWithCount = categoriasWithCount;
+                var estadosCount = await _context.Arrendamentos
+                    .GroupBy(a => a.Estado)
+                    .Select(g => new { Estado = g.Key, Count = g.Count() })
+                    .ToListAsync();
+
+                ViewBag.EstadosCount = estadosCount;
+                var categorias = _context.Categorias.ToList(); // Substitua isso pelo método real que obtém suas categorias
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+
+            }
+           
             return View(await _context.Categorias.ToListAsync());
         }
 
