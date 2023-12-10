@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HabitAqui.Controllers
 {
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         public CategoriasController(ApplicationDbContext context)
         {
             _context = context;
@@ -160,6 +160,26 @@ namespace HabitAqui.Controllers
         private bool CategoriaExists(int id)
         {
           return (_context.Categorias?.Any(e => e.CategoriaId == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> Ativar(int id)
+        {
+            var categoria = _context.Categorias.Where(c => c.CategoriaId == id).FirstOrDefault();
+
+            if (categoria != null)
+                categoria.Ativo = true;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Desativar(int id)
+        {
+            var categoria = _context.Categorias.Where(c => c.CategoriaId== id).FirstOrDefault();
+
+            if (categoria != null)
+                categoria.Ativo = false;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

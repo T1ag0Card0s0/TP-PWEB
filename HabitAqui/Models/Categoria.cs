@@ -6,6 +6,7 @@ namespace HabitAqui.Models
 	{
 		public int CategoriaId { get; set; }
 		public string Nome { get; set; }
+		public bool Ativo { get; set; }
         
         public ICollection<Habitacao> Habitacao { get; set; }
 

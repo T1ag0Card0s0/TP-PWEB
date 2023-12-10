@@ -80,8 +80,15 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
+
+            if (_context.Habitacoes.Any(h => h.LocadorId == id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(locador);
         }
+
 
         // POST: Locadores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -101,6 +108,11 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(locador.Funcionarios));
             ModelState.Remove(nameof(locador.Gestores));
             ModelState.Remove(nameof(locador.ApplicationUser));
+
+            if (_context.Habitacoes.Any(h => h.LocadorId == id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
             if (ModelState.IsValid)
             {
