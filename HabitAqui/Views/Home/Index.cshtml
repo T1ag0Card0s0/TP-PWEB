@@ -8,7 +8,7 @@
 @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor") )
 {
     <div class="container mt-4">
-        <div class="row">
+        <div class="row m-5">
             <div class="col" style="height: 400px; width: 400px;">
                 <h3>Habitações por categoria</h3>
                 <canvas id="habitacoesByCategoriaChart" width="400" height="400"></canvas>
@@ -17,6 +17,13 @@
                 <h3>Estados dos Arrendamentos</h3>
                 <canvas id="arrendamentosByEstadoChart" width="400" height="400" ></canvas>
             </div>
+        </div>
+        <div class="row m-5">
+            <div class="col" style="height: 400px; width: 400px;">
+                <h3>Habitações por categoria</h3>
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+         
         </div>
     </div>
 }else{
@@ -129,6 +136,38 @@
                     beginAtZero: true,
                     steps: 10,
                     stepValue: 1
+                }
+            }
+        }
+    });
+   
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    var monthlyArrendamentosData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.MonthlyArrendamentos));
+
+    var monthlyArrendamentosValues = Array.from({ length: 12 }, (_, i) => {
+        const monthData = monthlyArrendamentosData.find(d => d.Month === i + 1);
+        return monthData ? monthData.Count : 0;
+    });
+
+    var ctx = document.getElementById('radarChart').getContext('2d');
+    var myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Monthly Arrendamentos',
+                data: monthlyArrendamentosValues,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)', 
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    max: Math.max(...monthlyArrendamentosValues) + 1
                 }
             }
         }

@@ -74,6 +74,15 @@ namespace HabitAqui.Controllers
 
                     ViewBag.EstadosCount = estadosCount;
 
+                    // Fetch monthly arrendamentos data
+                    var monthlyArrendamentos = await _context.Arrendamentos
+                        .Where(a => a.Locador.LocadorId == locador.LocadorId)
+                        .GroupBy(a => new { Year = a.DataInicio.Year, Month = a.DataInicio.Month })
+                        .Select(g => new { Year = g.Key.Year, Month = g.Key.Month, Count = g.Count() })
+                        .ToListAsync();
+
+                    ViewBag.MonthlyArrendamentos = monthlyArrendamentos;
+
                     var jsonSettings = new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
