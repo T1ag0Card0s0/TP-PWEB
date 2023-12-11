@@ -117,6 +117,23 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Equipamentos
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Equipamentos" asp-action="Index">
+                                            Listar Equipamentos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Equipamentos" asp-action="Create">
+                                            Criar Equipamentos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         }
                         <partial name="_LoginPartial" />
                     </ul>
@@ -130,15 +147,6 @@
         @RenderBody()
     </div>
 
-    <footer class="text-center text-lg-start bg-dark text-muted border-top footer">
-
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-            © 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-        </div>
-
-    </footer>
-     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

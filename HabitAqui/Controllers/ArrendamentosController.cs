@@ -548,7 +548,9 @@ namespace HabitAqui.Controllers
             }
             var arrendamento = await _context.Arrendamentos
                 .Include(a=>a.EntregarArrendamento)
-                .Include(a=>a.ReceberArrendamento)
+                .Include(a=>a.EntregarArrendamento)
+                .Include( a=> a.EntregarArrendamento.Equipamentos)
+                .Include( a=> a.ReceberArrendamento.Equipamentos)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (arrendamento != null)

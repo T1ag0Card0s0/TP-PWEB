@@ -11,20 +11,20 @@
         <div class="col-md-6">
             <form asp-action="Entregar" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
+                <div class="form-group mb-3">
+                    <label class="control-label">Equipamentos Opcionais:</label>
                     @foreach (var equipamento in ViewBag.Equipamentos)
                     {
-                    <div>
-                        <label>
-                            <input type="checkbox" name="ids" value="@equipamento.Id">
-                            @equipamento.Nome
-                        </label>
-                    </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="ids" value="@equipamento.Id">
+                                @equipamento.Nome
+                            </label>
+                        </div>
                     }
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label class="control-label">Funcionário:</label>
                     <div>
                         <select class="form-control" name="FuncionarioEntregaId">
@@ -36,19 +36,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="Observacoes" class="control-label">Observações:</label>
                     <textarea asp-for="Observacoes" class="form-control"></textarea>
                     <span asp-validation-for="Observacoes" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="Danos" class="control-label">Danos:</label>
                     <textarea asp-for="Danos" class="form-control"></textarea>
                     <span asp-validation-for="Danos" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <button type="submit" class="btn btn-primary">Entregar</button>
                 </div>
             </form>

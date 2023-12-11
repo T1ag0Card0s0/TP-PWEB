@@ -23,15 +23,6 @@
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EquipamentoEstado" class="control-label"></label>
-                <select asp-for="EquipamentoEstado" class="form-control">
-                        <option value="@EquipamentoEstado.BOM">Bom</option>
-                    <option value="@EquipamentoEstado.DANIFICADO">Danificado</option>
-                    <option value="@EquipamentoEstado.EM_FALTA">Em falta</option>
-                </select>
-                <span asp-validation-for="EquipamentoEstado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

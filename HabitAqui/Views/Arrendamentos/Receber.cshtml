@@ -14,7 +14,7 @@
 
                 @if (ViewBag.Equipamentos != null && ViewBag.Equipamentos.Count > 0)
                 {
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label class="control-label">Equipamentos Opcionais</label>
                         <div>
                             @foreach (var equipamento in ViewBag.Equipamentos)
@@ -34,7 +34,7 @@
                     </div>
                 }
                     
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label class="control-label">Funcionário:</label>
                     <div>
                         <select class="form-control" name="FuncionarioRecebeuId">
@@ -46,24 +46,24 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="Observacoes" class="control-label">Observações:</label>
                     <textarea asp-for="Observacoes" class="form-control"></textarea>
                     <span asp-validation-for="Observacoes" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="Danos" class="control-label">Danos:</label>
                     <textarea asp-for="Danos" class="form-control" id="danos"></textarea>
                     <span asp-validation-for="Danos" class="text-danger"></span>
                 </div>
 
-                <div class="form-group" id="fotosDanosGroup" style="display: none;">
+                <div class="form-group mb-3" id="fotosDanosGroup" style="display: none;">
                     <label class="control-label">Fotos dos Danos:</label>
                     <input type="file" name="danosFotos" multiple class="form-control-file">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <button type="submit" class="btn btn-primary">Receber</button>
                 </div>
             </form>
