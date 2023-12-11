@@ -161,14 +161,14 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
+
             if (funcionario.Locador.Arrendamentos != null)
             {
                 if (!funcionario.Locador.Arrendamentos.IsEmpty())
                 {
-                    return Forbid();
+                    return RedirectToAction("ListEmployees", "Gestores");
                 }
             }
-
             return View(funcionario);
         }
 
@@ -183,12 +183,14 @@ namespace HabitAqui.Controllers
             }
             var funcionario = await _context.Funcionarios
                 .Include(m => m.ApplicationUser)
+                .Include(m => m.Locador)
+                .Include(m => m.Locador.Arrendamentos)
                 .FirstOrDefaultAsync(m => m.FuncionarioId == id);
 
             if (funcionario == null) {
                 return NotFound();
             }
-
+            
             var appuser = funcionario.ApplicationUser;
             await _userManager.DeleteAsync(appuser);
 
