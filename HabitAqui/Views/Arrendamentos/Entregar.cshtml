@@ -11,15 +11,16 @@
         <div class="col-md-6">
             <form asp-action="Entregar" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="form-group">
                     @foreach (var equipamento in ViewBag.Equipamentos)
                     {
-                        <div>
-                            <label>
-                                 <input type="checkbox" name="ids" value="@equipamento.Id">
-                                @equipamento.Nome 
-                            </label>
-                        </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="ids" value="@equipamento.Id">
+                            @equipamento.Nome
+                        </label>
+                    </div>
                     }
                 </div>
 
@@ -58,3 +59,16 @@
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
+
+<!--
+<div class="form-group">
+    foreach (var equipamento in ViewBag.Equipamentos)
+    {
+        <div>
+            <label>
+                <input type="checkbox" name="ids" value="equipamento.Id">
+                equipamento.Nome
+            </label>
+        </div>
+    }
+</div>-->

@@ -525,6 +525,9 @@ namespace HabitAqui.Controllers
                 .Include(a => a.Habitacao)
                 .Include(a => a.Locador)
                 .Include(a => a.Imagens)
+                .Include(a => a.EntregarArrendamento)
+                .Include(a => a.EntregarArrendamento.Equipamentos)
+                .Include(a => a.ReceberArrendamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (arrendamento == null)
             {
@@ -543,13 +546,26 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Arrendamentos'  is null.");
             }
-            var arrendamento = await _context.Arrendamentos.FindAsync(id);
+            var arrendamento = await _context.Arrendamentos
+                .Include(a=>a.EntregarArrendamento)
+                .Include(a=>a.ReceberArrendamento)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             if (arrendamento != null)
             {
                 foreach (var imagem in arrendamento.Imagens)
                 {
                     _context.Imagens.Remove(imagem);
                 }
+
+                if(arrendamento.EntregarArrendamentoId != null)
+                    _context.EntregarArrendamentos.Remove(arrendamento.EntregarArrendamento);
+               
+
+                if (arrendamento.ReceberArrendamentoId != null)
+                    _context.ReceberArrendamentos.Remove(arrendamento.ReceberArrendamento);
+                  
+
                 _context.Arrendamentos.Remove(arrendamento);
             }
             

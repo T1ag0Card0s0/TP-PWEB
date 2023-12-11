@@ -15,5 +15,6 @@ namespace HabitAqui.Models
         public string? Danos { get; set; }
 
         public string? Observacoes { get; set; }
+
     }
 }
