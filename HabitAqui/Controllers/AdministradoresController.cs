@@ -53,6 +53,30 @@ namespace HabitAqui.Controllers
             return View(administrador);
         }
 
+        public IActionResult Filter(string locadorNome, string estado, string order)
+        {
+            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
+            ViewData["Locadores"] = locadores;
+
+            if (locadorNome != null)
+                locadores = _context.Locadores.Where(l => l.Nome == locadorNome).ToList();
+
+            if (estado != null && estado.Equals("Ativo"))
+                locadores = _context.Locadores.Where(l => l.EstadoDeSubscricao == true).ToList();
+
+
+            if (estado != null && estado.Equals("Inativo"))
+                locadores = _context.Locadores.Where(l => l.EstadoDeSubscricao == false).ToList();
+
+            if (order != null && order.Equals("Crescente"))
+                locadores = locadores.OrderBy(l => l.MediaAvaliacao).ToList();
+
+            if (order != null && order.Equals("Decrescente"))
+                locadores = locadores.OrderByDescending(l => l.MediaAvaliacao).ToList();
+
+            return View("ListLocadores",locadores);
+        }
+
         public IActionResult ListUsers()
         {
             var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser).ToList();
@@ -209,14 +233,10 @@ namespace HabitAqui.Controllers
 
         public IActionResult ListLocadores()
         {
+
             var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
-
-            var viewModel = new ListLocadoresViewModel
-            {
-                Locadores = locadores
-            };
-
-            return View(viewModel);
+            ViewData["Locadores"] = locadores;
+            return View(locadores);
         }
     }
 }

@@ -1,31 +1,65 @@
-@model HabitAqui.ViewModels.ListLocadoresViewModel
+@model IEnumerable<HabitAqui.Models.Locador>
 
-<div class="container">
-    <h2>Lista de Locadores</h2>
-    <div class="row">
-        @foreach (var locador in Model.Locadores)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">@locador.Nome</h5>
-                        <p class="card-text">ID: @locador.LocadorId</p>
-                        <p class="card-text">Email:</p>
-                        <div class="d-flex justify-content-between mt-3">
-                            <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
-                            <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
-                            @if (locador.EstadoDeSubscricao == true)
-                            {
-                                <a asp-action="DesativarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
-                            }
-                            else
-                            {
-                                <a asp-action="AtivarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
-                            }
-                        </div>
+<div class="container-fluid p-3" style="background-color:#D8D8D8">
+    <form asp-area="" asp-controller="Administradores" asp-action="Filter">
+        <div class="row g-3 mt-2">
+            <div class="col-2">
+                <select name="locadorNome" class="form-select">
+                    <option value="">Selecione um locador</option>
+                    @foreach (var locadores in ViewBag.Locadores)
+                    {
+                        <option value="@locadores.Nome">@locadores.Nome</option>
+                    }
+                </select>
+            </div>
+            <div class="col-1">
+                <button type="submit" class="btn btn-dark btn-block">
+                    Procurar
+                </button>
+            </div>
+        </div>
+        <div class="row g-3 mt-2">
+            <div class="col-2">
+                <select name="order" class="form-select">
+                    <option selected value="">Ordenar Por</option>
+                    <option value="Crescente">Avaliação (asc)</option>
+                    <option value="Decrescente">Avaliação (desc)</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select name="estado" class="form-select">
+                    <option value="">Selecione um Estado</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row m-auto mt-2">
+    @foreach (var locador in Model)
+    {
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@locador.Nome</h5>
+                    <p class="card-text">ID: @locador.LocadorId</p>
+                    <p class="card-text">Avaliação: @locador.MediaAvaliacao</p>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
+                        <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
+                        @if (locador.EstadoDeSubscricao == true)
+                        {
+                            <a asp-action="DesativarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
+                        }
+                        else
+                        {
+                            <a asp-action="AtivarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
+                        }
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>

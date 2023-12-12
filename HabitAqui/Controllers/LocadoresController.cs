@@ -81,11 +81,6 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            if (_context.Habitacoes.Any(h => h.LocadorId == id))
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
             return View(locador);
         }
 
@@ -109,10 +104,6 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(locador.Gestores));
             ModelState.Remove(nameof(locador.ApplicationUser));
 
-            if (_context.Habitacoes.Any(h => h.LocadorId == id))
-            {
-                return RedirectToAction(nameof(Index));
-            }
 
             if (ModelState.IsValid)
             {
@@ -152,6 +143,11 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
+            if (_context.Habitacoes.Any(h => h.LocadorId == id))
+            {
+                return RedirectToAction("ListLocadores", "Administradores");
+            }
+
             return View(locador);
         }
 
@@ -169,7 +165,9 @@ namespace HabitAqui.Controllers
             {
                 _context.Locadores.Remove(locador);
             }
+
             
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
