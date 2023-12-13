@@ -60,12 +60,16 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClienteId,Nome,UtilizadorId")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("ClienteId,Nome")] Cliente cliente)
         {
             if (id != cliente.ClienteId)
             {
                 return NotFound();
             }
+
+            ModelState.Remove(nameof(cliente.AvaliacoesHabitacao));
+            ModelState.Remove(nameof(cliente.Arrendamentos));
+            ModelState.Remove(nameof(cliente.ApplicationUser));
 
             if (ModelState.IsValid)
             {
@@ -85,7 +89,7 @@ namespace HabitAqui.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListUsers", "Administradores");
             }
             return View(cliente);
         }
@@ -100,6 +104,12 @@ namespace HabitAqui.Controllers
 
             var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.ClienteId == id);
+
+            var arrendamentos = _context.Arrendamentos.Include(a => a.Cliente).Where(a => a.ClienteId == id);
+            if (arrendamentos.Any())
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             if (cliente == null)
             {
                 return NotFound();
@@ -113,16 +123,22 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Clientes == null)
+            var clientes = _context.Clientes.Include(c => c.ApplicationUser).ToList();
+            if (clientes == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Clientes'  is null.");
             }
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = clientes.Where(c=> c.ClienteId == id).FirstOrDefault();
             if (cliente != null)
             {
+                var user = _context.Users.Find(cliente.ApplicationUser.Id);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                }
+
                 _context.Clientes.Remove(cliente);
             }
-
             await _context.SaveChangesAsync();
             if (User.IsInRole("Gestores"))
             {

@@ -114,12 +114,16 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("FuncionarioId,Nome")] Funcionario funcionario)
         {
             if (id != funcionario.FuncionarioId)
             {
                 return NotFound();
             }
+
+            ModelState.Remove(nameof(funcionario.ApplicationUser));
+            ModelState.Remove(nameof(funcionario.LocadorId));
+            ModelState.Remove(nameof(funcionario.GestorId));
 
             if (ModelState.IsValid)
             {
@@ -139,7 +143,7 @@ namespace HabitAqui.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListUsers", "Administradores");
             }
             return View(funcionario);
         }
@@ -195,11 +199,13 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
             
+
             var appuser = funcionario.ApplicationUser;
             await _userManager.DeleteAsync(appuser);
 
             _context.Funcionarios.Remove(funcionario);
             await _context.SaveChangesAsync();
+
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("ListUsers", "Administradores");
@@ -207,7 +213,6 @@ namespace HabitAqui.Controllers
             if (User.IsInRole("Gestor")) {
                 return RedirectToAction("ListEmployees", "Gestores");
             }
-
             return RedirectToAction(nameof(Index));
         }
 

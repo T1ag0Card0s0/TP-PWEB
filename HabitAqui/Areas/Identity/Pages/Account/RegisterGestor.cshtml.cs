@@ -146,7 +146,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                     })
                     .ToList();
             }
-            
+
         }
 
         private int ObterLocadorIdAtual()
@@ -174,7 +174,8 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Ativo = true
+                    Ativo = true,
+                    EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -192,24 +193,24 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         };
 
                         _context.Add(gestor);
-                        await _context.SaveChangesAsync();
-                        gestor.ApplicationUser.EmailConfirmed = true;
                         await _userManager.AddToRoleAsync(user, "Gestor");
+                        await _context.SaveChangesAsync();
+                        
 
                         _logger.LogInformation("User created a new account with password.");
 
                         return LocalRedirect(returnUrl);
                     }
                 }
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
+            }
 
             // If we got this far, something failed, redisplay form
             ViewData["LocadoresId"] = new SelectList(_context.Locadores, "LocadorId", "Nome");
             return Page();
-            }
         }
     }
+}

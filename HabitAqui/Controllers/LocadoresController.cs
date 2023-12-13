@@ -156,17 +156,22 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Locadores == null)
+            var locadores = _context.Locadores.Include(c => c.ApplicationUser).ToList();
+            if (locadores == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
             }
-            var locador = await _context.Locadores.FindAsync(id);
+            var locador = locadores.Where(c=> c.LocadorId == id).FirstOrDefault();
             if (locador != null)
             {
+                var user = _context.Users.Find(locador.ApplicationUser.Id);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                }
+
                 _context.Locadores.Remove(locador);
             }
-
-            
 
             await _context.SaveChangesAsync();
             return RedirectToAction("ListLocadores", "Administradores");

@@ -131,7 +131,9 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    Ativo = true,
+                    EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -148,8 +150,6 @@ namespace HabitAqui.Areas.Identity.Pages.Account
 
                     _context.Update(locador);
 
-                    locador.ApplicationUser.EmailConfirmed = true;
-
                     await _context.SaveChangesAsync();
                     var emailGestor = $"{Input.FirstName + Input.LastName}@gestor";
 
@@ -159,7 +159,8 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         Email = emailGestor,
                         FirstName = Input.FirstName + Input.LastName,
                         LastName = "Gestor",
-                        Ativo = true
+                        Ativo = true,
+                        EmailConfirmed = true
                     };
 
                     result = await _userManager.CreateAsync(user2, Input.Password);
@@ -173,7 +174,6 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         };
 
                         _context.Update(gestor);
-                        gestor.ApplicationUser.EmailConfirmed = true;
                         await _userManager.AddToRoleAsync(user2, "Gestor");
                         await _context.SaveChangesAsync();
 
