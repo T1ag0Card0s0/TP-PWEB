@@ -96,7 +96,7 @@ namespace HabitAqui.Controllers
 
             var clientesNames = _context.Clientes.ToList();
             ViewData["Clientes"] = clientesNames;
-
+            
             var locadorId = ObterLocadorIdAtual();
 
             var arrendamentosFiltrados = _context.Arrendamentos

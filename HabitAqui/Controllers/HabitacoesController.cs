@@ -39,7 +39,7 @@ namespace HabitAqui.Controllers
             {
                 habitacoes = _context.Habitacoes.Include(h => h.Categoria)
                     .Include(h => h.Locador)
-                    .Include(h => h.Locador.ApplicationUser.Email)
+                    .Include(h => h.Locador.ApplicationUser)
                     .ToList();
             }
             
