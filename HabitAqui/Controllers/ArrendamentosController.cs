@@ -255,6 +255,12 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(arrendamento.Cliente));
             ModelState.Remove(nameof(arrendamento.ReceberArrendamento));
 
+            if (arrendamento.DataInicio > arrendamento.DataFim)
+            {
+                ModelState.AddModelError("DataInicio", "A data de início deve ser anterior à data de fim.");
+                return View(arrendamento);
+            }
+
             if (ModelState.IsValid)
             {
                 // Recupere o valor da TempData

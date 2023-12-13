@@ -13,6 +13,8 @@ namespace HabitAqui.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
+        [Required(ErrorMessage = "O custo é obrigatório.")]
+        [Range(0, double.MaxValue, ErrorMessage = "O custo não pode ser menor que zero.")]
         public decimal Custo { get; set; }
 
         public Cliente Cliente { get; set; }

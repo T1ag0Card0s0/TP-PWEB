@@ -245,7 +245,15 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(habitacao.Arrendamentos));
             ModelState.Remove(nameof(habitacao.Categoria));
             ModelState.Remove(nameof(habitacao.Locador));
-
+            if (habitacao.PeriodoMinimoArrendamento > habitacao.PeriodoMaximoArrendamento)
+            {
+                ModelState.AddModelError("PeriodoMinimoArrendamento", "O periodo minimo não pode ser superior ao periodo máximo.");
+                return View(habitacao);
+            }
+            if (habitacao.Custo < 0) {
+                ModelState.AddModelError("Custo", "O custo não pode ser inferior a 0.");
+                return View(habitacao);
+            }
             if (ModelState.IsValid)
             {
                 var categoriaNames = _context.Categorias.ToList();
