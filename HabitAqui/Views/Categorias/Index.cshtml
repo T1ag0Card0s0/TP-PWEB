@@ -4,22 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Nome</h5>
-                    <p class="card-text">ID: @item.CategoriaId</p>
-                    <div class="d-flex justify-content-between mt-3">
-                        <a asp-action="Delete" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-danger">Apagar</a>
+<div class="container mt-5 justify-content-center">
+    <h3>Categorias</h3>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.CategoriaId</th>
+                    <td>@item.Nome</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CategoriaId" class="btn btn-secondary">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.CategoriaId" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i> Apagar
+                        </a>                        
                         @if (item.Ativo)
                         {
                             <a asp-action="Desativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-dark">Desativar</a>
@@ -28,10 +46,10 @@
                         {
                             <a asp-action="Ativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-success">Ativar</a>
                         }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
 </div>

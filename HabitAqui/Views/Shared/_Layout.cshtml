@@ -70,6 +70,26 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Equipamentos
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Equipamentos" asp-action="Create">
+                                            Criar Equipamentos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Equipamentos" asp-action="Index">
+                                            Listar Equipamentos
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         }
                         @if (User.IsInRole("Cliente"))
                         {

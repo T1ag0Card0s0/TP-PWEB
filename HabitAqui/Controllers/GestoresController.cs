@@ -84,6 +84,7 @@ namespace HabitAqui.Controllers
             }
 
             var gestor = await _context.Gestores.FindAsync(id);
+
             if (gestor == null)
             {
                 return NotFound();
@@ -96,12 +97,15 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GestorId")] Gestor gestor)
+        public async Task<IActionResult> Edit(int id, [Bind("GestorId,Nome")] Gestor gestor)
         {
             if (id != gestor.GestorId)
             {
                 return NotFound();
             }
+
+            ModelState.Remove(nameof(gestor.Funcionarios));
+            ModelState.Remove(nameof(gestor.ApplicationUser));
 
             if (ModelState.IsValid)
             {
@@ -121,7 +125,7 @@ namespace HabitAqui.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListUsers", "Administradores");
             }
             return View(gestor);
         }
@@ -153,7 +157,12 @@ namespace HabitAqui.Controllers
             
             if (gestor.Locador.Arrendamentos != null) {
                 if (!gestor.Locador.Arrendamentos.IsEmpty()) {
-                    return Forbid();
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Administradores");
+                    }
+                    return RedirectToAction(nameof(ListEmployees));
                 }
             }
             return View(gestor);

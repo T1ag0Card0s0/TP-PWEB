@@ -166,6 +166,10 @@ namespace HabitAqui.Controllers
             {
                 if (!funcionario.Locador.Arrendamentos.IsEmpty())
                 {
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Administradores");
+                    }
                     return RedirectToAction("ListEmployees", "Gestores");
                 }
             }
@@ -196,7 +200,10 @@ namespace HabitAqui.Controllers
 
             _context.Funcionarios.Remove(funcionario);
             await _context.SaveChangesAsync();
-
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             if (User.IsInRole("Gestor")) {
                 return RedirectToAction("ListEmployees", "Gestores");
             }

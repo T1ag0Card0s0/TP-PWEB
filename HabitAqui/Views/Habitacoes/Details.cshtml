@@ -20,6 +20,7 @@
                 <dt>Custo</dt>
                 <dd>@Html.DisplayFor(model => model.Custo)</dd>
 
+
                 <dt>Média de Avaliação</dt>
                 @if (Model.MediaAvaliacao == null)
                 {
@@ -37,6 +38,9 @@
 
                 <dt>Locador</dt>
                 <dd>@Html.DisplayFor(model => model.Locador.Nome)</dd>
+
+                <dt>Email:</dt>
+                <dd>@Html.DisplayFor(model => model.Locador.ApplicationUser.Email)</dd>
             </dl>
         </div>
     </div>

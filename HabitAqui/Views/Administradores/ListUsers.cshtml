@@ -2,8 +2,9 @@
 
 <div class="container">
     <h1>Lista de Utilizadores</h1>
-
+    <hr />
     <h2>Gestores <a asp-area="Identity" asp-page="/Account/RegisterGestor" class="btn btn-link">Criar Novo</a></h2>
+    <hr />
     <div class="row">
         @foreach (var gestor in Model.Gestores)
         {
@@ -16,6 +17,7 @@
                         <p class="card-text">Locador: @gestor.Locador.Nome</p>
                         <div class="d-flex justify-content-between mt-3">
                             <a asp-action="Delete" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-danger">Apagar</a>
+                            <a asp-action="Edit" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-secondary">Editar</a>
                             @if (gestor.ApplicationUser.Ativo)
                             {
                             <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@gestor.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
@@ -33,6 +35,7 @@
     </div>
 
     <h2>Funcionarios <a asp-area="Identity" asp-page="/Account/RegisterFunc" class="btn btn-link">Criar Novo</a></h2>
+    <hr />
     <div class="row">
         @foreach (var funcionario in Model.Funcionarios)
         {
@@ -45,7 +48,7 @@
                         <p class="card-text">Locador: @funcionario.Locador.Nome</p>
                         <div class="d-flex justify-content-between mt-3">
                             <a asp-action="Delete" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-danger">Apagar</a>
-
+                            <a asp-action="Edit" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-secondary">Editar</a>
                             @if (funcionario.ApplicationUser.Ativo)
                             {
                                 <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@funcionario.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
@@ -61,6 +64,7 @@
         }
     </div>
     <h2>Clientes <a asp-area="Identity" asp-page="/Account/RegisterClient" class="btn btn-link">Criar Novo</a></h2>
+    <hr />
     <div class="row">
         @foreach (var cliente in Model.Clientes)
         {
@@ -71,7 +75,7 @@
                         <p class="card-text">Email: @cliente.ApplicationUser.Email</p>
                         <div class="d-flex justify-content-between mt-3">
                             <a asp-action="Delete" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
-
+                            <a asp-action="Edit" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-secondary">Editar</a>
                             @if (cliente.ApplicationUser.Ativo)
                             {
                                 <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-dark">Desativar</a>

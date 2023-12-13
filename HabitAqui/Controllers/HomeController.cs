@@ -30,7 +30,7 @@ namespace HabitAqui.Controllers
                 if (User.IsInRole("Funcionario"))
                 {
                     string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    Funcionario funcionario = await _context.Funcionarios
+                    var funcionario = await _context.Funcionarios
                         .Include(f => f.Locador)
                         .FirstOrDefaultAsync(f => f.ApplicationUser.Id == userId);
                     if (funcionario != null)
@@ -41,7 +41,7 @@ namespace HabitAqui.Controllers
                 else if (User.IsInRole("Gestor"))
                 {
                     string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    Gestor gestor = await _context.Gestores
+                    var gestor = await _context.Gestores
                         .Include(g => g.Locador)
                         .FirstOrDefaultAsync(g => g.ApplicationUser.Id == userId);
                     if (gestor != null)
@@ -117,10 +117,8 @@ namespace HabitAqui.Controllers
                 habitacoes = habitacoes.Where(h => h.PeriodoMinimoArrendamento >= periodo);
             }
 
-            // Retrieve the list of Categoria names from the database
+           
             var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
-            
-            // Pass the list of Categoria names to the view
             ViewData["CategoriaNames"] = categoriaNames;
             var resultado = habitacoes.ToList();
 
@@ -131,10 +129,8 @@ namespace HabitAqui.Controllers
         {
             var habitacoes = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).Include(h => h.Arrendamentos).AsQueryable();
 
-            // Retrieve the list of Categoria names from the database
-            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
 
-            // Pass the list of Categoria names to the view
+            var categoriaNames = _context.Categorias.Select(c => c.Nome).ToList();
             ViewData["CategoriaNames"] = categoriaNames;
             var resultado = habitacoes.ToList();
 

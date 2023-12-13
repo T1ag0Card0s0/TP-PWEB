@@ -15,7 +15,8 @@
                         <p class="card-text">Email: @gestor.ApplicationUser.Email</p>
                         <p class="card-text">Locador: @gestor.Locador.Nome</p>
                         <div class="d-flex justify-content-between mt-3">
-                            @if(User.Identity.IsAuthenticated && User.Identity.Name != gestor.ApplicationUser.UserName){
+                            @if(User.Identity.IsAuthenticated && User.Identity.Name != gestor.ApplicationUser.UserName)
+                            {
                                 <a asp-action="Delete" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-danger">Apagar</a>
                                 if (gestor.ApplicationUser.Ativo)
                                 {

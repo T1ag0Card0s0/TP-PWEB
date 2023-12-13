@@ -4,32 +4,39 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Equipamentos</h2>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Adicionar Novo</a>
-</p>
-
-<div class="row m-auto mt-2">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-3">
-            <div class="card border-dark mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nome)</h5>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Descricao)</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+<div class="container mt-5 justify-content-center">
+    <h3>Equipamentos</h3>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Nome</td>
+                    <td>@item.Descricao</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">
                             <i class="fa-solid fa-pen-to-square"></i> Editar
                         </a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i> Apagar
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 
 

@@ -5,27 +5,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (User.IsInRole("Funcionario") || User.IsInRole("Gestor") )
+@if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
 {
     <div class="container mt-4">
-        <div class="row m-5">
-            <div class="col" style="height: 400px; width: 400px;">
+        <div class="row justify-content-center">
+            <div class="col-4 ">
                 <h3>Habitações por categoria</h3>
-                <canvas id="habitacoesByCategoriaChart" width="400" height="400"></canvas>
+                <canvas id="habitacoesByCategoriaChart"></canvas>
             </div>
-            <div class="col" style="height: 400px; width: 400px;">
-                <h3>Estados dos Arrendamentos</h3>
-                <canvas id="arrendamentosByEstadoChart" width="400" height="400" ></canvas>
+            <div class="col-4">
+                <h3>Arrendamentos por estado</h3>
+                <canvas id="arrendamentosByEstadoChart"></canvas>
             </div>
-        </div>
-        <div class="row m-5">
-            <div class="col" style="height: 400px; width: 400px;">
-                <h3>Habitações por categoria</h3>
-                <canvas id="radarChart" width="400" height="400"></canvas>
+            <div class="col-4">
+                <h3>Arrendamentos por mês</h3>
+                <canvas id="radarChart"></canvas>
             </div>
-         
         </div>
     </div>
+
 }else{
 <div class="d-flex justify-content-center align-items-center vh-100 bg-image" style="background-image:url('https://img.freepik.com/premium-photo/empty-minimal-room-interior-design-with-fishbone-flooring_327072-21366.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1697760000&semt=ais'); background-size:cover; height:100vh;">
     <div class="d-flex justify-content-center align-items-center v-100">

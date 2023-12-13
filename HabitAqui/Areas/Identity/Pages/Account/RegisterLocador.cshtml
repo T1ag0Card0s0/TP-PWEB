@@ -10,7 +10,10 @@
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <h2>Crie uma nova conta Locador</h2>
                 <hr />
-
+                <h6 style="color: darkred;">
+                    Ao criar uma nova conta deste tipo, uma outra conta com o perfil de "Gestor" será criada automaticamente da seguinte forma:
+                    <br /><br />Email: PrimeiroNomeUltimoNome@gestor<br /><br />A password de entrada é igual à do locador, podendo esta ser alterada mais tarde
+                </h6>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div asp-validation-summary="All" class="text-danger"></div>
 

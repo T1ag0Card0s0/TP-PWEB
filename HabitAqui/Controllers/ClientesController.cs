@@ -150,7 +150,6 @@ namespace HabitAqui.Controllers
                 .AsQueryable();
 
             habitacoes = habitacoes.Where(h => h.Cliente.ApplicationUser.Email.Contains(User.Identity.Name));
-            Console.WriteLine("User.Identity.Name: " + User.Identity.Name);
 
             var resultado = habitacoes.ToList();
 

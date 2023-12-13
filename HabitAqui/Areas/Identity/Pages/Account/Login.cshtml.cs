@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using HabitAqui.Models;
+using Microsoft.EntityFrameworkCore;
+using HabitAqui.Data;
 
 namespace HabitAqui.Areas.Identity.Pages.Account
 {
@@ -23,14 +25,17 @@ namespace HabitAqui.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -114,9 +119,17 @@ namespace HabitAqui.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var user = _context.Users.FirstOrDefault(u => u.Email == Input.Email);
+                
+                if (user == null || !user.Ativo)
+                {
+                    ModelState.AddModelError(string.Empty, "A sua conta foi desativada.");
+                    return Page();
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -133,7 +146,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Erro ao fazr login.");
                     return Page();
                 }
             }

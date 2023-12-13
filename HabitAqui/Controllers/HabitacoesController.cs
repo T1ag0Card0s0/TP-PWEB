@@ -37,7 +37,10 @@ namespace HabitAqui.Controllers
             // Se habitacoes for nulo (ou seja, nenhum resultado de pesquisa), carrega todas as habitacoes
             if (habitacoes == null || !habitacoes.Any())
             {
-                habitacoes = _context.Habitacoes.Include(h => h.Categoria).Include(h => h.Locador).ToList();
+                habitacoes = _context.Habitacoes.Include(h => h.Categoria)
+                    .Include(h => h.Locador)
+                    .Include(h => h.Locador.ApplicationUser.Email)
+                    .ToList();
             }
             
             return View(habitacoes);
@@ -134,6 +137,7 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
+                .Include(h => h.Locador.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {
@@ -217,7 +221,7 @@ namespace HabitAqui.Controllers
         [Authorize(Roles = "Gestor, Funcionario")]
         public IActionResult Create()
         {
-            List<Categoria> listaCategorias = _context.Categorias.ToList();
+            List<Categoria> listaCategorias = _context.Categorias.Where(c => c.Ativo == true).ToList();
 
             ViewData["Categorias"] = listaCategorias;
             return View();
@@ -232,7 +236,7 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PeriodoMinimoArrendamento,PeriodoMaximoArrendamento,Custo,Ativo,Localizacao,CategoriaId")] Habitacao habitacao)
         {
-            List<Categoria> listaCategorias = _context.Categorias.ToList();
+            List<Categoria> listaCategorias = _context.Categorias.Where(c => c.Ativo == true).ToList();
 
             ViewData["Categorias"] = listaCategorias;
 
