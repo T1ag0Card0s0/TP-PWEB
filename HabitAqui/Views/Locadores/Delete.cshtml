@@ -7,17 +7,17 @@
 <div class="container mt-5 ">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Apagar Gestor</h3>
+            <h3 class="card-title">Apagar Locador</h3>
         </div>
         <div class="card-body">
-            <h4>Tem a certeza de que quer apagar este Gestor?</h4>
+            <h4>Tem a certeza de que quer apagar este Locador?</h4>
             <dl class="row">
                 <dd>Nome: @Html.DisplayFor(model => model.Nome)</dd>
             </dl>
             <form asp-action="Delete">
                 <input type="hidden" asp-for="LocadorId" />
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
-                <a asp-action="ListLocadores" asp-controller="Administradores" class="btn btn-secondary" data-dismiss="modal">Back to List</a>
+                <a asp-action="ListLocadores" asp-controller="Administradores" class="btn btn-secondary" data-dismiss="modal">Voltar</a>
             </form>
         </div>
     </div>

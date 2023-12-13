@@ -169,7 +169,7 @@ namespace HabitAqui.Controllers
             
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("ListLocadores", "Administradores");
         }
 
         private bool LocadorExists(int id)
