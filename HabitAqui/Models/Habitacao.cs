@@ -12,7 +12,8 @@ namespace HabitAqui.Models
         [DataType("number")]
         public double? MediaAvaliacao { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O custo é obrigatório.")]
+        [Range(0, double.MaxValue, ErrorMessage = "O custo não pode ser menor que zero.")]
         [DataType("number")]
         public int Custo { get; set; }
 

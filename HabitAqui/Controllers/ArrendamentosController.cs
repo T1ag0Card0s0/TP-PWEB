@@ -260,6 +260,11 @@ namespace HabitAqui.Controllers
                 ModelState.AddModelError("DataInicio", "A data de início deve ser anterior à data de fim.");
                 return View(arrendamento);
             }
+            if (arrendamento.DataInicio < DateTime.Now)
+            {
+                ModelState.AddModelError("DataInicio", "A data de início não pode ser no passado.");
+                return View(arrendamento);
+            }
 
             if (ModelState.IsValid)
             {
