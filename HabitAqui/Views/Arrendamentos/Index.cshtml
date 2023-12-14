@@ -34,12 +34,15 @@
             </div>
             <div class="row g-3 mt-2">
                 <div class="col-2">
-                    <input class="form-control" type="date" name="start_date" placeholder="Data de Início">
+                    <label>Data de Inicio</label>
+                    <input class="form-control" type="date" name="start_date">
                 </div>
                 <div class="col-2">
-                    <input class="form-control" type="date" name="end_date" placeholder="Data de Fim">
+                    <label>Data de Fim</label>
+                    <input class="form-control" type="date" name="end_date">
                 </div>
                 <div class="col-2">
+                    <label></label>
                     <select name="order" class="form-select">
                         <option selected value="">Ordenar Por</option>
                         <option value="PrecoCrescente">Preço (asc)</option>
@@ -49,6 +52,7 @@
                     </select>
                 </div>
                 <div class="col-2">
+                    <label></label>
                     <select name="estado" class="form-select">
                         <option value="">Selecione um Estado</option>
                         <option value="CONFIRMADO">Confirmado</option>

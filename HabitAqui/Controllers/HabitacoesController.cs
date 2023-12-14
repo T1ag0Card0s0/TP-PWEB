@@ -261,7 +261,7 @@ namespace HabitAqui.Controllers
           
                 _context.Add(habitacao);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Listar));
             }
             
             return View(habitacao);
