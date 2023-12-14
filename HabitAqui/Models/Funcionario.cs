@@ -11,10 +11,6 @@ namespace HabitAqui.Models
         [ForeignKey("LocadorId")]
         public int LocadorId { get; set; }
 
-        public Gestor Gestor { get; set; }
-        [ForeignKey("GestorId")]
-        public int? GestorId { get; set; }
-
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

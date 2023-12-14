@@ -2,8 +2,6 @@
 @{
     ViewData["Title"] = "Search";
 }
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 
 <div class="container-fluid p-3" style="background-color:#D8D8D8">
@@ -87,9 +85,12 @@
             <div class="card border-dark mb-3 text-center" style="width:18rem;">
                 <div class="card-header border-dark">
                     <div class="float-end">
-                        <a asp-action="Favorito" asp-controller="Clientes" asp-route-id="@item.Id">
-                            <i class="fa-solid fa-heart fa-beat text-danger"></i>
-                        </a>
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <a asp-action="Favorito" asp-controller="Clientes" asp-route-id="@item.Id">
+                                <i class="fa-solid fa-heart fa-beat text-danger"></i>
+                            </a>
+                        }
                     </div>
                     <h5 class="card-title">
                         @Html.DisplayFor(modelItem => item.Categoria.Nome)

@@ -146,7 +146,7 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Erro ao fazr login.");
+                    ModelState.AddModelError(string.Empty, "Erro ao fazer login.");
                     return Page();
                 }
             }

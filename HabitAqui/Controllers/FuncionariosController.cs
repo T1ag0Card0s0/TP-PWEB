@@ -123,7 +123,6 @@ namespace HabitAqui.Controllers
             }
 
             ModelState.Remove(nameof(funcionario.ApplicationUser));
-            ModelState.Remove(nameof(funcionario.Gestor));
             ModelState.Remove(nameof(funcionario.Locador));
 
             // Recupere o valor da TempData

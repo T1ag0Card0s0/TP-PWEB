@@ -180,45 +180,18 @@ namespace HabitAqui.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole("Gestor"))
+                    var funcionario = new Funcionario
                     {
-                        var gestor = _context.Gestores.FirstOrDefault(l => l.ApplicationUser.Id == _userManager.GetUserId(User));
+                        ApplicationUser = user,
+                        Nome = user.FirstName + " " + user.LastName,
+                        LocadorId = Input.LocadorId // Associa o Funcionario ao Locador existente
+                    };
 
-                        if (gestor != null)
-                        {
-                            var funcionario = new Funcionario
-                            {
-                                ApplicationUser = user,
-                                Nome = user.FirstName + " " + user.LastName,
-                                LocadorId = Input.LocadorId, // Associa o Funcionario ao Locador existente
-                                GestorId = gestor.GestorId
-                            };
+                    _context.Update(funcionario);
+                    await _userManager.AddToRoleAsync(user, "Funcionario");
+                    await _context.SaveChangesAsync();
 
-                            _context.Update(funcionario);
-                            await _context.SaveChangesAsync();
-
-                            await _userManager.AddToRoleAsync(user, "Funcionario");
-                            
-                            return LocalRedirect(returnUrl);
-                        }
-                    }
-                    else
-                    {
-                        var funcionario = new Funcionario
-                        {
-                            ApplicationUser = user,
-                            Nome = user.FirstName + " " + user.LastName,
-                            LocadorId = Input.LocadorId // Associa o Funcionario ao Locador existente
-                        };
-
-                        _context.Update(funcionario);
-                        await _userManager.AddToRoleAsync(user, "Funcionario");
-                        await _context.SaveChangesAsync();
-
-                       
-                        
-                        return LocalRedirect(returnUrl);
-                    }
+                    return LocalRedirect(returnUrl);
 
                 }
 
