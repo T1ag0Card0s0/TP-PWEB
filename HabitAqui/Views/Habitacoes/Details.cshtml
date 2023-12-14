@@ -46,7 +46,7 @@
     </div>
 
     <div class="mt-3">
-        @if (User.IsInRole("Cliente"))
+        @if (User.IsInRole("Cliente") || User.IsInRole("Admin"))
         {
             <a class="btn btn-secondary" asp-controller="Home" asp-action="ListaHabitacoes">Voltar à Lista</a>
         }
