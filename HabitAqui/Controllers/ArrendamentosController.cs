@@ -71,6 +71,8 @@ namespace HabitAqui.Controllers
             return View("Index", arrendamentos);
 
         }
+
+
         public IActionResult ListClienteArrendamentos()
         {
             var categoriaNames = _context.Categorias.ToList();
@@ -125,9 +127,10 @@ namespace HabitAqui.Controllers
 
             if (start_date != default(DateTime))
             {
+                Console.Write("##################### " + start_date.ToString());
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(a => a.DataInicio >= start_date);
             }
-            if (start_date != default(DateTime))
+            if (end_date != default(DateTime))
             {
                 arrendamentosFiltrados = arrendamentosFiltrados.Where(a => a.DataFim <= end_date);
             }
@@ -322,16 +325,9 @@ namespace HabitAqui.Controllers
             {
                 try
                 {
-                    //arrendamento.EquipamentosOpcionais = new List<Equipamento>();
-
                     foreach (var equipamentoId in EquipamentosOpcionais)
                     {
                         var equipamento = await _context.Equipamentos.FindAsync(equipamentoId);
-
-                        if (equipamento != null)
-                        {
-                            //arrendamento.EquipamentosOpcionais.Add(equipamento);
-                        }
                     }
                     // Recupere o valor da TempData
                     if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
