@@ -13,36 +13,48 @@
 </div>
 
 <div id="multiCollapseExample1" class="collapse multi-collapse">
+    
     <div class="card-body">
         <h3>Gestores<a asp-area="Identity" asp-page="/Account/RegisterGestor" class="btn btn-link">Criar Novo</a></h3>
         <hr />
         <div class="row">
-            @foreach (var gestor in Model.Gestores)
+            @if (Model.Gestores.Any())
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@gestor.Nome</h5>
-                            <p class="card-text">ID: @gestor.GestorId</p>
-                            <p class="card-text">Email: @gestor.ApplicationUser.Email</p>
-                            <p class="card-text">Locador: @gestor.Locador.Nome</p>
-                            <div class="d-flex justify-content-between mt-3">
-                                <a asp-action="Delete" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-danger">Apagar</a>
-                                <a asp-action="Edit" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-secondary">Editar</a>
-                                @if (gestor.ApplicationUser.Ativo)
-                                {
-                                    <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@gestor.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
-                                }
-                                else
-                                {
-                                    <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@gestor.ApplicationUser.Id" class="btn btn-success">Ativar</a>
-                                }
+                @foreach (var gestor in Model.Gestores)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@gestor.Nome</h5>
+                                <p class="card-text">ID: @gestor.GestorId</p>
+                                <p class="card-text">Email: @gestor.ApplicationUser.Email</p>
+                                <p class="card-text">Locador: @gestor.Locador.Nome</p>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a asp-action="Delete" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-danger">Apagar</a>
+                                    <a asp-action="Edit" asp-controller="Gestores" asp-route-id="@gestor.GestorId" class="btn btn-secondary">Editar</a>
+                                    @if (gestor.ApplicationUser.Ativo)
+                                    {
+                                        <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@gestor.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@gestor.ApplicationUser.Id" class="btn btn-success">Ativar</a>
+                                    }
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
+            else
+            {
+                <p class="alert alert-warning">
+                    Não há nenhum gestor disponivel!
+                </p>
+            }
+            
         </div>
     </div>
 </div>
@@ -51,31 +63,42 @@
         <h3>Funcionários <a asp-area="Identity" asp-page="/Account/RegisterFunc" class="btn btn-link">Criar Novo</a></h3>
         <hr />
         <div class="row">
-            @foreach (var funcionario in Model.Funcionarios)
+            @if (Model.Funcionarios.Any())
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@funcionario.Nome</h5>
-                            <p class="card-text">ID: @funcionario.FuncionarioId</p>
-                            <p class="card-text">Email: @funcionario.ApplicationUser.Email</p>
-                            <p class="card-text">Locador: @funcionario.Locador.Nome</p>
-                            <div class="d-flex justify-content-between mt-3">
-                                <a asp-action="Delete" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-danger">Apagar</a>
-                                <a asp-action="Edit" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-secondary">Editar</a>
-                                @if (funcionario.ApplicationUser.Ativo)
-                                {
-                                    <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@funcionario.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
-                                }
-                                else
-                                {
-                                    <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@funcionario.ApplicationUser.Id" class="btn btn-success">Ativar</a>
-                                }
+                @foreach (var funcionario in Model.Funcionarios)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@funcionario.Nome</h5>
+                                <p class="card-text">ID: @funcionario.FuncionarioId</p>
+                                <p class="card-text">Email: @funcionario.ApplicationUser.Email</p>
+                                <p class="card-text">Locador: @funcionario.Locador.Nome</p>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a asp-action="Delete" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-danger">Apagar</a>
+                                    <a asp-action="Edit" asp-controller="Funcionarios" asp-route-id="@funcionario.FuncionarioId" class="btn btn-secondary">Editar</a>
+                                    @if (funcionario.ApplicationUser.Ativo)
+                                    {
+                                        <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@funcionario.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@funcionario.ApplicationUser.Id" class="btn btn-success">Ativar</a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
+            else
+            {
+                <p class="alert alert-warning">
+                    Não há nenhum funcionário disponivel!
+                </p>
+            }
+            
         </div>
     </div>
 </div>
@@ -85,29 +108,40 @@
         <h3>Clientes <a asp-area="Identity" asp-page="/Account/RegisterClient" class="btn btn-link">Criar Novo</a></h3>
         <hr />
         <div class="row">
-            @foreach (var cliente in Model.Clientes)
+            @if (Model.Clientes.Any())
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@cliente.Nome</h5>
-                            <p class="card-text">Email: @cliente.ApplicationUser.Email</p>
-                            <div class="d-flex justify-content-between mt-3">
-                                <a asp-action="Delete" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
-                                <a asp-action="Edit" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-secondary">Editar</a>
-                                @if (cliente.ApplicationUser.Ativo)
-                                {
-                                    <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
-                                }
-                                else
-                                {
-                                    <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-success">Ativar</a>
-                                }
+                @foreach (var cliente in Model.Clientes)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@cliente.Nome</h5>
+                                <p class="card-text">Email: @cliente.ApplicationUser.Email</p>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a asp-action="Delete" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Apagar</a>
+                                    <a asp-action="Edit" asp-controller="Clientes" asp-route-id="@cliente.ClienteId" class="btn btn-secondary">Editar</a>
+                                    @if (cliente.ApplicationUser.Ativo)
+                                    {
+                                        <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-success">Ativar</a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
+            else
+            {
+                <p class="alert alert-warning">
+                    Não há nenhum cliente disponivel!
+                </p>
+            }
+            
         </div>
     </div>
 </div>

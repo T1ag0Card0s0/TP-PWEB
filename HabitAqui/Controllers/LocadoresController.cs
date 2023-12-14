@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HabitAqui.Data;
 using HabitAqui.Models;
 
+
 namespace HabitAqui.Controllers
 {
     public class LocadoresController : Controller
@@ -22,9 +23,9 @@ namespace HabitAqui.Controllers
         // GET: Locadores
         public async Task<IActionResult> Index()
         {
-              return _context.Locadores != null ? 
-                          View(await _context.Locadores.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
+            return _context.Locadores != null ?
+                        View(await _context.Locadores.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
         }
 
         // GET: Locadores/Details/5
@@ -102,7 +103,7 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(locador.Avaliacoes));
             ModelState.Remove(nameof(locador.Funcionarios));
             ModelState.Remove(nameof(locador.Gestores));
-            
+
             if (ModelState.IsValid)
             {
                 try
@@ -159,15 +160,57 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
             }
-            var locador = locadores.Where(c=> c.LocadorId == id).FirstOrDefault();
+            var locador = locadores.Where(c => c.LocadorId == id).FirstOrDefault();
             if (locador != null)
             {
+                var gestores = _context.Gestores
+                    .Include(g => g.ApplicationUser)
+                    .Where(g => g.LocadorId == locador.LocadorId)
+                    .ToList();
+
+                if (gestores != null)
+                {
+                    foreach (var g in gestores)
+                    {
+                        var user = _context.Users
+                            .Where(u => u.Id == g.ApplicationUser.Id)
+                            .FirstOrDefault();
+
+                        if (user != null)
+                        {
+                            _context.Users.Remove(user);
+                        }
+                    }
+                }
+
+                var funcionarios = _context.Funcionarios
+                    .Include(g => g.ApplicationUser)
+                    .Where(g => g.LocadorId == locador.LocadorId)
+                    .ToList();
+
+                if (funcionarios != null)
+                {
+                    foreach (var g in funcionarios)
+                    {
+                        var user = _context.Users
+                            .Where(u => u.Id == g.ApplicationUser.Id)
+                            .FirstOrDefault();
+
+                        if (user != null)
+                        {
+                            _context.Users.Remove(user);
+                        }
+                    }
+                }
+
                 _context.Locadores.Remove(locador);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction("ListLocadores", "Administradores");
+
         }
+    
 
         private bool LocadorExists(int id)
         {
