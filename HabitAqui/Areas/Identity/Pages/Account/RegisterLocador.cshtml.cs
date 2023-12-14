@@ -126,31 +126,19 @@ namespace HabitAqui.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var locador = new Locador
                 {
-                    UserName = Input.Email,
+                    Nome = Input.FirstName + " " + Input.LastName,
                     Email = Input.Email,
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Ativo = true,
-                    EmailConfirmed = true
+                    EstadoDeSubscricao = true,
+                    MediaAvaliacao = 0
                 };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                if(locador != null)
                 {
-
-                    var locador = new Locador
-                    {
-                        ApplicationUser = user,
-                        Nome = user.FirstName + " " + user.LastName,
-                        EstadoDeSubscricao = true,
-                        MediaAvaliacao = 0
-                    };
-
                     _context.Update(locador);
-
                     await _context.SaveChangesAsync();
+                    
                     var emailGestor = $"{Input.FirstName + Input.LastName}@gestor";
 
                     var user2 = new ApplicationUser
@@ -163,13 +151,13 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         EmailConfirmed = true
                     };
 
-                    result = await _userManager.CreateAsync(user2, Input.Password);
-                    if(result.Succeeded)
+                    var result = await _userManager.CreateAsync(user2, Input.Password);
+                    if (result.Succeeded)
                     {
                         var gestor = new Gestor
                         {
                             ApplicationUser = user2,
-                            Nome = user.FirstName + " " + user.LastName + " Gestor",
+                            Nome = Input.FirstName + " " + Input.LastName + " Gestor",
                             LocadorId = locador.LocadorId
                         };
 
@@ -179,16 +167,13 @@ namespace HabitAqui.Areas.Identity.Pages.Account
 
                         return LocalRedirect(returnUrl);
                     }
-                    _context.Remove(locador);
-                    _context.Remove(user);
-                    await _context.SaveChangesAsync();
-                    return Page();
+                }
+                
+                _context.Remove(locador);
+                await _context.SaveChangesAsync();
 
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+
+                return Page();
             }
 
             // If we got this far, something failed, redisplay form

@@ -79,42 +79,52 @@
     </form>
 </div>
 <div class="row m-auto">
-    @foreach (var item in Model)
+    @if (Model.Any())
     {
-        <div class="col-md-3">
-            <div class="card border-dark mb-3 text-center" style="width:18rem;">
-                <div class="card-header border-dark">
-                    <div class="float-end">
-                        @if (User.IsInRole("Cliente"))
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card border-dark mb-3 text-center" style="width:18rem;">
+                    <div class="card-header border-dark">
+                        <div class="float-end">
+                            @if (User.IsInRole("Cliente"))
+                            {
+                                <a asp-action="Favorito" asp-controller="Clientes" asp-route-id="@item.Id">
+                                    <i class="fa-solid fa-heart fa-beat text-danger"></i>
+                                </a>
+                            }
+                        </div>
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                        </h5>
+                    </div>
+
+                    <div class="card-body text-dark">
+                        <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
+                        <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
+                    </div>
+                    <div class="card-footer border-dark">
+                        <p class="card-text-center">
+                            <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
+                            @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)<i class="fa-solid fa-star"></i>
+                        </p>
+                        @if (User.IsInRole("Cliente") || User.IsInRole("Funcionario") || User.IsInRole("Gestor") || User.IsInRole("Admin"))
                         {
-                            <a asp-action="Favorito" asp-controller="Clientes" asp-route-id="@item.Id">
-                                <i class="fa-solid fa-heart fa-beat text-danger"></i>
-                            </a>
+                            <p class="card-text-center">
+                                <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
+                            </p>
                         }
                     </div>
-                    <h5 class="card-title">
-                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
-                    </h5>
-                </div>
-                
-                <div class="card-body text-dark">
-                    <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
-                    <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
-                </div>
-                <div class="card-footer border-dark">
-                    <p class="card-text-center">
-                        <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
-                        @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)<i class="fa-solid fa-star"></i>
-                    </p>
-                    @if (User.IsInRole("Cliente") || User.IsInRole("Funcionario") || User.IsInRole("Gestor") || User.IsInRole("Admin"))
-                    {
-                        <p class="card-text-center">
-                            <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
-                        </p>
-                    }
                 </div>
             </div>
-        </div>
+        }
+
+    }
+    else
+    {
+        <p class="alert alert-warning">
+            Não há nenhuma habitação disponivel!
+        </p>
     }
 </div>
 

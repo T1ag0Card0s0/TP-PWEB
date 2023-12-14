@@ -56,7 +56,7 @@ namespace HabitAqui.Controllers
 
         public IActionResult Filter(string locadorNome, string estado, string order)
         {
-            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
+            var locadores = _context.Locadores.ToList();
             ViewData["Locadores"] = locadores;
 
             if (locadorNome != null)
@@ -246,8 +246,7 @@ namespace HabitAqui.Controllers
 
         public IActionResult ListLocadores()
         {
-
-            var locadores = _context.Locadores.Include(l => l.ApplicationUser).ToList();
+            var locadores = _context.Locadores.ToList();
             ViewData["Locadores"] = locadores;
             return View(locadores);
         }

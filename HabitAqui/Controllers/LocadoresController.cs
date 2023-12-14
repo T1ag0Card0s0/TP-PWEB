@@ -56,7 +56,7 @@ namespace HabitAqui.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LocadorId,Nome,EstadoDeSubscricao,MediaAvaliacao")] Locador locador)
+        public async Task<IActionResult> Create([Bind("LocadorId,Nome,Email,EstadoDeSubscricao,MediaAvaliacao")] Locador locador)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace HabitAqui.Controllers
             ModelState.Remove(nameof(locador.Avaliacoes));
             ModelState.Remove(nameof(locador.Funcionarios));
             ModelState.Remove(nameof(locador.Gestores));
-            ModelState.Remove(nameof(locador.ApplicationUser));
+            ModelState.Remove(nameof(locador.Email));
 
 
             if (ModelState.IsValid)
@@ -156,7 +156,7 @@ namespace HabitAqui.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var locadores = _context.Locadores.Include(c => c.ApplicationUser).ToList();
+            var locadores = _context.Locadores.ToList();
             if (locadores == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Locadores'  is null.");
@@ -164,12 +164,6 @@ namespace HabitAqui.Controllers
             var locador = locadores.Where(c=> c.LocadorId == id).FirstOrDefault();
             if (locador != null)
             {
-                var user = _context.Users.Find(locador.ApplicationUser.Id);
-                if (user != null)
-                {
-                    _context.Users.Remove(user);
-                }
-
                 _context.Locadores.Remove(locador);
             }
 

@@ -39,7 +39,6 @@ namespace HabitAqui.Controllers
             {
                 habitacoes = _context.Habitacoes.Include(h => h.Categoria)
                     .Include(h => h.Locador)
-                    .Include(h => h.Locador.ApplicationUser)
                     .ToList();
             }
             
@@ -137,7 +136,6 @@ namespace HabitAqui.Controllers
             var habitacao = await _context.Habitacoes
                 .Include(h => h.Categoria)
                 .Include(h => h.Locador)
-                .Include(h => h.Locador.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (habitacao == null)
             {
