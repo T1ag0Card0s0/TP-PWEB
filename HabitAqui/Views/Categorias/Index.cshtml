@@ -5,51 +5,61 @@
 }
 
 <div class="container mt-5 justify-content-center">
-    <h3>Categorias</h3>
-    <hr />
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @if (Model.Any())
+    {
+        <h3>Categorias</h3>
+        <hr />
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <th scope="row">@item.CategoriaId</th>
-                    <td>@item.Nome</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.CategoriaId" class="btn btn-secondary">
-                            <i class="fa-solid fa-pen-to-square"></i> Editar
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.CategoriaId" class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i> Apagar
-                        </a>                        
-                        @if (item.Ativo)
-                        {
-                            <a asp-action="Desativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-dark">Desativar</a>
-                        }
-                        else
-                        {
-                            <a asp-action="Ativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-success">Ativar</a>
-                        }
-                    </td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Ações</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.CategoriaId</th>
+                        <td>@item.Nome</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.CategoriaId" class="btn btn-secondary">
+                                <i class="fa-solid fa-pen-to-square"></i> Editar
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.CategoriaId" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i> Apagar
+                            </a>
+                            @if (item.Ativo)
+                            {
+                                <a asp-action="Desativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-dark">Desativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Ativar" asp-controller="Categorias" asp-route-id="@item.CategoriaId" class="btn btn-success">Ativar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="alert alert-warning">
+            Não há nenhuma categoria registada!
+        </p>
+    }
+
 
 </div>

@@ -38,28 +38,39 @@
 </div>
 
 <div class="row m-auto mt-2">
-    @foreach (var locador in Model)
+    @if (Model.Any())
     {
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">@locador.Nome</h5>
-                    <p class="card-text">ID: @locador.LocadorId</p>
-                    <p class="card-text">Avaliação: @locador.MediaAvaliacao</p>
-                    <div class="d-flex justify-content-between mt-3">
-                        <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
-                        <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
-                        @if (locador.EstadoDeSubscricao == true)
-                        {
-                            <a asp-action="DesativarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
-                        }
-                        else
-                        {
-                            <a asp-action="AtivarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
-                        }
+        @foreach (var locador in Model)
+        {
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@locador.Nome</h5>
+                        <p class="card-text">ID: @locador.LocadorId</p>
+                        <p class="card-text">Avaliação: @locador.MediaAvaliacao</p>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a asp-action="Edit" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-secondary">Editar</a>
+                            <a asp-action="Delete" asp-controller="Locadores" asp-route-id="@locador.LocadorId" class="btn btn-danger">Apagar</a>
+                            @if (locador.EstadoDeSubscricao == true)
+                            {
+                                <a asp-action="DesativarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-dark">Desativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="AtivarLocador" asp-controller="Administradores" asp-route-id="@locador.LocadorId" class="btn btn-success">Ativar</a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+
     }
+    else
+    {
+        <p class="alert alert-warning">
+            Não há nenhum locador registado!
+        </p>
+    }
+
 </div>
