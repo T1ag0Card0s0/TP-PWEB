@@ -191,7 +191,7 @@ namespace HabitAqui.Controllers
                     cliente.Favoritos.Add(habitacao);
                     _context.SaveChanges();
 
-                    return RedirectToAction("ListaHabitacoes", "Home");
+                    return RedirectToAction("ListFavoritos");
                 }
                 
             }
@@ -235,6 +235,7 @@ namespace HabitAqui.Controllers
                 if(habitacao != null )
                 {
                     cliente.Favoritos.Remove(habitacao);
+                    _context.SaveChanges();
                     return RedirectToAction(nameof(ListFavoritos));
                 
                 }
