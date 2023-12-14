@@ -102,6 +102,7 @@ namespace HabitAqui.Controllers
             }
 
             var funcionario = await _context.Funcionarios.FindAsync(id);
+            TempData["LocadorId"] = funcionario.LocadorId;
             if (funcionario == null)
             {
                 return NotFound();
@@ -122,8 +123,14 @@ namespace HabitAqui.Controllers
             }
 
             ModelState.Remove(nameof(funcionario.ApplicationUser));
-            ModelState.Remove(nameof(funcionario.LocadorId));
-            ModelState.Remove(nameof(funcionario.GestorId));
+            ModelState.Remove(nameof(funcionario.Gestor));
+            ModelState.Remove(nameof(funcionario.Locador));
+
+            // Recupere o valor da TempData
+            if (TempData.TryGetValue("LocadorId", out var locadorId))
+            {
+                funcionario.LocadorId = (int)locadorId;
+            }
 
             if (ModelState.IsValid)
             {

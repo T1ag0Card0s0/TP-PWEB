@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using HabitAqui.ViewModels;
 using FluentNHibernate.Conventions;
+using NHibernate.Type;
 
 namespace HabitAqui.Controllers
 {
@@ -83,7 +84,11 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            var gestor = await _context.Gestores.FindAsync(id);
+            var gestores =  _context.Gestores.Include(g=> g.Locador ).ToList();
+
+            var gestor = gestores.Where(g=> g.GestorId == id).First();
+
+            TempData["LocadorId"] = gestor.LocadorId;
 
             if (gestor == null)
             {
@@ -104,9 +109,15 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            ModelState.Remove(nameof(gestor.Funcionarios));
             ModelState.Remove(nameof(gestor.ApplicationUser));
+            ModelState.Remove(nameof(gestor.Funcionarios));
+            ModelState.Remove(nameof(gestor.Locador));
 
+            // Recupere o valor da TempData
+            if (TempData.TryGetValue("LocadorId", out var locadorId))
+            {
+                gestor.LocadorId = (int)locadorId;
+            }
             if (ModelState.IsValid)
             {
                 try
