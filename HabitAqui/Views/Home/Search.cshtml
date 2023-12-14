@@ -86,10 +86,16 @@
         <div class="col-md-3">
             <div class="card border-dark mb-3 text-center" style="width:18rem;">
                 <div class="card-header border-dark">
+                    <div class="float-end">
+                        <a asp-action="Favorito" asp-controller="Clientes" asp-route-id="@item.Id">
+                            <i class="fa-solid fa-heart fa-beat"></i>
+                        </a>
+                    </div>
                     <h5 class="card-title">
                         @Html.DisplayFor(modelItem => item.Categoria.Nome)
                     </h5>
                 </div>
+                
                 <div class="card-body text-dark">
                     <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
                     <p class="card-text-center">@Html.DisplayFor(modelItem => item.Localizacao)</p>
@@ -112,6 +118,21 @@
 </div>
 
 <script>
+    function changeBtn(){
+        var iconCoracao = document.getElementById("icon-coracao");
+
+        iconCoracao.classList.toggle("coracao-ativo");
+
+        // Atualiza o ícone do coração com base na classe 'coracao-ativo'
+        if (iconCoracao.classList.contains("coracao-ativo")) {
+            iconCoracao.classList.remove("fa-thin");
+            iconCoracao.classList.add("fa-solid");
+        } else {
+            iconCoracao.classList.remove("fa-solid");
+            iconCoracao.classList.add("fa-thin");
+        }
+    }
+ 
     const select = document.querySelector('select[name="orderby"]');
     const form = document.querySelector('form[name="form"]');
 

@@ -146,7 +146,6 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         {
                             ApplicationUser = user,
                             Nome = user.FirstName + " " + user.LastName,
-                            AvaliacoesHabitacao = new List<AvaliacaoHabitacao>(),
                             Arrendamentos = new List<Arrendamento>()
                         };
                         _context.Update(cliente);
@@ -162,7 +161,6 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         {
                             ApplicationUser = user,
                             Nome = user.FirstName + " " + user.LastName,
-                            AvaliacoesHabitacao = new List<AvaliacaoHabitacao>(),
                             Arrendamentos = new List<Arrendamento>()
                         };
                         _context.Update(cliente);

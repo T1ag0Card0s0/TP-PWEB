@@ -84,9 +84,14 @@ namespace HabitAqui.Controllers
             var cliente = _userManager.GetUserAsync(User).Result;
 
             var arrendamentos = _context.Arrendamentos.Include(a => a.Cliente)
-                .Include(a => a.Habitacao).Include(a => a.Habitacao.Categoria).Include(a => a.Locador).AsQueryable();
+                .Include(a => a.Habitacao)
+                .Include(a => a.Habitacao.Categoria)
+                .Include(a => a.Locador)
+                .AsQueryable();
 
-            arrendamentos = arrendamentos.Where(a => a.Cliente.ApplicationUser.Id.Equals(cliente.Id));
+            arrendamentos = arrendamentos
+                .Where(a => a.Cliente.ApplicationUser.Id.Equals(cliente.Id)
+                && (a.Estado == Estados.ENTREGUE || a.Estado == Estados.RECEBIDO));
 
             return View("Index", arrendamentos);
         }

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HabitAqui.Models.Habitacao>
+@{
+    ViewData["Title"] = "Favoritos";
+}
+
+<div class="row m-auto mt-2">
+    @if (Model.Any())
+    {
+
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card border-dark mb-3 text-center" style="width:18rem;">
+                    <div class="card-header border-dark">
+                        <div class="float-end">
+                            <a asp-action="RemoveFavorito" asp-controller="Clientes" asp-route-id="@item.Id">
+                                <i class="fas fa-times text-danger"></i>
+                            </a>
+                        </div>
+                        <h5 class="card-title">
+                            @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                        </h5>
+                    </div>
+                    <div class="card-body text-dark">
+                        <h4 class="card-text-center">@Html.DisplayFor(modelItem => item.Custo) €</h4>
+                        <p class="card-text-center"><i class="fas fa-map-marker-alt"></i> @Html.DisplayFor(modelItem => item.Localizacao)</p>
+                        <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id">Ver Mais</a>
+                    </div>
+                    <div class="card-footer border-dark">
+                        <p class="card-text-center">
+                            <i class="fa-solid fa-circle-user"></i> @Html.DisplayFor(modelItem => item.Locador.Nome)
+                            <i class="fa-solid fa-star"></i> @Html.DisplayFor(modelItem => item.Locador.MediaAvaliacao)
+                        </p>
+                        <p class="card-text-center">
+                            <a asp-action="Details" asp-controller="Habitacoes" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <p class="alert alert-warning">
+            Não tem nehuma habitação adicionada aos favoritos!
+        </p>
+    }
+</div>

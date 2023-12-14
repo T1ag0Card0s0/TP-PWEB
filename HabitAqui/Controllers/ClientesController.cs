@@ -67,7 +67,6 @@ namespace HabitAqui.Controllers
                 return NotFound();
             }
 
-            ModelState.Remove(nameof(cliente.AvaliacoesHabitacao));
             ModelState.Remove(nameof(cliente.Arrendamentos));
             ModelState.Remove(nameof(cliente.ApplicationUser));
 
@@ -170,6 +169,77 @@ namespace HabitAqui.Controllers
             var resultado = habitacoes.ToList();
 
             return View("ListArrendamentos", resultado);
+        }
+
+        public IActionResult Favorito(int id)
+        {
+            var user_atual = _userManager.GetUserAsync(User).Result;
+            var cliente = _context.Clientes.Include(c=> c.ApplicationUser).
+                Where(c => c.ApplicationUser.Id == user_atual.Id).First();
+
+            if( cliente != null )
+            {
+                var habitacao = _context.Habitacoes
+                    .Include(c=> c.Categoria)
+                    .Include(c=> c.Locador).Where(c=> c.Id == id).First();
+
+                if(habitacao != null )
+                {
+                    if (cliente.Favoritos == null)
+                        cliente.Favoritos = new List<Habitacao>();
+
+                    cliente.Favoritos.Add(habitacao);
+                    _context.SaveChanges();
+
+                    return RedirectToAction("ListaHabitacoes", "Home");
+                }
+                
+            }
+
+            return NotFound();
+        }
+
+        public IActionResult ListFavoritos()
+        {
+            var user_atual = _userManager.GetUserAsync(User).Result;
+
+            var cliente = _context.Clientes
+                .Include(c=> c.Favoritos)
+                .Where(c => c.ApplicationUser.Id == user_atual.Id).First();
+
+            if(cliente != null )
+            {
+                var habitacoes = cliente.Favoritos;
+                var habitacao = _context.Habitacoes
+                    .Include(c => c.Categoria)
+                    .Include(c => c.Locador).ToList();
+
+                habitacao = habitacoes.ToList();
+                return View(habitacao);
+            }
+            return NotFound();
+           
+        }
+
+        public IActionResult RemoveFavorito(int id)
+        {
+            var user_atual = _userManager.GetUserAsync(User).Result;
+
+            var cliente = _context.Clientes
+                .Include(c => c.Favoritos)
+                .Where(c => c.ApplicationUser.Id == user_atual.Id).First();
+
+            if (cliente != null)
+            {
+                var habitacao = _context.Habitacoes.Find(id);
+                if(habitacao != null )
+                {
+                    cliente.Favoritos.Remove(habitacao);
+                    return RedirectToAction(nameof(ListFavoritos));
+                
+                }
+            }
+            return NotFound();
         }
 
         public IActionResult Create()

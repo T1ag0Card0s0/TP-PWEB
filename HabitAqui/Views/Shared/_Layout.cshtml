@@ -96,6 +96,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Arrendamentos" asp-action="ListClienteArrendamentos">Os meus arrendamentos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Clientes" asp-action="ListFavoritos">Favoritos</a>
+                            </li>
                         }
                         @if (User.IsInRole("Gestor"))
                         {
