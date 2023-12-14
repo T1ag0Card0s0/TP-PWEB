@@ -66,102 +66,113 @@
 }
 
 <div class="row m-auto mt-2">
-    @foreach (var item in Model)
+    @if (Model.Any())
     {
-        <div class="col-md-3">
-            @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
-            {
-                <div class="card border-dark mb-3" style="max-width: 18rem;">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            <div class="float-end">
-                                <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id">
-                                    <i class="fas fa-times text-danger"></i>
-                                </a>
-                            </div>
-                            @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
-                            @Html.DisplayFor(modelItem => item.Custo)€
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item border-dark">
-                                <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
-                            </li>
-                            <li class="list-group-item border-dark"><i class="fas fa-user"></i> @Html.DisplayFor(modelItem => item.Cliente.Nome)</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        @if (Estados.CONFIRMADO == item.Estado)
-                        {
-                            <p class="text-center">
-                                <a asp-action="Entregar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">Entregar</a>
-                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                            </p>
-                        }
-                        else if (Estados.NAO_CONFIRMADO == item.Estado)
-                        {
-                            <p class="text-center">
-                                <a asp-action="Confirmar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">
-                                    <i class="fas fa-check"></i>
-                                </a>
-                                <a asp-action="Cancelar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">
-                                    <i class="fas fa-times"></i>
-                                </a>
-                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                            </p>
-                        }
-                        else if (Estados.REJEITADO == item.Estado)
-                        {
-                            <p class="text-center">
-                                <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
-                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                            </p>
-                        }
-                        else if (Estados.ENTREGUE == item.Estado)
-                        {
-                            <p class="text-center">
-                                <a asp-action="Receber" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-secondary">Receber</a>
-                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                            </p>
-                        }
-                        else if (Estados.RECEBIDO == item.Estado)
-                        {
-                            <p class ="text-center">Contrato terminado</p>
-                            <p class="text-center">
-                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                            </p>
-                        }
-                    </div>
-                </div>
-            }else if (User.IsInRole("Cliente") && item.Estado == Estados.RECEBIDO || item.Estado == Estados.ENTREGUE)
-            {
-                <div class="card border-dark mb-3" style="max-width: 18rem;">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
-                            @Html.DisplayFor(modelItem => item.Custo)€
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item border-dark">
-                                <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <p class="text-center">
-                            @if(item.Estado == Estados.RECEBIDO)
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                @if (User.IsInRole("Funcionario") || User.IsInRole("Gestor"))
+                {
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <div class="float-end">
+                                    <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id">
+                                        <i class="fas fa-times text-danger"></i>
+                                    </a>
+                                </div>
+                                @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
+                                @Html.DisplayFor(modelItem => item.Custo)€
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-dark">
+                                    <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
+                                </li>
+                                <li class="list-group-item border-dark"><i class="fas fa-user"></i> @Html.DisplayFor(modelItem => item.Cliente.Nome)</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            @if (Estados.CONFIRMADO == item.Estado)
                             {
-                                <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-success">Avaliar</a>
+                                <p class="text-center">
+                                    <a asp-action="Entregar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">Entregar</a>
+                                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                                </p>
                             }
-                            <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
-                        </p>
+                            else if (Estados.NAO_CONFIRMADO == item.Estado)
+                            {
+                                <p class="text-center">
+                                    <a asp-action="Confirmar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-success">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                    <a asp-action="Cancelar" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                                </p>
+                            }
+                            else if (Estados.REJEITADO == item.Estado)
+                            {
+                                <p class="text-center">
+                                    <a asp-action="Delete" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                                </p>
+                            }
+                            else if (Estados.ENTREGUE == item.Estado)
+                            {
+                                <p class="text-center">
+                                    <a asp-action="Receber" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-secondary">Receber</a>
+                                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                                </p>
+                            }
+                            else if (Estados.RECEBIDO == item.Estado)
+                            {
+                                <p class ="text-center">Contrato terminado</p>
+                                <p class="text-center">
+                                    <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                                </p>
+                            }
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
-      }
+                }
+                else if (User.IsInRole("Cliente") && item.Estado == Estados.RECEBIDO || item.Estado == Estados.ENTREGUE)
+                {
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                @Html.DisplayFor(modelItem => item.Habitacao.Categoria.Nome) -
+                                @Html.DisplayFor(modelItem => item.Custo)€
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-dark">
+                                    <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataInicio) - <i class="far fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.DataFim)
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-center">
+                                @if (item.Estado == Estados.RECEBIDO)
+                                {
+                                    <a asp-action="Avaliar" asp-controller="Habitacoes" asp-route-id="@item.HabitacaoId" class="btn btn-success">Avaliar</a>
+                                }
+                                <a asp-action="Details" asp-controller="Arrendamentos" asp-route-id="@item.Id" class="btn btn-dark">Detalhes</a>
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    }
+    else
+    {
+        <p class="alert alert-warning">
+            Não há nenhum arrendamento disponivel!
+        </p>
+    }
 </div>
 

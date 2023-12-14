@@ -20,3 +20,17 @@ html {
 body {
     margin-bottom: 70px; /* Height of the footer */
 }
+
+/* Adicione estilos personalizados aqui, se necessário */
+.custom-chart-container {
+    text-align: center;
+    align-items:center;
+    justify-content:center;
+}
+
+.custom-chart {
+    width: 100%; /* Isso garante que todos os gráficos tenham a mesma largura */
+    max-width: 400px; /* Ajuste conforme necessário */
+    margin: auto; /* Isso centraliza o gráfico */
+    display: block;
+}
