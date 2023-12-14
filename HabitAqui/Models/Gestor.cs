@@ -9,9 +9,6 @@ namespace HabitAqui.Models
         
         public int LocadorId { get; set; }
         public Locador Locador { get; set; }
-        
-
-        public ICollection<Funcionario>? Funcionarios { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
     }

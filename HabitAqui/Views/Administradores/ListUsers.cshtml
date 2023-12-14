@@ -4,17 +4,17 @@
     <div>
         <label>Carregue no botão para o qual deseja ver os utilizadores registados</label>
         <p>
-            <a class="btn btn-dark m-3" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Gestores</a>
-            <button class="btn btn-dark m-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Funcionários</button>
-            <button class="btn btn-dark m-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">Clientes</button>
+            <a class="btn btn-dark mt-3" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Gestores</a>
+            <button class="btn btn-dark mt-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Funcionários</button>
+            <button class="btn btn-dark mt-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">Clientes</button>
+            <button class="btn btn-dark mt-3" type="button" data-toggle="collapse" data-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">Administradores</button>
         </p>
     </div>
 </div>
 
-
 <div id="multiCollapseExample1" class="collapse multi-collapse">
     <div class="card-body">
-        <h3>Gestores <a asp-area="Identity" asp-page="/Account/RegisterGestor" class="btn btn-link">Criar Novo</a></h3>
+        <h3>Gestores<a asp-area="Identity" asp-page="/Account/RegisterGestor" class="btn btn-link">Criar Novo</a></h3>
         <hr />
         <div class="row">
             @foreach (var gestor in Model.Gestores)
@@ -48,7 +48,7 @@
 </div>
 <div id="multiCollapseExample2" class="collapse multi-collapse">
     <div class="card-body">
-        <h3>Funcionarios <a asp-area="Identity" asp-page="/Account/RegisterFunc" class="btn btn-link">Criar Novo</a></h3>
+        <h3>Funcionários <a asp-area="Identity" asp-page="/Account/RegisterFunc" class="btn btn-link">Criar Novo</a></h3>
         <hr />
         <div class="row">
             @foreach (var funcionario in Model.Funcionarios)
@@ -102,6 +102,41 @@
                                 else
                                 {
                                     <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@cliente.ApplicationUser.Id" class="btn btn-success">Ativar</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="multiCollapseExample4" class="collapse multi-collapse">
+    <div class="card-body">
+        <h3>Administradores <a asp-area="Identity" asp-page="/Account/RegisterAdministrador" class="btn btn-link">Criar Novo</a></h3>
+        <hr />
+        <div class="row">
+            @foreach (var admin in Model.Administradores)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@admin.Name</h5>
+                            <p class="card-text">Email: @admin.ApplicationUser.Email</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                @if (User.Identity.IsAuthenticated && User.Identity.Name != admin.ApplicationUser.UserName)
+                                {
+                                    <a asp-action="Delete" asp-controller="Administradores" asp-route-id="@admin.AdministradorId" class="btn btn-danger">Apagar</a>
+                                    <a asp-action="Edit" asp-controller="Administradores" asp-route-id="@admin.AdministradorId" class="btn btn-secondary">Editar</a>
+                                    @if (admin.ApplicationUser.Ativo)
+                                    {
+                                        <a asp-action="Desativar" asp-controller="Gestores" asp-route-id="@admin.ApplicationUser.Id" class="btn btn-dark">Desativar</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Ativar" asp-controller="Gestores" asp-route-id="@admin.ApplicationUser.Id" class="btn btn-success">Ativar</a>
+                                    }
                                 }
                             </div>
                         </div>

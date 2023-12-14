@@ -196,7 +196,6 @@ namespace HabitAqui.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, "Gestor");
                         await _context.SaveChangesAsync();
                         
-
                         _logger.LogInformation("User created a new account with password.");
 
                         return LocalRedirect(returnUrl);

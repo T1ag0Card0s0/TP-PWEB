@@ -110,7 +110,7 @@ namespace HabitAqui.Controllers
             }
 
             ModelState.Remove(nameof(gestor.ApplicationUser));
-            ModelState.Remove(nameof(gestor.Funcionarios));
+           // ModelState.Remove(nameof(gestor.Funcionarios));
             ModelState.Remove(nameof(gestor.Locador));
 
             // Recupere o valor da TempData
@@ -203,6 +203,10 @@ namespace HabitAqui.Controllers
 
             _context.Gestores.Remove(gestor);
             await _context.SaveChangesAsync();
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             return RedirectToAction(nameof(ListEmployees));
         }
 

@@ -8,5 +8,6 @@ namespace HabitAqui.ViewModels
         public List<Gestor> Gestores { get; set; }
         public List<Locador> Locadores { get; set; }
         public List<Cliente> Clientes { get; set;}
+        public List<Administrador> Administradores { get; set;}
     }
 }

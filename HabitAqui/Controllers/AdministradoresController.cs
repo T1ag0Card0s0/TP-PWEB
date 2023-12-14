@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using HabitAqui.ViewModels;
 using SQLitePCL;
+using System.Numerics;
 
 namespace HabitAqui.Controllers
 {
@@ -82,12 +83,14 @@ namespace HabitAqui.Controllers
             var funcionarios = _context.Funcionarios.Include(f => f.Locador).Include(f => f.ApplicationUser).ToList();
             var gestores = _context.Gestores.Include(g => g.Locador).Include(g => g.ApplicationUser).ToList();
             var clientes = _context.Clientes.Include(g => g.ApplicationUser).ToList();
+            var administradores = _context.Administradores.Include(g => g.ApplicationUser).ToList();
 
             var viewModel = new ListUsersViewModel
             {
                 Funcionarios = funcionarios,
                 Gestores = gestores,
-                Clientes = clientes
+                Clientes = clientes,
+                Administradores = administradores,
             };
 
             return View(viewModel);
@@ -165,6 +168,7 @@ namespace HabitAqui.Controllers
             {
                 return NotFound();
             }
+            ModelState.Remove(nameof(administrador.ApplicationUser));
 
             if (ModelState.IsValid)
             {
@@ -184,7 +188,7 @@ namespace HabitAqui.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListUsers", "Administradores");
             }
             return View(administrador);
         }
@@ -216,13 +220,22 @@ namespace HabitAqui.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Administradores'  is null.");
             }
-            var administrador = await _context.Administradores.FindAsync(id);
+            var administrador = await _context.Administradores
+                .Include(m => m.ApplicationUser)
+                .FirstOrDefaultAsync(m => m.AdministradorId == id);
             if (administrador != null)
             {
+                var appuser = administrador.ApplicationUser;
+                await _userManager.DeleteAsync(appuser);
                 _context.Administradores.Remove(administrador);
             }
-            
+
             await _context.SaveChangesAsync();
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ListUsers", "Administradores");
+            }
             return RedirectToAction(nameof(Index));
         }
 
