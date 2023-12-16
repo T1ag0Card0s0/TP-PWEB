@@ -279,18 +279,6 @@ namespace HabitAqui.Controllers
                 // Recupere o valor da TempData
                 if (TempData.TryGetValue("HabitacaoId", out var habitacaoId))
                 {
-                    var arrendamentos = _context.Arrendamentos.Where(a => a.HabitacaoId == (int)habitacaoId).ToList();
-                    if(arrendamentos != null)
-                    {
-                        foreach(var a in arrendamentos)
-                        {
-                            if(arrendamento.DataFim > a.DataInicio)
-                            {
-                                ModelState.AddModelError("DataInicio","Há outro arrendamento para esta habitação nessas datas");
-                                return View(arrendamento);
-                            }
-                        }
-                    }
                     arrendamento.HabitacaoId = (int)habitacaoId;
                 }
                 arrendamento.LocadorId = ObterLocadorIdAtual();
